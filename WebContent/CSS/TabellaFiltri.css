@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+
+aside {
+	float: left;
+	padding-right: 10px;
+}
+
+button.ok {
+	font-size: 100%;
+	float: left;
+}
