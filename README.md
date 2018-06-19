@@ -1,3 +1,2 @@
 # OtticaCrisci
-Questo Ã¨ un tes
-AAAAAAAAAAAAAAAAAAAAAAAAAAA
+Questo progetto è destinato a falire
