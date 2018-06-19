@@ -3,9 +3,9 @@ package it.unisa.model;
 import java.sql.SQLException;
 import java.util.Collection;
 
-public interface ProductModel<T> {
+public interface ProductModel<T,J> {
 	
-	public T doRetrieveByKey(int code) throws SQLException;
+	public T doRetrieveByKey(J code) throws SQLException;
 	
 	public Collection<T> doRetrieveAll(String order) throws SQLException;
 	
@@ -13,5 +13,5 @@ public interface ProductModel<T> {
 	
 	public void doUpdate(T product) throws SQLException;
 	
-	public boolean doDelete(int code) throws SQLException;
+	public boolean doDelete(J code) throws SQLException;
 }
