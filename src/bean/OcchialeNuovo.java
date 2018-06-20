@@ -5,7 +5,7 @@ import java.util.Date;
 public class OcchialeNuovo {
 	
 	int idOcchiale,prezzo;
-	String stato;
+	String stato,cF;
 	Date dataOrdine,dataRitiro;
 	
 	public int getId() {
@@ -37,6 +37,18 @@ public class OcchialeNuovo {
 	}
 	public void setDataRitiro(Date dataRitiro) {
 		this.dataRitiro = dataRitiro;
+	}
+	public int getIdOcchiale() {
+		return idOcchiale;
+	}
+	public void setIdOcchiale(int idOcchiale) {
+		this.idOcchiale = idOcchiale;
+	}
+	public String getcF() {
+		return cF;
+	}
+	public void setcF(String cF) {
+		this.cF = cF;
 	}
 	
 	
