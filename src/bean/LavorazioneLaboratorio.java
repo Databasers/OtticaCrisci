@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class LavorazioneLaboratorio {
 	
-	int codAddetto,codLavirazione;
+	int codAddetto,codLavirazione,oR_idOcchiale,oN_idOcchiale;
 	Date dataInizio,dataFine;
 	enum tipoLavorazione {
 			Montaggio,
@@ -42,6 +42,18 @@ public class LavorazioneLaboratorio {
 	}
 	public void setTipo(tipoLavorazione tipo) {
 		this.tipo = tipo;
+	}
+	public int getoR_idOcchiale() {
+		return oR_idOcchiale;
+	}
+	public void setoR_idOcchiale(int oR_idOcchiale) {
+		this.oR_idOcchiale = oR_idOcchiale;
+	}
+	public int getoN_idOcchiale() {
+		return oN_idOcchiale;
+	}
+	public void setoN_idOcchiale(int oN_idOcchiale) {
+		this.oN_idOcchiale = oN_idOcchiale;
 	}
 	
 

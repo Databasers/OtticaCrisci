@@ -6,7 +6,7 @@ public class OcchialeRotto {
 
 	int idOcchiale;
 	Date dataConsegna,dataRitiro;
-	String tipoDanno;
+	String tipoDanno,cF;
 	
 	public int getIdOcchiale() {
 		return idOcchiale;
@@ -31,6 +31,12 @@ public class OcchialeRotto {
 	}
 	public void setTipoDanno(String tipoDanno) {
 		this.tipoDanno = tipoDanno;
+	}
+	public String getcF() {
+		return cF;
+	}
+	public void setcF(String cF) {
+		this.cF = cF;
 	}
 	
 }
