@@ -3,7 +3,7 @@ package bean;
 public class Frame {
 
 	int id,prezzo,peso;
-	String modello,colore,marchio;
+	String modello,colore,marchio,partitaIva;
 	
 	public int getId() {
 		return id;
@@ -40,6 +40,12 @@ public class Frame {
 	}
 	public void setMarchio(String marchio) {
 		this.marchio = marchio;
+	}
+	public String getPartitaIva() {
+		return partitaIva;
+	}
+	public void setPartitaIva(String partitaIva) {
+		this.partitaIva = partitaIva;
 	}
 	
 }
