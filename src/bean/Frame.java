@@ -3,7 +3,8 @@ package bean;
 public class Frame {
 
 	int id,prezzo,peso;
-	String modello,colore,marchio,partitaIva;
+	String modello,colore,marchio,materiale;
+	int PartitaIva;
 	
 	public int getId() {
 		return id;
@@ -41,11 +42,18 @@ public class Frame {
 	public void setMarchio(String marchio) {
 		this.marchio = marchio;
 	}
-	public String getPartitaIva() {
-		return partitaIva;
+	public int getPartitaIva() {
+		return PartitaIva;
 	}
-	public void setPartitaIva(String partitaIva) {
-		this.partitaIva = partitaIva;
+	public void setPartitaIva(int partitaIva) {
+		PartitaIva = partitaIva;
 	}
+	public String getMateriale() {
+		return materiale;
+	}
+	public void setMateriale(String materiale) {
+		this.materiale = materiale;
+	}
+
 	
 }
