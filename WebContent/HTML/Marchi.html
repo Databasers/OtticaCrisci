@@ -3,7 +3,6 @@
 <LINK rel="stylesheet" href="../CSS/Marchi.css" type="text/css">
 <!--  
 	Area dedicata alla descrizione dei marchi collegati al sito
-	
 -->
 
 
@@ -11,6 +10,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<script src="../JS/Marchi.js"></script>
 </head>
 <body>
 
@@ -18,7 +18,7 @@
 		<table style="width:100%">
 			<tr>
 				<th>
-					<a>
+					<a onclick = 'pfunc()'>
 						<img src="http://www.luxottica.com/sites/luxottica.com/files/brand/logo_grid/oakley.png" width="400" height="140" alt="Oakley" title="Oakley">
 					</a>
 				</th>
@@ -67,7 +67,10 @@
 					</a>
 				</th>
 			</tr>
+			</table>
 
 		<!-- Parte a scomparsa che viene modificata cliccando su un marchio -->
+		<p id="puttana">
+		</p>
 </body>
 </html>
