@@ -1,3 +1,4 @@
-function pfunc(){
-	document.getElementById("puttana").innerHTML= "Ora scrivo cose e spero vadano bene";
+function pfunc(marchio){
+	document.getElementById("puttana").innerHTML= marchio + "<br/>";
+	//Insert animazione qui
 }
