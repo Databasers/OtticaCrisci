@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `ottico` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ottico`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ottico
@@ -40,7 +38,7 @@ CREATE TABLE `certificato` (
 
 LOCK TABLES `certificato` WRITE;
 /*!40000 ALTER TABLE `certificato` DISABLE KEYS */;
-INSERT INTO `certificato` VALUES ('CRSLGU97P06F924H','C:AiOLog.txt',0);
+INSERT INTO `certificato` VALUES ('CRSGPP78I52W687F','www.yahoo.it',1);
 /*!40000 ALTER TABLE `certificato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +64,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('CCCGZN93L08F839T','Graziano','Ciccarelli',''),('CRSLGU97P06F924H','Luigi','Crisci',''),('FRNSST80R50C129B','Francesca','Esposito',''),('GVNDRT78S14F839Z','Giovanni','De Martino',''),('LGUCSC97P06F924V','Luigi','Crisci',''),('LRANTR94S69B963J','Laura','Notaro',''),('LRIDDA97E54F839T','Ilaria','Addeo',''),('PLADCN80E11A089R','Paolo','De Canio',''),('RMMNTN96T21F839N','Antonio','Auriemma',''),('SLVFNC81A41A509P','Silvia','Francescani','');
+INSERT INTO `cliente` VALUES ('CCCGZN93L08F839T','Graziano','Ciccarelli',''),('CRSGPP78I52W687F','Giuseppe','Crisci','azz'),('CRSLGU97P06F924H','Luigi','Crisci',''),('FRNSST80R50C129B','Francesca','Esposito',''),('GVNDRT78S14F839Z','Giovanni','De Martino',''),('LGUCSC97P06F924V','Luigi','Crisci',''),('LRANTR94S69B963J','Laura','Notaro',''),('LRIDDA97E54F839T','Ilaria','Addeo',''),('PLADCN80E11A089R','Paolo','De Canio',''),('RMMNTN96T21F839N','Antonio','Auriemma',''),('SLVFNC81A41A509P','Silvia','Francescani','');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,6 +238,8 @@ CREATE TABLE `occhiale_nuovo` (
   `IDLente` int(15) unsigned NOT NULL,
   `IDFrame` int(15) unsigned NOT NULL,
   `CodiceFiscale` varchar(16) NOT NULL,
+  `DataOrdine` date NOT NULL,
+  `Stato` varchar(45) NOT NULL,
   PRIMARY KEY (`IDOcchiale`),
   UNIQUE KEY `IDLente` (`IDLente`),
   UNIQUE KEY `IDFrame` (`IDFrame`),
@@ -256,7 +256,7 @@ CREATE TABLE `occhiale_nuovo` (
 
 LOCK TABLES `occhiale_nuovo` WRITE;
 /*!40000 ALTER TABLE `occhiale_nuovo` DISABLE KEYS */;
-INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T'),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T'),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T'),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T'),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T'),(6,300,NULL,6,6,'LRIDDA97E54F839T'),(7,400,NULL,7,7,'RMMNTN96T21F839N'),(8,200,NULL,8,8,'RMMNTN96T21F839N'),(9,350,NULL,9,9,'LRANTR94S69B963J'),(10,500,NULL,10,10,'LRANTR94S69B963J'),(11,169,NULL,11,18,'CRSLGU97P06F924H');
+INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T','0000-00-00',''),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T','0000-00-00',''),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T','0000-00-00',''),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T','0000-00-00',''),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T','0000-00-00',''),(6,300,NULL,6,6,'LRIDDA97E54F839T','0000-00-00',''),(7,400,NULL,7,7,'RMMNTN96T21F839N','0000-00-00',''),(8,200,NULL,8,8,'RMMNTN96T21F839N','0000-00-00',''),(9,350,NULL,9,9,'LRANTR94S69B963J','0000-00-00',''),(10,500,NULL,10,10,'LRANTR94S69B963J','0000-00-00',''),(11,169,NULL,11,18,'CRSLGU97P06F924H','0000-00-00','');
 /*!40000 ALTER TABLE `occhiale_nuovo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,4 +299,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-20 11:22:55
+-- Dump completed on 2018-06-23 12:14:28

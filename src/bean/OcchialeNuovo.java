@@ -1,10 +1,12 @@
 package bean;
 
-import java.util.Date;
+import java.sql.Date;
+
+// `IDOcchiale`, `Prezzo`, `DataRitiro`, `IDLente`, `IDFrame`, `CodiceFiscale`, `DataOrdine`, `Stato`
 
 public class OcchialeNuovo {
 	
-	int idOcchiale,prezzo;
+	int idOcchiale,prezzo,idLente,idFrame;
 	String stato,cF;
 	Date dataOrdine,dataRitiro;
 	
@@ -49,6 +51,18 @@ public class OcchialeNuovo {
 	}
 	public void setcF(String cF) {
 		this.cF = cF;
+	}
+	public int getIdLente() {
+		return idLente;
+	}
+	public void setIdLente(int idLente) {
+		this.idLente = idLente;
+	}
+	public int getIdFrame() {
+		return idFrame;
+	}
+	public void setIdFrame(int idFrame) {
+		this.idFrame = idFrame;
 	}
 	
 	

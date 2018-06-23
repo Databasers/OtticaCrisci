@@ -1,16 +1,12 @@
 package bean;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class LavorazioneLaboratorio {
 	
-	int codAddetto,codLavirazione,oR_idOcchiale,oN_idOcchiale;
+	int codAddetto,codLavorazione,oR_idOcchiale,oN_idOcchiale;
 	Date dataInizio,dataFine;
-	enum tipoLavorazione {
-			Montaggio,
-			Riparazione;
-	}
-	tipoLavorazione tipo;
+	String tipo;
 	
 	public int getCodAddetto() {
 		return codAddetto;
@@ -18,11 +14,11 @@ public class LavorazioneLaboratorio {
 	public void setCodAddetto(int codAddetto) {
 		this.codAddetto = codAddetto;
 	}
-	public int getCodLavirazione() {
-		return codLavirazione;
+	public int getCodLavorazione() {
+		return codLavorazione;
 	}
-	public void setCodLavirazione(int codLavirazione) {
-		this.codLavirazione = codLavirazione;
+	public void setCodLavorazione(int codLavorazione) {
+		this.codLavorazione = codLavorazione;
 	}
 	public Date getDataInizio() {
 		return dataInizio;
@@ -37,10 +33,10 @@ public class LavorazioneLaboratorio {
 		this.dataFine = dataFine;
 	}
 	
-	public tipoLavorazione getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
-	public void setTipo(tipoLavorazione tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 	public int getoR_idOcchiale() {
