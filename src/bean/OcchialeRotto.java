@@ -1,10 +1,12 @@
 package bean;
 
-import java.util.Date;
+import java.sql.Date;
+
+// `IDOcchiale`, `Prezzo`, `DataRitiro`, `DataConsegna`, `Entit‡Danno`, `CodiceFiscale`
 
 public class OcchialeRotto {
 
-	int idOcchiale;
+	int idOcchiale,prezzo;
 	Date dataConsegna,dataRitiro;
 	String tipoDanno,cF;
 	
@@ -37,6 +39,12 @@ public class OcchialeRotto {
 	}
 	public void setcF(String cF) {
 		this.cF = cF;
+	}
+	public int getPrezzo() {
+		return prezzo;
+	}
+	public void setPrezzo(int prezzo) {
+		this.prezzo = prezzo;
 	}
 	
 }

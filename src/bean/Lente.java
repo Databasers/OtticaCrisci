@@ -2,8 +2,8 @@ package bean;
 
 public class Lente {
 
-	int id,diottria,peso,prezzo;
-	String materiale,tipo,partitaIva;
+	int id,diottria,peso,prezzo,partitaIva;
+	String materiale,tipo;
 	
 	public int getId() {
 		return id;
@@ -41,10 +41,10 @@ public class Lente {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public String getPartitaIva() {
+	public int getPartitaIva() {
 		return partitaIva;
 	}
-	public void setPartitaIva(String partitaIva) {
+	public void setPartitaIva(int partitaIva) {
 		this.partitaIva = partitaIva;
 	}
 	

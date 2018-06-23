@@ -7,21 +7,23 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import bean.LavorazioneDeposito;
+import bean.OcchialeRotto;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
-public class ManagerDeposito  implements ProductModel<LavorazioneDeposito, Integer> {
 
-	private static final String TableName="LavorazioneDeposito";
+
+public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer> {
+
+	private static final String TableName="OcchialeRotto";
 	
 	@Override
-	public LavorazioneDeposito doRetrieveByKey(Integer code) throws SQLException {
+	public OcchialeRotto doRetrieveByKey(Integer code) throws SQLException {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
-		LavorazioneDeposito temp=new LavorazioneDeposito();
+		OcchialeRotto temp=new OcchialeRotto();
 		
-		String sql="SELECT* FROM "+TableName+" WHERE CodiceLavorazione=?  ";
+		String sql="SELECT* FROM "+TableName+" WHERE IDOcchiale=?  ";
 		
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
@@ -33,17 +35,13 @@ public class ManagerDeposito  implements ProductModel<LavorazioneDeposito, Integ
 			ResultSet rs= preparedStatement.executeQuery();
 			
 			rs.next();
-			temp.setCodAddetto(rs.getInt("CodiceAddetto"));
-			temp.setCodLavorazione(rs.getInt("CodiceLavorazione"));
-			temp.setDataIngresso(rs.getDate("DataIngresso"));
-			temp.setDataUscita(rs.getDate("DataUscita"));
-			temp.setPos(rs.getString("PosizioneOcchiale"));
-			temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovo.IDOcchiale"));
-			temp.setoR_idOcchiale(rs.getInt("Occhiale_rotto.IDOcchiale"));
-			temp.setIdFrame(rs.getInt("IDFrame"));
-			
-			
-			
+			temp.setIdOcchiale(rs.getInt("IDOcchialeRotto"));
+			temp.setPrezzo(rs.getInt("Prezzo"));
+			temp.setDataRitiro(rs.getDate("DataRitiro"));
+			temp.setDataConsegna(rs.getDate("DataConsegna"));
+			temp.setTipoDanno(rs.getString("EntitàDanno"));
+			temp.setcF(rs.getString("CodiceFiscale"));
+						
 		}finally {
 			try {
 			if(preparedStatement!=null)
@@ -57,9 +55,9 @@ public class ManagerDeposito  implements ProductModel<LavorazioneDeposito, Integ
 	}
 
 	@Override
-	public Collection<LavorazioneDeposito> doRetrieveAll(String order) throws SQLException {
+	public Collection<OcchialeRotto> doRetrieveAll(String order) throws SQLException {
 		
-		Collection<LavorazioneDeposito> c= new LinkedList<LavorazioneDeposito>();
+		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
@@ -76,16 +74,14 @@ public class ManagerDeposito  implements ProductModel<LavorazioneDeposito, Integ
 			
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {
-				LavorazioneDeposito temp= new LavorazioneDeposito();
-				temp.setCodAddetto(rs.getInt("CodiceAddetto"));
-				temp.setCodLavorazione(rs.getInt("CodiceLavorazione"));
-				temp.setDataIngresso(rs.getDate("DataIngresso"));
-				temp.setDataUscita(rs.getDate("DataUscita"));
-				temp.setPos(rs.getString("PosizioneOcchiale"));
-				temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovo.IDOcchiale"));
-				temp.setoR_idOcchiale(rs.getInt("Occhiale_rotto.IDOcchiale"));
-				temp.setIdFrame(rs.getInt("IDFrame"));
-
+				OcchialeRotto temp= new OcchialeRotto();
+				
+				temp.setIdOcchiale(rs.getInt("IDOcchialeRotto"));
+				temp.setPrezzo(rs.getInt("Prezzo"));
+				temp.setDataRitiro(rs.getDate("DataRitiro"));
+				temp.setDataConsegna(rs.getDate("DataConsegna"));
+				temp.setTipoDanno(rs.getString("EntitàDanno"));
+				temp.setcF(rs.getString("CodiceFiscale"));
 				c.add(temp);
 			}
 		}finally {
@@ -99,26 +95,26 @@ public class ManagerDeposito  implements ProductModel<LavorazioneDeposito, Integ
 		
 		return c;
 	}
+	
 
 	@Override
-	public void doSave(LavorazioneDeposito product) throws SQLException {
+	public void doSave(OcchialeRotto product) throws SQLException {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?,?,?)";
+		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?)";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
 			
-			preparedStatement.setInt(1, product.getCodLavorazione());
-			preparedStatement.setInt(2, product.getCodAddetto());
-			preparedStatement.setDate(3, product.getDataIngresso());
-			preparedStatement.setDate(4, product.getDataUscita());
-			preparedStatement.setString(5, product.getPos());
-			preparedStatement.setInt(6, product.getoN_idOcchiale());
-			preparedStatement.setInt(7, product.getoR_idOcchiale());
-			preparedStatement.setInt(8, product.getIdFrame());
+			preparedStatement.setInt(1, product.getIdOcchiale());
+			preparedStatement.setInt(2, product.getPrezzo());
+			preparedStatement.setDate(3, product.getDataRitiro());
+			preparedStatement.setDate(4, product.getDataConsegna());
+			preparedStatement.setString(5, product.getTipoDanno());
+			preparedStatement.setString(6, product.getcF());
 			
+
 			System.out.println("doSave: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 
@@ -133,30 +129,29 @@ public class ManagerDeposito  implements ProductModel<LavorazioneDeposito, Integ
 		}
 
 	}
+	
+	//`IDOcchiale`, `Prezzo`, `DataRitiro`, `DataConsegna`, `EntitàDanno`, `CodiceFiscale`
 
 	@Override
-	public void doUpdate(LavorazioneDeposito product) throws SQLException {
+	public void doUpdate(OcchialeRotto product) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "UPDATE " + TableName
-				+ " SET CodiceLavorazione = ?, CodiceAddetto = ?, DataIngresso= ?, DataUscita= ?, "
-				+ " PosizioneOcchiale= ?, Occhiale_nuovo.IDOcchiale= ?, Occhiale_rotto.IDOcchiale=?, "
-				+ " IDFrame= ? "
-				+ " WHERE CodiceLavorazione = ?";
+				+ " SET IDOcchiale = ?, Prezzo = ?, DataRitiro= ?, DataConsegna = ?, EntitàDanno= ?, "
+				+ " CodiceFiscale= ? "
+				+ " WHERE IDOcchiale = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, product.getCodLavorazione());
-			preparedStatement.setInt(2, product.getCodAddetto());
-			preparedStatement.setDate(3, product.getDataIngresso());
-			preparedStatement.setDate(4, product.getDataUscita());
-			preparedStatement.setString(5, product.getPos());
-			preparedStatement.setInt(6, product.getoN_idOcchiale());
-			preparedStatement.setInt(7, product.getoR_idOcchiale());
-			preparedStatement.setInt(8, product.getIdFrame());
-			preparedStatement.setInt(9, product.getCodLavorazione());
+			preparedStatement.setInt(1, product.getIdOcchiale());
+			preparedStatement.setInt(2, product.getPrezzo());
+			preparedStatement.setDate(3, product.getDataRitiro());
+			preparedStatement.setDate(4, product.getDataConsegna());
+			preparedStatement.setString(5, product.getTipoDanno());
+			preparedStatement.setString(6, product.getcF());
+			preparedStatement.setInt(9, product.getIdOcchiale());
 
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
@@ -181,7 +176,7 @@ public class ManagerDeposito  implements ProductModel<LavorazioneDeposito, Integ
 
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + TableName + " WHERE CodiceLavorazione = ?";
+		String deleteSQL = "DELETE FROM " + TableName + " WHERE IDOcchiale = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
