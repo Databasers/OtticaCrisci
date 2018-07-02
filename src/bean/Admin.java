@@ -1,11 +1,11 @@
 package bean;
 
-public class Cliente {
-	
+public class Admin {
+
 	private String nome,cognome,cF,password;
 
 	
-	public Cliente(String cf2, String nome2, String cognome2, String password2) {
+	public Admin(String cf2, String nome2, String cognome2, String password2) {
 		cF=cf2;
 		nome=nome2;
 		cognome=cognome2;
@@ -13,7 +13,7 @@ public class Cliente {
 	}
 
 
-	public Cliente() {
+	public Admin() {
 		
 	}
 
@@ -62,7 +62,7 @@ public class Cliente {
 	 */
 	@Override
 	public String toString() {
-		return "Cliente [nome=" + nome + ", cognome=" + cognome + ", cF=" + cF + ", password=" + password + "]";
+		return "Admin [nome=" + nome + ", cognome=" + cognome + ", cF=" + cF + ", password=" + password + "]";
 	}
 	
 	
