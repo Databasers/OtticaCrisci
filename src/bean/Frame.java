@@ -3,7 +3,7 @@ package bean;
 public class Frame {
 
 	int id,prezzo,peso;
-	String modello,colore,marchio,materiale;
+	String modello,colore,marchio,materiale,urlImmagine;
 	int PartitaIva;
 	
 	public int getId() {
@@ -53,6 +53,12 @@ public class Frame {
 	}
 	public void setMateriale(String materiale) {
 		this.materiale = materiale;
+	}
+	public String getUrlImmagine() {
+		return urlImmagine;
+	}
+	public void setUrlImmagine(String urlImmagine) {
+		this.urlImmagine = urlImmagine;
 	}
 
 	

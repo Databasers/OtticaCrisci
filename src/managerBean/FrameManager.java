@@ -21,7 +21,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 		PreparedStatement preparedStatement=null;
 		Frame temp=new Frame();
 		
-		String sql="SELECT* FROM "+TableName+" WHERE PartitaIva=?  ";
+		String sql="SELECT* FROM "+TableName+" WHERE IDFrame=?  ";
 		
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
@@ -33,7 +33,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 			ResultSet rs= preparedStatement.executeQuery();
 			
 			rs.next();
-			temp.setId(rs.getInt("IDOcchiale"));
+			temp.setId(rs.getInt("IDFrame"));
 			temp.setColore(rs.getString("Colore"));
 			temp.setMarchio(rs.getString("Marchio"));
 			temp.setModello(rs.getString("Modello"));
@@ -41,6 +41,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 			temp.setPrezzo(rs.getInt("Prezzo"));
 			temp.setPartitaIva(rs.getInt("PartitaIva"));
 			temp.setMateriale(rs.getString("Materiale"));
+			temp.setUrlImmagine(rs.getString("UrlImmagine"));
 			
 		}finally {
 			try {
@@ -75,7 +76,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {
 				Frame temp= new Frame();
-				temp.setId(rs.getInt("IDOcchiale"));
+				temp.setId(rs.getInt("IDFrame"));
 				temp.setColore(rs.getString("Colore"));
 				temp.setMarchio(rs.getString("Marchio"));
 				temp.setModello(rs.getString("Modello"));
@@ -83,7 +84,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 				temp.setPrezzo(rs.getInt("Prezzo"));
 				temp.setPartitaIva(rs.getInt("PartitaIva"));
 				temp.setMateriale(rs.getString("Materiale"));
-
+				temp.setUrlImmagine(rs.getString("UrlImmagine"));
 				c.add(temp);
 			}
 		}finally {
@@ -116,7 +117,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 			preparedStatement.setInt(6, product.getPrezzo());
 			preparedStatement.setInt(7, product.getPartitaIva());
 			preparedStatement.setString(8, product.getMarchio());
-
+			preparedStatement.setString(9, product.getUrlImmagine());
 			
 			
 			System.out.println("doSave: "+ preparedStatement.toString());
@@ -141,7 +142,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 
 		String insertSQL = "UPDATE " + TableName
 				+ " SET IDFrame = ?, Modello = ?, Colore= ?, Peso = ?, Materiale= ?, Prezzo= ?, "
-				+ " PartitaIva= ?, Marchio= ? "
+				+ " PartitaIva= ?, Marchio= ?, UrlImmagine= ?"
 				+ " WHERE IDFrame = ?";
 
 		try {
@@ -155,6 +156,8 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 			preparedStatement.setInt(6, product.getPrezzo());
 			preparedStatement.setInt(7, product.getPartitaIva());
 			preparedStatement.setString(8, product.getMarchio());
+			preparedStatement.setString(9, product.getUrlImmagine());
+
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
