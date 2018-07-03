@@ -2,8 +2,25 @@ package bean;
 
 public class Lente {
 
-	int id,diottria,peso,prezzo,partitaIva;
+	Integer id;
+	int diottria,peso,prezzo,partitaIva;
 	String materiale,tipo;
+	
+	//Sorry per i nomi ma mi scocciavo, è tardi
+	public Lente(Integer id2, int gradazione, String string, int i, int j, String modello, int k) {
+		id=id2;
+		diottria=gradazione;
+		materiale=string;
+		peso=i;
+		prezzo=j;
+		tipo=modello;
+		partitaIva=k;
+		
+	}
+	
+	public Lente() {
+		
+	}
 	
 	public int getId() {
 		return id;

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -60,7 +61,7 @@ public class LenteManager implements ProductModel<Lente, Integer> {
 	@Override
 	public Collection<Lente> doRetrieveAll(String order) throws SQLException {
 		
-		Collection<Lente> c= new LinkedList<Lente>();
+		Collection<Lente> c= new ArrayList<Lente>();
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		

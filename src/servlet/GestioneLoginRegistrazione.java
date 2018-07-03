@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Admin;
 import bean.Cliente;
 import bean.SessioneUtente;
-import it.unisa.model.*;
+import it.unisa.model.DriverManagerConnectionPool;
 import managerBean.ClienteManager;
 
 @WebServlet("/GestioneLogin")

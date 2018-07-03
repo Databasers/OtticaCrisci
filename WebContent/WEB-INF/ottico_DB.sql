@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `ottico` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `ottico`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ottico
@@ -108,6 +110,7 @@ CREATE TABLE `frame` (
   `Prezzo` int(15) unsigned NOT NULL,
   `PartitaIVA` int(15) unsigned NOT NULL,
   `Marchio` varchar(45) NOT NULL,
+  `UrlImmagine` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`IDFrame`),
   KEY `PartitaIVA` (`PartitaIVA`),
   CONSTRAINT `frame_ibfk_1` FOREIGN KEY (`PartitaIVA`) REFERENCES `fornitore` (`PartitaIVA`) ON UPDATE CASCADE
@@ -120,7 +123,7 @@ CREATE TABLE `frame` (
 
 LOCK TABLES `frame` WRITE;
 /*!40000 ALTER TABLE `frame` DISABLE KEYS */;
-INSERT INTO `frame` VALUES (1,'tondo','nero',10,'plastica',100,123456,''),(2,'rettangolare','grigio',15,'plastica',75,345678,''),(3,'occhi di gatto','blu scuro',12,'plastica',50,123456,''),(4,'tondo','blu',10,'plastica',100,345678,''),(5,'tondo','nero',8,'metallo',150,123456,''),(6,'tondo piccolo','nero',10,'metallo',150,345678,''),(7,'rettangolare','nero',10,'metallo',125,123456,''),(8,'tondo','nero',10,'metallo',125,345678,''),(9,'rettangolare','nero',8,'metallo',150,123456,''),(10,'tondo','nero',8,'metallo',125,123456,''),(11,'occhi di gatto','blu',15,'acciaio',200,123456,''),(12,'occhi di gatto','grigio',11,'acciaio',100,345678,''),(13,'rettangolare','grigio',15,'acciaio',75,123456,''),(14,'rettangolare','nero',12,'plastica',50,345678,''),(15,'occhi di gatto','blu',10,'plastica',50,123456,''),(16,'tondo piccolo','nero',10,'plastica',50,123456,''),(17,'tondo','blu',8,'plastica',50,123456,''),(18,'NNJK','DSD',1,'NJNKNKJ',30,123456,'');
+INSERT INTO `frame` VALUES (1,'tondo','nero',10,'plastica',100,123456,'',NULL),(2,'rettangolare','grigio',15,'plastica',75,345678,'',NULL),(3,'occhi di gatto','blu scuro',12,'plastica',50,123456,'',NULL),(4,'tondo','blu',10,'plastica',100,345678,'',NULL),(5,'tondo','nero',8,'metallo',150,123456,'',NULL),(6,'tondo piccolo','nero',10,'metallo',150,345678,'',NULL),(7,'rettangolare','nero',10,'metallo',125,123456,'',NULL),(8,'tondo','nero',10,'metallo',125,345678,'',NULL),(9,'rettangolare','nero',8,'metallo',150,123456,'',NULL),(10,'tondo','nero',8,'metallo',125,123456,'',NULL),(11,'occhi di gatto','blu',15,'acciaio',200,123456,'',NULL),(12,'occhi di gatto','grigio',11,'acciaio',100,345678,'',NULL),(13,'rettangolare','grigio',15,'acciaio',75,123456,'',NULL),(14,'rettangolare','nero',12,'plastica',50,345678,'',NULL),(15,'occhi di gatto','blu',10,'plastica',50,123456,'',NULL),(16,'tondo piccolo','nero',10,'plastica',50,123456,'',NULL),(17,'tondo','blu',8,'plastica',50,123456,'',NULL),(18,'NNJK','DSD',1,'NJNKNKJ',30,123456,'',NULL);
 /*!40000 ALTER TABLE `frame` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,4 +302,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-23 12:14:28
+-- Dump completed on 2018-07-03 12:02:53

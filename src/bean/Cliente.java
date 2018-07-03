@@ -3,18 +3,18 @@ package bean;
 public class Cliente {
 	
 	private String nome,cognome,cF,password;
+	private int gradazione;
 
-	
+	public Cliente() {
+		
+	}
+
+
 	public Cliente(String cf2, String nome2, String cognome2, String password2) {
 		cF=cf2;
 		nome=nome2;
 		cognome=cognome2;
 		password=password2;
-	}
-
-
-	public Cliente() {
-		
 	}
 
 
@@ -63,6 +63,16 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente [nome=" + nome + ", cognome=" + cognome + ", cF=" + cF + ", password=" + password + "]";
+	}
+
+
+	public int getGradazione() {
+		return gradazione;
+	}
+
+
+	public void setGradazione(int gradazione) {
+		this.gradazione = gradazione;
 	}
 	
 	

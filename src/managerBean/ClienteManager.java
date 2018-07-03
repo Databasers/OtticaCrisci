@@ -37,7 +37,7 @@ public class ClienteManager implements ProductModel<Cliente,String> {
 			temp.setNome(rs.getString("Nome"));
 			temp.setCognome(rs.getString("Cognome"));
 			temp.setPassword(rs.getString("Password"));
-			
+			temp.setGradazione(rs.getInt("Gradazione"));
 			
 				
 		}finally {
@@ -77,6 +77,7 @@ public class ClienteManager implements ProductModel<Cliente,String> {
 				temp.setNome(rs.getString("Nome"));
 				temp.setCognome(rs.getString("Cognome"));
 				temp.setPassword(rs.getString("Password"));
+				temp.setGradazione(rs.getInt("Gradazione"));
 				c.add(temp);
 			}
 		}finally {
@@ -96,7 +97,7 @@ public class ClienteManager implements ProductModel<Cliente,String> {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?)";
+		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?)";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
@@ -104,8 +105,8 @@ public class ClienteManager implements ProductModel<Cliente,String> {
 			preparedStatement.setString(1, product.getcF());
 			preparedStatement.setString(2, product.getNome());
 			preparedStatement.setString(3, product.getCognome());
-			preparedStatement.setString(3, product.getPassword());
-			
+			preparedStatement.setString(4, product.getPassword());
+			preparedStatement.setInt(5, product.getGradazione());
 			System.out.println("doSave: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 
@@ -127,7 +128,7 @@ public class ClienteManager implements ProductModel<Cliente,String> {
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "UPDATE " + TableName
-				+ " SET CodiceFiscale = ?, Nome = ?, Cognome = ?, Password= ? "
+				+ " SET CodiceFiscale = ?, Nome = ?, Cognome = ?, Password= ?, Gradazione=? "
 				+ " WHERE CodiceFiscale = ?";
 
 		try {
@@ -137,7 +138,8 @@ public class ClienteManager implements ProductModel<Cliente,String> {
 			preparedStatement.setString(2, product.getNome());
 			preparedStatement.setString(3, product.getCognome());
 			preparedStatement.setString(4, product.getCognome());
-			preparedStatement.setString(5, product.getcF());
+			preparedStatement.setInt(5, product.getGradazione());
+			preparedStatement.setString(6, product.getcF());
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
