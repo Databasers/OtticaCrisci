@@ -157,7 +157,7 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 			preparedStatement.setInt(7, product.getPartitaIva());
 			preparedStatement.setString(8, product.getMarchio());
 			preparedStatement.setString(9, product.getUrlImmagine());
-
+			preparedStatement.setInt(10, product.getId());
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
