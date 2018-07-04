@@ -57,11 +57,14 @@ public class GestioneUtente extends HttpServlet {
 	}
 
 	private void doAddCertificato(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {
+		//controllo se esiste già un certificato
+		if(certificatoManager.doRetrieveByKey(cliente.getcF())==null) //Ho bisogno di mandare un messaggio all'utente, dato che nascondo l'accesso al form?
+		{	
 		String saveDir="C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati";
 		for(Part certificato: request.getParts()) //tanto lo fa una sola volta
 		{
 			String filename= certificato.getSubmittedFileName();
-			saveDir+=File.separator+filename;
+			saveDir+=File.separator+cliente.getcF();
 			if(filename!=null && !filename.equals("")) {
 				certificato.write(saveDir); 
 				System.out.println("Directory di salvataggio: " + saveDir);
@@ -70,6 +73,7 @@ public class GestioneUtente extends HttpServlet {
 			}
 			else
 				request.setAttribute("certificatoInserito", true);
+		}
 		}
 		RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
 		x.forward(request, response);
