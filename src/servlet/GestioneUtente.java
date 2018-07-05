@@ -1,26 +1,23 @@
 package servlet;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-
-import org.apache.catalina.connector.Request;
-
 import bean.Certificato;
 import bean.Cliente;
+import bean.OcchialeNuovo;
+import bean.OcchialeRotto;
 import bean.SessioneUtente;
 import managerBean.CertificatoManager;
 import managerBean.ClienteManager;
-/**
- * Servlet implementation class GestioneUtente
- */
+import managerBean.OcchialeNuovoManager;
+import managerBean.OcchialeRottoManager;
+
 @WebServlet("/GestioneUtente")
 @MultipartConfig(fileSizeThreshold= 1024*1024*2, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*50 )
 public class GestioneUtente extends HttpServlet {
@@ -29,11 +26,15 @@ public class GestioneUtente extends HttpServlet {
 	private CertificatoManager certificatoManager;
     private ClienteManager clienteManager;
     private Cliente cliente;
+    private OcchialeNuovoManager occhialeNuovoManager;
+    private OcchialeRottoManager occhialeRottoManager;
     
     public GestioneUtente() {
         super();
         certificatoManager=new CertificatoManager();
         clienteManager= new ClienteManager();
+        occhialeNuovoManager=new OcchialeNuovoManager();
+        occhialeRottoManager= new OcchialeRottoManager();
     }
 
 	
@@ -41,20 +42,41 @@ public class GestioneUtente extends HttpServlet {
 		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("su");
 		try {
 			cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
-		} catch (SQLException e) {
+			String action=(String)request.getParameter("action");
+			if(action.equalsIgnoreCase("modificaPassword"))
+				doModificaPassword(request,response);
+			if(action.equalsIgnoreCase("addCertificato"))
+					doAddCertificato(request,response);
+			if(action.equalsIgnoreCase("retrieveOrdini"))
+					doRetrieveOrdini(request,response);
+			RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
+			x.forward(request, response);
+		}
+		catch (Exception e) {
+			System.out.println("SQLException nella servlet GestioneUtente");
 			e.printStackTrace();
 		}
-		String action=(String)request.getParameter("action");
-		if(action.equalsIgnoreCase("modificaPassword"))
-			doModificaPassword(request,response);
-		if(action.equalsIgnoreCase("addCertificato"))
-			try {
-				doAddCertificato(request,response);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
+		cliente=null;
 	}
+
+	/**
+	 * Invia alla pagina Utente.jsp gli ordini effettuati dal cliente, sia occhiali nuovi che rotti
+	 * Sessione:
+	 * OcchialiNuovi: Collection<OcchialeNuovo>, null se vuoto
+	 * OcchialiRotti: Collection<OcchialeRotto>, null se vuoto
+	 * @param request
+	 * @param response
+	 * @throws SQLException
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void doRetrieveOrdini(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		Collection<OcchialeNuovo> occhialeN=occhialeNuovoManager.doRetrieveByCondition(cliente.getcF());
+		Collection<OcchialeRotto> occhialeR= occhialeRottoManager.doRetrieveByCondition(cliente.getcF());
+		request.getSession().setAttribute("OcchialiNuovi", occhialeN);
+		request.getSession().setAttribute("OcchialiRotti", occhialeR);
+	}
+
 
 	private void doAddCertificato(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {
 		//controllo se esiste già un certificato
@@ -75,21 +97,23 @@ public class GestioneUtente extends HttpServlet {
 				request.setAttribute("certificatoInserito", true);
 		}
 		}
-		RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
-		x.forward(request, response);
+	}
+
+	
+	private void doModificaPassword(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		String password=request.getParameter("passowrdVecchia");
+		if(cliente.getPassword().equals(password)) {
+			cliente.setPassword(request.getParameter("passwordNuova"));
+			clienteManager.doSave(cliente);
+			request.setAttribute("passwordCambiata", true);
+		}
+		else {
+			request.setAttribute("passwordCambiata", false);
+		}
+		
 	}
 
 
-
-	private void doModificaPassword(HttpServletRequest request, HttpServletResponse response) {
-		
-		
-	}
-
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

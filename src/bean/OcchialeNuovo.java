@@ -4,44 +4,26 @@ import java.sql.Date;
 
 // `IDOcchiale`, `Prezzo`, `DataRitiro`, `IDLente`, `IDFrame`, `CodiceFiscale`, `DataOrdine`, `Stato`
 
-public class OcchialeNuovo {
+public class OcchialeNuovo extends Occhiale {
 
-	int idOcchiale, prezzo, idLente, idFrame;
-	String stato, cF;
+	int  idLente, idFrame;
+	String stato;
 	Date dataOrdine, dataRitiro;
 
 	public OcchialeNuovo(Integer idOcchiale2, double d, Date dr, int id, int id2, String getcF, Date data,
 			String string) {
 		
-		idOcchiale=idOcchiale2;
-		prezzo=(int) d;
+		super(idOcchiale2,d,getcF);
 		dataRitiro=dr;
 		idLente=id;
 		idFrame=id2;
-		cF=getcF;
 		dataOrdine=data;
 		stato=string;
 		
 	}
 
 	public OcchialeNuovo() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public int getId() {
-		return idOcchiale;
-	}
-
-	public void setId(int id) {
-		this.idOcchiale = id;
-	}
-
-	public int getPrezzo() {
-		return prezzo;
-	}
-
-	public void setPrezzo(int prezzo) {
-		this.prezzo = prezzo;
+		super();
 	}
 
 	public String getStato() {
@@ -68,21 +50,6 @@ public class OcchialeNuovo {
 		this.dataRitiro = dataRitiro;
 	}
 
-	public int getIdOcchiale() {
-		return idOcchiale;
-	}
-
-	public void setIdOcchiale(int idOcchiale) {
-		this.idOcchiale = idOcchiale;
-	}
-
-	public String getcF() {
-		return cF;
-	}
-
-	public void setcF(String cF) {
-		this.cF = cF;
-	}
 
 	public int getIdLente() {
 		return idLente;

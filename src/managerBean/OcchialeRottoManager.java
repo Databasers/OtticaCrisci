@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import bean.OcchialeNuovo;
 import bean.OcchialeRotto;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
@@ -17,13 +18,52 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 	private static final String TableName="OcchialeRotto";
 	
+	public Collection<OcchialeRotto> doRetrieveByCondition(String codiceFiscale) throws SQLException{
+		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String sql= "SELECT * FROM "+TableName+" WHERE codiceFiscale=?";
+			
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
+			preparedStatement.setString(1, codiceFiscale);
+			ResultSet rs=preparedStatement.executeQuery();
+			if(!rs.next()) //se il resultSet Ë vuoto
+				c=null;
+			 do{
+				OcchialeRotto temp= new OcchialeRotto();
+				temp.setId(rs.getInt("IDOcchiale"));
+				temp.setPrezzo(rs.getInt("Prezzo"));
+				temp.setDataRitiro(rs.getDate("DataRitiro"));
+				temp.setDataConsegna(rs.getDate("DataConsegna"));
+				temp.setTipoDanno(rs.getString("Entit‡Danno"));
+				temp.setcF(rs.getString("CodiceFiscale"));
+				c.add(temp);
+			}while(rs.next());
+		}finally {
+			try {
+				if(preparedStatement!=null)
+					preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return c;
+	}
+	
+	
 	@Override
 	public OcchialeRotto doRetrieveByKey(Integer code) throws SQLException {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		OcchialeRotto temp=new OcchialeRotto();
 		
-		String sql="SELECT* FROM "+TableName+" WHERE IDOcchiale=?  ";
+		String sql="SELECT* FROM "+TableName+" WHERE Id=?  ";
 		
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
@@ -35,7 +75,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			ResultSet rs= preparedStatement.executeQuery();
 			
 			rs.next();
-			temp.setIdOcchiale(rs.getInt("IDOcchialeRotto"));
+			temp.setId(rs.getInt("IDOcchiale"));
 			temp.setPrezzo(rs.getInt("Prezzo"));
 			temp.setDataRitiro(rs.getDate("DataRitiro"));
 			temp.setDataConsegna(rs.getDate("DataConsegna"));
@@ -75,8 +115,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {
 				OcchialeRotto temp= new OcchialeRotto();
-				
-				temp.setIdOcchiale(rs.getInt("IDOcchialeRotto"));
+				temp.setId(rs.getInt("IDOcchiale"));
 				temp.setPrezzo(rs.getInt("Prezzo"));
 				temp.setDataRitiro(rs.getDate("DataRitiro"));
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
@@ -107,7 +146,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
 			
-			preparedStatement.setInt(1, product.getIdOcchiale());
+			preparedStatement.setInt(1, product.getId());
 			preparedStatement.setInt(2, product.getPrezzo());
 			preparedStatement.setDate(3, product.getDataRitiro());
 			preparedStatement.setDate(4, product.getDataConsegna());
@@ -130,7 +169,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 	}
 	
-	//`IDOcchiale`, `Prezzo`, `DataRitiro`, `DataConsegna`, `Entit‡Danno`, `CodiceFiscale`
+	//`Id`, `Prezzo`, `DataRitiro`, `DataConsegna`, `Entit‡Danno`, `CodiceFiscale`
 
 	@Override
 	public void doUpdate(OcchialeRotto product) throws SQLException {
@@ -140,18 +179,18 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		String insertSQL = "UPDATE " + TableName
 				+ " SET IDOcchiale = ?, Prezzo = ?, DataRitiro= ?, DataConsegna = ?, Entit‡Danno= ?, "
 				+ " CodiceFiscale= ? "
-				+ " WHERE IDOcchiale = ?";
+				+ " WHERE Id = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, product.getIdOcchiale());
+			preparedStatement.setInt(1, product.getId());
 			preparedStatement.setInt(2, product.getPrezzo());
 			preparedStatement.setDate(3, product.getDataRitiro());
 			preparedStatement.setDate(4, product.getDataConsegna());
 			preparedStatement.setString(5, product.getTipoDanno());
 			preparedStatement.setString(6, product.getcF());
-			preparedStatement.setInt(9, product.getIdOcchiale());
+			preparedStatement.setInt(9, product.getId());
 
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
@@ -176,7 +215,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + TableName + " WHERE IDOcchiale = ?";
+		String deleteSQL = "DELETE FROM " + TableName + " WHERE Id = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
