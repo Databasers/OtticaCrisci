@@ -37,9 +37,10 @@ public class GestioneUtente extends HttpServlet {
         occhialeRottoManager= new OcchialeRottoManager();
     }
 
-	
+	//Inserire chiamata asincrona per restituzione frame e lente di ordine
+    //Inserire filtro per sessione
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("su");
+		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("utente");
 		try {
 			cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
 			String action=(String)request.getParameter("action");
@@ -49,6 +50,8 @@ public class GestioneUtente extends HttpServlet {
 					doAddCertificato(request,response);
 			if(action.equalsIgnoreCase("retrieveOrdini"))
 					doRetrieveOrdini(request,response);
+			if(action.equalsIgnoreCase("retrieve"))
+				doRetrieve(request,response);
 			RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
 			x.forward(request, response);
 		}
@@ -58,6 +61,27 @@ public class GestioneUtente extends HttpServlet {
 		}
 		cliente=null;
 	}
+
+	
+
+
+	/**
+	 * Da chiamare all'istanziazione
+	 * @param request
+	 * @param response
+	 * @throws SQLException
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void doRetrieve(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		doRetrieveOrdini(request, response);
+		if(certificatoManager.doRetrieveByKey(cliente.getcF())==null)
+			request.setAttribute("certificatoInserito", false);
+		else
+			request.setAttribute("certificatoInserito", true);
+		
+	}
+
 
 	/**
 	 * Invia alla pagina Utente.jsp gli ordini effettuati dal cliente, sia occhiali nuovi che rotti
@@ -71,6 +95,10 @@ public class GestioneUtente extends HttpServlet {
 	 * @throws IOException
 	 */
 	private void doRetrieveOrdini(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		if(request.getSession().getAttribute("OcchialiNuovi")!=null)
+			request.getSession().removeAttribute("OcchialiNuovi");
+		if(request.getSession().getAttribute("OcchialiRotti")!=null)
+			request.getSession().removeAttribute("OcchialiRotti");
 		Collection<OcchialeNuovo> occhialeN=occhialeNuovoManager.doRetrieveByCondition(cliente.getcF());
 		Collection<OcchialeRotto> occhialeR= occhialeRottoManager.doRetrieveByCondition(cliente.getcF());
 		request.getSession().setAttribute("OcchialiNuovi", occhialeN);
@@ -86,6 +114,7 @@ public class GestioneUtente extends HttpServlet {
 		for(Part certificato: request.getParts()) //tanto lo fa una sola volta
 		{
 			String filename= certificato.getSubmittedFileName();
+			//Da aggiugere gestione dell'estensione
 			saveDir+=File.separator+cliente.getcF();
 			if(filename!=null && !filename.equals("")) {
 				certificato.write(saveDir); 
@@ -94,14 +123,20 @@ public class GestioneUtente extends HttpServlet {
 				request.setAttribute("certificatoInserito", true);
 			}
 			else
-				request.setAttribute("certificatoInserito", true);
+				request.setAttribute("certificatoInserito", false);
 		}
 		}
 	}
 
-	
+	/**
+	 * Cambia password
+	 * Richiede attributo "passwordVecchia" e "passowrdNuova"
+	 * @param request
+	 * @param response
+	 * @throws SQLException
+	 */
 	private void doModificaPassword(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		String password=request.getParameter("passowrdVecchia");
+		String password=request.getParameter("passwordVecchia");
 		if(cliente.getPassword().equals(password)) {
 			cliente.setPassword(request.getParameter("passwordNuova"));
 			clienteManager.doSave(cliente);
@@ -115,7 +150,6 @@ public class GestioneUtente extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

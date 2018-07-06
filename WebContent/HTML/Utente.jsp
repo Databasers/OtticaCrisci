@@ -34,7 +34,7 @@
 
 
 	<form id="certificato" action="http://localhost:8080/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
-		<input type="file" accept=".img,.pdf" name="certificato">
+		<input type="file" accept=".jpg,.pdf" name="certificato">
 		<input type="submit">
 	</form>
 
