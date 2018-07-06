@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
+<%@page import="java.util.LinkedList"%>
 <%@page import="bean.Frame, java.util.List, servlet.GestioneCarrello"%>
 <html>
 <style>
@@ -21,7 +23,7 @@
 		<button class="ok">Conferma</button>
 		
 	</aside>
-	<%! List<Frame> lista = new List<>;
+	<%! List<Frame> lista = new LinkedList<Frame>();
 		String select = "tabella";
 		GestioneCarrello gestione = new GestioneCarrello();%>
 	<%
@@ -29,13 +31,13 @@
 	//"pagine" nel negozio che possono essere anche di lunghezza diverse in base a cosa preferisce l'utente. Tutto questo sarebbe fantastico
 	//ma io di certo non tengo sbatta di mettermi a fare una cosa del genere da solo senza chiedere a voi, che poi sbaglio qualcosa e devo
 	//riscrivere tutto, dio che palle la vita.
-		if(select = "colonna"){%>
+		if(select == "colonna"){%>
 			<hr/>
 			<%while (!lista.isEmpty()) {
 				Frame x = lista.remove(0);
 				%>
 				<div id="sinistra" style="float: left">
-				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio() x.getModello() x.getMateriale() x.getColore())%></p>
+				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> x.getModello() x.getMateriale() x.getColore()"%></p>
 				</div>
 				<div id = "destra" style="float: right;">
 				<p><%=x.getPrezzo()%></p>
@@ -44,26 +46,27 @@
 				<hr/>
 <%			} 
 		} 
-		else if(select = "tabella"){%>
-		<table>
+		else if(select == "tabella"){%>
+		<table width = 100%>
 			<tr>
-			<%for(int i = 0; i< lista.size() - i; i++){
+				<td width=50%>
+			<% int h = lista.size()/2;
+			for(int i = 0; i< h; i++){
 				Frame x = lista.remove(i);%>
 				<div id="sinistra" style="float: left">
-				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio() x.getModello() x.getMateriale() x.getColore())%></p>
+				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> <%=x.getModello()%> <%=x.getMateriale()%> <%=x.getColore()%></p>
 				</div>
 				<div id = "destra" style="float: right;">
 				<p><%=x.getPrezzo()%></p>
 				<button type="submit" formaction="/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</button>
 				</div>
-			<%} %>
-			</tr>
-			<tr>
+			<% } %>
+				<td>
 				<%while (!lista.isEmpty()) {
 					Frame x = lista.remove(0);
 					%>
 					<div id="sinistra" style="float: left">
-					<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio() x.getModello() x.getMateriale() x.getColore())%></p>
+					<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> <%=x.getModello()%> <%=x.getMateriale()%> <%=x.getColore()%></p>
 					</div>
 					<div id = "destra" style="float: right;">
 					<p><%=x.getPrezzo()%></p>
