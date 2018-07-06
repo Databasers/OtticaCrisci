@@ -10,11 +10,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import bean.Certificato;
 import bean.Cliente;
+import bean.Frame;
+import bean.Lente;
 import bean.OcchialeNuovo;
 import bean.OcchialeRotto;
 import bean.SessioneUtente;
 import managerBean.CertificatoManager;
 import managerBean.ClienteManager;
+import managerBean.FrameManager;
+import managerBean.LenteManager;
 import managerBean.OcchialeNuovoManager;
 import managerBean.OcchialeRottoManager;
 
@@ -42,19 +46,23 @@ public class GestioneUtente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("utente");
 		try {
-			cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
+			//cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
 			String action=(String)request.getParameter("action");
-			if(action.equalsIgnoreCase("modificaPassword"))
-				doModificaPassword(request,response);
-			if(action.equalsIgnoreCase("addCertificato"))
-					doAddCertificato(request,response);
-			if(action.equalsIgnoreCase("retrieveOrdini"))
-					doRetrieveOrdini(request,response);
-			if(action.equalsIgnoreCase("retrieve"))
-				doRetrieve(request,response);
-			RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
-			x.forward(request, response);
-		}
+			if(action.equalsIgnoreCase("ajax"))
+				doAjax(request,response);
+			else {
+					if(action.equalsIgnoreCase("modificaPassword"))
+						doModificaPassword(request,response);
+					if(action.equalsIgnoreCase("addCertificato"))
+						doAddCertificato(request,response);
+					if(action.equalsIgnoreCase("retrieveOrdini"))
+						doRetrieveOrdini(request,response);
+					if(action.equalsIgnoreCase("retrieve"))
+						doRetrieve(request,response);
+					RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
+					x.forward(request, response);
+				}
+			}
 		catch (Exception e) {
 			System.out.println("SQLException nella servlet GestioneUtente");
 			e.printStackTrace();
@@ -64,6 +72,61 @@ public class GestioneUtente extends HttpServlet {
 
 	
 
+	/**
+	 * Gestione ajax per dettagli su di un ordine
+	 * Necessita un attributo param=IDOcchiale-NomeTabella
+	 * Restituisce un file XML da leggere nell'handler ajax con gli attributi inseriti in tag xml (es. attributo IDFrame in <IDFrame>Valore</IDFrame>
+	 * per occhiali nuovi, gli attributi comuni ad frame e lente hanno una F o una L finale nel nome del tag xml per differenziarli
+	 * @param request
+	 * @param response
+	 * @throws SQLException
+	 * @throws IOException 
+	 */
+	private void doAjax(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		response.setContentType("text/xml");
+		StringBuffer risposta= new StringBuffer();
+		
+		risposta.append("<info>");
+		String param= (String)request.getParameter("param");
+		System.out.println("param=" + param);
+		System.out.println("IndexOf stampa: " + param.trim().indexOf('-') );
+		int idOcchiale=Integer.parseInt(param.trim().substring(0, param.trim().indexOf('-'))); //recupera l'id tra la pos. 0 e il carattere "-"
+		String table=param.trim().substring(param.trim().indexOf("-")+1);
+		System.out.println("IdOcchiale=" + idOcchiale + "\nTable name= " + table);
+		if(table.equalsIgnoreCase("occhialeNuovo")) {
+			OcchialeNuovo occhiale=occhialeNuovoManager.doRetrieveByKey(idOcchiale);
+			int idFrame=occhiale.getIdFrame();
+			int idLente=occhiale.getIdLente();
+			FrameManager frameM= new FrameManager();
+			LenteManager lenteM= new LenteManager();
+			Frame frame=frameM.doRetrieveByKey(idFrame);
+			Lente lente=lenteM.doRetrieveByKey(idLente);
+			//`IDFrame`, `Modello`, `Colore`, `Peso`, `Materiale`, `Prezzo`, `Marchio`, `UrlImmagine`
+			risposta.append("<IDFrame>"+frame.getId()+"</IDFrame>");
+			risposta.append("<PrezzoF>"+frame.getPrezzo()+"</PrezzoF>");
+			risposta.append("<Modello>"+frame.getModello()+"</Modello>");
+			risposta.append("<Colore>"+frame.getColore()+"</Colore>");
+			risposta.append("<PesoF>"+frame.getPeso()+"</PesoF>");
+			risposta.append("<MaterialeF>"+frame.getMateriale()+"</MaterialeF>");
+			risposta.append("<Marchio>"+frame.getMarchio()+"</Marchio>");
+			risposta.append("<URLImmagine>"+frame.getUrlImmagine()+"</URLImmagine>");
+			//`IDLente`, `Diottria`, `Materiale`, `Peso`, `Prezzo`, `TipoLente`
+			risposta.append("<PesoL>"+lente.getPeso()+"</PesoL>");
+			risposta.append("<IDLente>"+lente.getId()+"</IDLente>");
+			risposta.append("<Diottria>"+lente.getDiottria()+"</Diottria>");
+			risposta.append("<MaterialeL>"+lente.getMateriale()+"</Materiale>");
+			risposta.append("<PrezzoL>"+lente.getPrezzo()+"</Prezzo>");
+			risposta.append("<TipoLente>"+lente.getTipo()+"</TipoLente>");
+		}
+		else {
+			OcchialeRotto occhiale=occhialeRottoManager.doRetrieveByKey(idOcchiale);
+			// `IDOcchiale`, `Prezzo`, `DataRitiro`, `DataConsegna`, `Entit‡Danno`, `CodiceFiscale`
+			//Non so cosa restituire
+		}
+		risposta.append("</info>");
+		response.getWriter().write(risposta.toString());
+		System.out.println("Ajax server completato");
+	}
 
 	/**
 	 * Da chiamare all'istanziazione

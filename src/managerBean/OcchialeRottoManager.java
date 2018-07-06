@@ -16,7 +16,7 @@ import it.unisa.model.ProductModel;
 
 public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer> {
 
-	private static final String TableName="OcchialeRotto";
+	private static final String TableName="Occhiale_rotto";
 	
 	public Collection<OcchialeRotto> doRetrieveByCondition(String codiceFiscale) throws SQLException{
 		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
