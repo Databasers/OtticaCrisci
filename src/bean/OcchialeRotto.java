@@ -4,18 +4,12 @@ import java.sql.Date;
 
 // `IDOcchiale`, `Prezzo`, `DataRitiro`, `DataConsegna`, `Entit‡Danno`, `CodiceFiscale`
 
-public class OcchialeRotto {
+public class OcchialeRotto extends Occhiale{
 
-	int idOcchiale,prezzo;
 	Date dataConsegna,dataRitiro;
-	String tipoDanno,cF;
+	String tipoDanno;
 	
-	public int getIdOcchiale() {
-		return idOcchiale;
-	}
-	public void setIdOcchiale(int idOcchiale) {
-		this.idOcchiale = idOcchiale;
-	}
+
 	public Date getDataConsegna() {
 		return dataConsegna;
 	}
@@ -34,17 +28,6 @@ public class OcchialeRotto {
 	public void setTipoDanno(String tipoDanno) {
 		this.tipoDanno = tipoDanno;
 	}
-	public String getcF() {
-		return cF;
-	}
-	public void setcF(String cF) {
-		this.cF = cF;
-	}
-	public int getPrezzo() {
-		return prezzo;
-	}
-	public void setPrezzo(int prezzo) {
-		this.prezzo = prezzo;
-	}
+
 	
 }
