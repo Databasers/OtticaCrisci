@@ -18,6 +18,43 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 	private static final String TableName="Occhiale_rotto";
 	
+	public Collection<OcchialeRotto> doRetrieveIfNotCompleted(String order) throws SQLException{
+		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String sql= "SELECT * FROM "+TableName+" WHERE DataRitiro IS NULL";
+			
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
+			ResultSet rs=preparedStatement.executeQuery();
+			if(!rs.next()) //se il resultSet Ë vuoto
+				c=null;
+			 do{
+				OcchialeRotto temp= new OcchialeRotto();
+				temp.setId(rs.getInt("IDOcchiale"));
+				temp.setPrezzo(rs.getInt("Prezzo"));
+				temp.setDataRitiro(rs.getDate("DataRitiro"));
+				temp.setDataConsegna(rs.getDate("DataConsegna"));
+				temp.setTipoDanno(rs.getString("Entit‡Danno"));
+				temp.setcF(rs.getString("CodiceFiscale"));
+				c.add(temp);
+			}while(rs.next());
+		}finally {
+			try {
+				if(preparedStatement!=null)
+					preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return c;
+	}
+	
 	public Collection<OcchialeRotto> doRetrieveByCondition(String codiceFiscale) throws SQLException{
 		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
 		Connection connection=null;

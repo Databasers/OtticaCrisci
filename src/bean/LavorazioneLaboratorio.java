@@ -8,6 +8,19 @@ public class LavorazioneLaboratorio {
 	Date dataInizio,dataFine;
 	String tipo;
 	
+	public LavorazioneLaboratorio() { }
+	
+	public LavorazioneLaboratorio(Integer codLavorazione, int nextInt, String tipo, Date data, Date object2, Integer id,
+			Integer object3) {
+		this.codLavorazione=codLavorazione;
+		codAddetto=nextInt;
+		this.tipo=tipo;
+		dataInizio=data;
+		dataFine=object2;
+		oN_idOcchiale=id;
+		oR_idOcchiale=object3;
+		
+	}
 	public int getCodAddetto() {
 		return codAddetto;
 	}

@@ -14,7 +14,16 @@
 <body>
 	<%!SessioneUtente su = null;%>
 	
-	<% su =(SessioneUtente) session.getAttribute("utente");%>
+	
+
+	
+	<% 
+	su =(SessioneUtente) session.getAttribute("Utente");
+		if(su==null)
+		{
+			response.sendRedirect("Login.jsp");
+		}
+	%>
 	
 	
 	

@@ -1,4 +1,5 @@
 package managerBean;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,18 +7,19 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import bean.Certificato;
-import it.unisa.model.*;
+import bean.Admin;
+import it.unisa.model.DriverManagerConnectionPool;
+import it.unisa.model.ProductModel;
 
-public class CertificatoManager implements ProductModel<Certificato,String> {
+public class AdminManager implements ProductModel<Admin,String> {
 
-	private static final String TableName="certificato";
+	private static final String TableName="Admin";
 	
 	@Override
-	public Certificato doRetrieveByKey(String code) throws SQLException {
+	public Admin doRetrieveByKey(String code) throws SQLException {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
-		Certificato temp=new Certificato();
+		Admin temp=new Admin();
 		
 		String sql="SELECT* FROM "+TableName+" WHERE CodiceFiscale=?  ";
 		
@@ -32,15 +34,15 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 			
 			rs.next();
 			temp.setcF(rs.getString("CodiceFiscale"));
-			temp.setUrl(rs.getString("Url"));
-			temp.setValido(rs.getBoolean("Valido"));
-			temp.setValidato(rs.getBoolean("Validato"));
+			temp.setNome(rs.getString("Nome"));
+			temp.setCognome(rs.getString("Cognome"));
+			temp.setPassword(rs.getString("Password"));
+			temp.setDataAssunzione(rs.getDate("DataAssunzione"));
+			temp.setDataNascita(rs.getDate("DataNascita"));
+			temp.setTelefono(rs.getInt("Telefono"));
 			
 				
-		}catch (SQLException e) {
-			temp=null;
-		}
-		finally {
+		}finally {
 			try {
 			if(preparedStatement!=null)
 				preparedStatement.close();
@@ -53,9 +55,9 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 	}
 
 	@Override
-	public Collection<Certificato> doRetrieveAll(String order) throws SQLException {
+	public Collection<Admin> doRetrieveAll(String order) throws SQLException {
 		
-		Collection<Certificato> c= new LinkedList<Certificato>();
+		Collection<Admin> c= new LinkedList<Admin>();
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
@@ -72,48 +74,15 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 			
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {
-				Certificato temp= new Certificato();
+				Admin temp= new Admin();
 				temp.setcF(rs.getString("CodiceFiscale"));
-				temp.setUrl(rs.getString("Url"));
-				temp.setValido(rs.getBoolean("Valido"));
-				temp.setValidato(rs.getBoolean("Validato"));
-				c.add(temp);
-			}
-		}finally {
-			try {
-				if(preparedStatement!=null)
-					preparedStatement.close();
-			}finally {
-				DriverManagerConnectionPool.releaseConnection(connection);
-			}
-		}
-		
-		return c;
-	}
-	
-	public Collection<Certificato> doRetrieveIfNotValidated(String order) throws SQLException{
-		Collection<Certificato> c= new LinkedList<Certificato>();
-		Connection connection=null;
-		PreparedStatement preparedStatement=null;
-		
-		String sql= "SELECT * FROM "+TableName+" WHERE Valido=false AND Validato=false ";
-		if(order != null && !order.equals("")) {
-			sql += " ORDER BY " + order;
-		}
-			
-		try {
-			connection=DriverManagerConnectionPool.getConnection();
-			preparedStatement= connection.prepareStatement(sql);
-			
-			System.out.println("doRetrieveAll: "+ preparedStatement.toString());
-			
-			ResultSet rs=preparedStatement.executeQuery();
-			while(rs.next()) {
-				Certificato temp= new Certificato();
-				temp.setcF(rs.getString("CodiceFiscale"));
-				temp.setUrl(rs.getString("Url"));
-				temp.setValido(rs.getBoolean("Valido"));
-				temp.setValidato(rs.getBoolean("Validato"));
+				temp.setNome(rs.getString("Nome"));
+				temp.setCognome(rs.getString("Cognome"));
+				temp.setPassword(rs.getString("Password"));
+				temp.setDataAssunzione(rs.getDate("DataAssunzione"));
+				temp.setDataNascita(rs.getDate("DataNascita"));
+				temp.setTelefono(rs.getInt("Telefono"));
+				
 				c.add(temp);
 			}
 		}finally {
@@ -129,19 +98,22 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 	}
 
 	@Override
-	public void doSave(Certificato product) throws SQLException {
+	public void doSave(Admin product) throws SQLException {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String sql="INSERT INTO "+TableName+" VALUES(?,?,?)";
+		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?)";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
 			
 			preparedStatement.setString(1, product.getcF());
-			preparedStatement.setString(2, product.getUrl());
-			preparedStatement.setBoolean(3, product.isValido());
-			
+			preparedStatement.setString(2, product.getNome());
+			preparedStatement.setString(3, product.getCognome());
+			preparedStatement.setString(4, product.getPassword());
+			preparedStatement.setDate(5,product.getDataAssunzione());
+			preparedStatement.setDate(6, product.getDataNascita());
+			preparedStatement.setInt(7, product.getTelefono());
 			System.out.println("doSave: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 
@@ -158,22 +130,25 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 	}
 
 	@Override
-	public void doUpdate(Certificato product) throws SQLException {
+	public void doUpdate(Admin product) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "UPDATE " + TableName
-				+ " SET CodiceFiscale = ?, Url = ?, Valido = ?, validato=? "
+				+ " SET CodiceFiscale = ?, Nome = ?, Cognome = ?, Password= ?, DataAssunzione= ?, DataNascita= ?, Telefono= ? "
 				+ " WHERE CodiceFiscale = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
 			preparedStatement.setString(1, product.getcF());
-			preparedStatement.setString(2, product.getUrl());
-			preparedStatement.setBoolean(3, product.isValido());
-			preparedStatement.setBoolean(4, product.isValidato());
-			preparedStatement.setString(5, product.getcF());
+			preparedStatement.setString(2, product.getNome());
+			preparedStatement.setString(3, product.getCognome());
+			preparedStatement.setString(4, product.getCognome());
+			preparedStatement.setDate(5,product.getDataAssunzione());
+			preparedStatement.setDate(6, product.getDataNascita());
+			preparedStatement.setInt(7, product.getTelefono());
+			preparedStatement.setString(8, product.getcF());
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
@@ -206,7 +181,7 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 
 			System.out.println("doDelete: "+ preparedStatement.toString());
 			result = preparedStatement.executeUpdate();
-
+			
 			connection.commit();
 		} finally {
 			try {

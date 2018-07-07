@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,9 +24,11 @@ import it.unisa.model.*;
 import managerBean.CertificatoManager;
 import managerBean.ClienteManager;
 import managerBean.FrameManager;
+import managerBean.LaboratorioManager;
 import managerBean.LenteManager;
 import managerBean.OcchialeNuovoManager;
 import bean.Frame;
+import bean.LavorazioneLaboratorio;
 import bean.Lente;
 import bean.OcchialeNuovo;
 import bean.SessioneUtente;
@@ -39,6 +42,7 @@ public class GestioneCarrello extends HttpServlet {
 	LenteManager lente= new LenteManager();
 	FrameManager model= new FrameManager();
 	OcchialeNuovoManager occhialeNuovo= new OcchialeNuovoManager();
+	LaboratorioManager lavorazioneManager= new LaboratorioManager();
 	Carrello<Frame> carrello;
 	
     public GestioneCarrello() {
@@ -104,13 +108,14 @@ public class GestioneCarrello extends HttpServlet {
 			for(Frame f: lista) {
 				int gradazione=cliente.doRetrieveByKey(su.getcF()).getGradazione();
 				//creo la lente
-				//`IDLente`, `Diottria`, `Materiale`, `Peso`, `Prezzo`, `TipoLente`, `PartitaIva`
 				Lente l=createAndRetrieveLente(f,gradazione);
 				//Creo l'occhiale
-				// `IDOcchiale`, `Prezzo`, `DataRitiro`, `IDLente`, `IDFrame`, `CodiceFiscale`, `DataOrdine`, `Stato`
 				@SuppressWarnings("deprecation")
 				Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
-				occhialeNuovo.doSave(new OcchialeNuovo(null,(f.getPrezzo()+l.getPrezzo())*1.5,null,l.getId(),f.getId(),su.getcF(),data,"In Lavorazione"));
+				OcchialeNuovo occhiale=createAndRetrieveOcchiale(l,f,su,data);
+				//creo la lavorazione in laboratorio
+				LavorazioneLaboratorio tmp= new LavorazioneLaboratorio(null,(new Random()).nextInt(50),"montaggio",data,null,occhiale.getId(),null);
+				lavorazioneManager.doSave(tmp);
 			}
 		}
 		else {
@@ -124,6 +129,24 @@ public class GestioneCarrello extends HttpServlet {
 		
 		}
 		
+	/**
+	 * Crea un nuovo occhiale nuovo,la salva e la recupera dal db
+	 * Necessaria in quanto la chiave di Lente è auto-increment, pertanto alla definizione è semplicemente null
+	 * @param f
+	 * @param gradazione
+	 * @return
+	 * @throws SQLException
+	 */
+	private synchronized OcchialeNuovo createAndRetrieveOcchiale(Lente l, Frame f,SessioneUtente su, Date data) throws SQLException {
+		
+		OcchialeNuovo occhiale=new OcchialeNuovo(null,(f.getPrezzo()+l.getPrezzo())*1.5,null,l.getId(),f.getId(),su.getcF(),data,"In Lavorazione");
+		occhialeNuovo.doSave(occhiale);
+		ArrayList<OcchialeNuovo> elenco=(ArrayList<OcchialeNuovo>) occhialeNuovo.doRetrieveAll("IDOcchiale");
+		occhiale=elenco.get(elenco.size()-1);
+		return occhiale;
+	}
+
+
 	/**
 	 * Crea una nuova lente,la salva e la recupera dal db
 	 * Necessaria in quanto la chiave di Lente è auto-increment, pertanto alla definizione è semplicemente null

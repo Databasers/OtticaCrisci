@@ -56,7 +56,7 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		
 }
 	/**
-	 * Elimina la sessioneUtente dalla sessione, controllando preventivamente se esiste un utente loggato
+	 * Elimina la sessioneUtente dalla sessione, controllando preventivamente se esiste un Utente loggato
 	 * @param request
 	 * @param response
 	 * @throws ServletException
@@ -131,7 +131,7 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		cognome=request.getParameter("cognome");
 		nome=request.getParameter("nome");
 		
-		//controllo se esiste un utente con lo stesso codice fiscale
+		//controllo se esiste un Utente con lo stesso codice fiscale
 		String sql="Select codicefiscale from cliente where codicefiscale=?";
 		Connection connessione;
 		try {
@@ -141,12 +141,12 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 			statement.setString(1, cf);
 			ResultSet rs=statement.executeQuery();
 			if(!rs.next()) { //se non esistono altri utenti con lo stesso codice
-				System.out.println("Registrazione utente");
+				System.out.println("Registrazione Utente");
 				Cliente c=new Cliente(cf,nome,cognome,password);
 				cManager.doSave(c);
 				SessioneUtente su= new SessioneUtente(c, "Utente");
-				request.getSession().setAttribute("utente",su);
-				response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.html"); 
+				request.getSession().setAttribute("Utente",su);
+				response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
 			}
 			else
 			{
