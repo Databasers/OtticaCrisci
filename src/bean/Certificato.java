@@ -2,7 +2,7 @@ package bean;
 
 public class Certificato {
 	
-	boolean valido;
+	boolean valido,validato;
 	String url,cF;
 	
 	public Certificato(String getcF, String saveDir, boolean b) {
@@ -31,6 +31,12 @@ public class Certificato {
 	}
 	public void setcF(String cF) {
 		this.cF = cF;
+	}
+	public boolean isValidato() {
+		return validato;
+	}
+	public void setValidato(boolean validato) {
+		this.validato = validato;
 	}
 	
 

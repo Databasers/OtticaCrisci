@@ -37,12 +37,12 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		}
 		else{
 			//controllo se c'è già loggato
-			if(request.getSession().getAttribute("su")!=null) {
-				request.setAttribute("alreadyLogged", "true"); //Da gestire nella pagina Utente
-				RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.html");
+			if(request.getSession().getAttribute("Utente")!=null) {
+				request.setAttribute("alreadyLogged", true); //Da gestire nella pagina Utente
+				RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
 				x.forward(request, response); 	
 			}
-			request.getSession().removeAttribute("su");
+			request.getSession().removeAttribute("Utente");
 			if(((String)request.getParameter("action")).equals("login")) {
 				doLogin(request, response);
 			}
@@ -64,16 +64,17 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 	 */
 	private void doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//controllo se non è loggato
-		if(request.getSession().getAttribute("su")==null) {
+		if(request.getSession().getAttribute("Utente")==null) {
 			RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Login.jsp"); //lo manda a loggarsi
 			x.forward(request, response); 	
 		}
-		request.removeAttribute("su"); 
+		request.getSession().removeAttribute("Utente");
+		request.getSession().invalidate();
 		RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Homepage.html");
 		x.forward(request, response); 
 	}
 
-
+	//Bisogna eliminare gli accessi al db
 	private void doLoginAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username, password;
 		username=request.getParameter("username");
@@ -110,8 +111,9 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		try {
 			Cliente c=checkLogin(username,password); //controllo se i dati sono corretti
 			SessioneUtente su= new SessioneUtente(c, "Utente"); //creo l'oggetto sessione
-			request.getSession().setAttribute("utente", su);
-			response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.html"); 	
+			request.getSession().setAttribute("Utente", su);
+			System.out.println("Login effettuato!");
+			response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 	
 		} catch (Exception e) {
 			System.out.println("Query errata");
 			request.setAttribute("Done", "falso");

@@ -49,6 +49,12 @@
 	</div>
 
   
+  
+  
+  
+  
+  
+  
   <!-- Qui inizia la pagina di Servlet, dentro c'è un esempio di chiamata ajax -->
   
   <script type="text/javascript">
@@ -66,7 +72,7 @@ function displayResults(listXML, id) {
 	try { 
 		var obj = document.getElementById(id);		
 		if(obj != null) {
-			var rdfs = listXML.getElementsByTagName("IDOcchiale")[0].firstChild.nodeValue; 
+			var rdfs = listXML.getElementsByTagName("IDLente")[0].firstChild.nodeValue; 
 			obj.innerHTML =rdfs;
 			console.log("Handle results");
 		}
@@ -75,7 +81,7 @@ function displayResults(listXML, id) {
 	 
 }
 </script>
-<script type="text/javascript" src="ajax.js"></script>
+<script type="text/javascript" src="../JS/ajax.js"></script>
 
 
 </head>
@@ -107,7 +113,7 @@ function displayResults(listXML, id) {
 
 	<br><br>
 	<p id="modAjax"> </p>
-	<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '1-occhialeNuovo');">
+	<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '3-occhialeNuovo');">
 
 </body>
 </html>

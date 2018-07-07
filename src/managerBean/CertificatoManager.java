@@ -34,7 +34,7 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 			temp.setcF(rs.getString("CodiceFiscale"));
 			temp.setUrl(rs.getString("Url"));
 			temp.setValido(rs.getBoolean("Valido"));
-			
+			temp.setValidato(rs.getBoolean("Validato"));
 			
 				
 		}catch (SQLException e) {
@@ -76,6 +76,7 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 				temp.setcF(rs.getString("CodiceFiscale"));
 				temp.setUrl(rs.getString("Url"));
 				temp.setValido(rs.getBoolean("Valido"));
+				temp.setValidato(rs.getBoolean("Validato"));
 				c.add(temp);
 			}
 		}finally {
@@ -125,7 +126,7 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "UPDATE " + TableName
-				+ " SET CodiceFiscale = ?, Url = ?, Valido = ? "
+				+ " SET CodiceFiscale = ?, Url = ?, Valido = ?, validato=? "
 				+ " WHERE CodiceFiscale = ?";
 
 		try {
@@ -134,7 +135,8 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 			preparedStatement.setString(1, product.getcF());
 			preparedStatement.setString(2, product.getUrl());
 			preparedStatement.setBoolean(3, product.isValido());
-			preparedStatement.setString(4, product.getcF());
+			preparedStatement.setBoolean(4, product.isValidato());
+			preparedStatement.setString(5, product.getcF());
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();

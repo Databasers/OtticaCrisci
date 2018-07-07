@@ -116,7 +116,7 @@ public class GestioneCarrello extends HttpServlet {
 		else {
 			//Da inserire nella JSP della pagina Cliente
 			request.removeAttribute("DaValidare");
-			request.setAttribute("DaValidare", "true");
+			request.setAttribute("DaValidare", true);
 		}
 		}
 		RequestDispatcher x=getServletContext().getRequestDispatcher(dispatcher);

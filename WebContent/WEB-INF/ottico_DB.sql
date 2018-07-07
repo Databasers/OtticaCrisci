@@ -28,6 +28,7 @@ CREATE TABLE `certificato` (
   `CodiceFiscale` varchar(16) NOT NULL,
   `Url` varchar(100) DEFAULT NULL,
   `Valido` tinyint(1) NOT NULL,
+  `Validato` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`CodiceFiscale`),
   UNIQUE KEY `Url_UNIQUE` (`Url`),
   CONSTRAINT `CodiceFiscale` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`CodiceFiscale`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -40,7 +41,7 @@ CREATE TABLE `certificato` (
 
 LOCK TABLES `certificato` WRITE;
 /*!40000 ALTER TABLE `certificato` DISABLE KEYS */;
-INSERT INTO `certificato` VALUES ('CRSGPP78I52W687F','www.yahoo.it',1);
+INSERT INTO `certificato` VALUES ('CRSGPP78I52W687F','www.yahoo.it',1,NULL);
 /*!40000 ALTER TABLE `certificato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,6 +57,8 @@ CREATE TABLE `cliente` (
   `Nome` varchar(20) NOT NULL,
   `Cognome` varchar(20) NOT NULL,
   `Password` varchar(45) NOT NULL,
+  `Gradazione` int(10) unsigned DEFAULT NULL,
+  `test` binary(160) DEFAULT NULL,
   PRIMARY KEY (`CodiceFiscale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -66,7 +69,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('CCCGZN93L08F839T','Graziano','Ciccarelli',''),('CRSGPP78I52W687F','Giuseppe','Crisci','azz'),('CRSLGU97P06F924H','Luigi','Crisci',''),('FRNSST80R50C129B','Francesca','Esposito',''),('GVNDRT78S14F839Z','Giovanni','De Martino',''),('LGUCSC97P06F924V','Luigi','Crisci',''),('LRANTR94S69B963J','Laura','Notaro',''),('LRIDDA97E54F839T','Ilaria','Addeo',''),('PLADCN80E11A089R','Paolo','De Canio',''),('RMMNTN96T21F839N','Antonio','Auriemma',''),('SLVFNC81A41A509P','Silvia','Francescani','');
+INSERT INTO `cliente` VALUES ('aaaa','luigi','ferri','iiiii',15,'005defb57c2884322d1a684d04ec526b2ee76706\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0'),('BBBBB','luigi','ferri','iiiii',15,'005defb57c2884322d1a684d04ec526b2ee76706\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0'),('CCCGZN93L08F839T','Graziano','Ciccarelli','',NULL,NULL),('CRSGPP78I52W687F','Giuseppe','Crisci','azz',NULL,NULL),('CRSLGU97P06F924H','Luigi','Crisci','prova',NULL,NULL),('FRNSST80R50C129B','Francesca','Esposito','',NULL,NULL),('GVNDRT78S14F839Z','Giovanni','De Martino','',NULL,NULL),('LGUCSC97P06F924V','Luigi','Crisci','',NULL,NULL),('LRANTR94S69B963J','Laura','Notaro','',NULL,NULL),('LRIDDA97E54F839T','Ilaria','Addeo','',NULL,NULL),('PLADCN80E11A089R','Paolo','De Canio','',NULL,NULL),('RMMNTN96T21F839N','Antonio','Auriemma','',NULL,NULL),('SLVFNC81A41A509P','Silvia','Francescani','',NULL,NULL);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,4 +305,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-03 12:02:53
+-- Dump completed on 2018-07-07 12:55:17
