@@ -37,7 +37,10 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 			
 			
 				
-		}finally {
+		}catch (SQLException e) {
+			temp=null;
+		}
+		finally {
 			try {
 			if(preparedStatement!=null)
 				preparedStatement.close();

@@ -5,6 +5,15 @@ public class Certificato {
 	boolean valido;
 	String url,cF;
 	
+	public Certificato(String getcF, String saveDir, boolean b) {
+		cF=getcF;
+		url=saveDir;
+		valido=b;
+	}
+	public Certificato () {
+		
+	}
+	
 	public boolean isValido() {
 		return valido;
 	}
