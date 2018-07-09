@@ -105,7 +105,7 @@ public class CertificatoManager implements ProductModel<Certificato,String> {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
 			
-			System.out.println("doRetrieveAll: "+ preparedStatement.toString());
+			System.out.println("doRetrieveIfNotValidated: "+ preparedStatement.toString());
 			
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {

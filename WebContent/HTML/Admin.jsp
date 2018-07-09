@@ -1,3 +1,4 @@
+<%@ page import="bean.*,managerBean.*,java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,11 +7,22 @@
 </head>
 <body>
 
-	<!-- 
-		Ma non ne ho proprio idea, qua non abbiamo visto nulla
-		Anyway, Deve poter inserire nuovi frame, gestire gli ordini e le operazioni di lav.Laboratorio e lav. Deposito
-		Deve poter verificare i certificati e bannare gli utenti come solo un vero amministratore sa fare 
-	 -->
-
-</body>
-</html>
+	<%	String label=(String)request.getAttribute("label");
+	if(label==null){
+		%> <%@ include file="AdminCertificato.jsp" %>
+	<% } 
+	else{
+		%><p><%=label %></p> <% 
+		if(label.equalsIgnoreCase("certificato")){
+		%>
+			<%@ include file="AdminCertificato.jsp" %>
+	
+	<%	}
+		} %> 
+	
+	
+	
+	
+	
+	
+	

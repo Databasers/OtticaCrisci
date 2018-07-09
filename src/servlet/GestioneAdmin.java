@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,16 +30,21 @@ public class GestioneAdmin extends HttpServlet {
        
     String label;
     SessioneUtente su;
+    OcchialeNuovoManager occhialeNuovo;
+	OcchialeRottoManager occhialeRotto;
+	CertificatoManager certificato;
+	
     public GestioneAdmin() {
         super();
-        // TODO Auto-generated constructor stub
-    }
+        occhialeNuovo= new OcchialeNuovoManager(); 
+        occhialeRotto= new OcchialeRottoManager();
+        certificato= new CertificatoManager();
+        }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action=(String)request.getParameter("action");
 		su=(SessioneUtente)request.getSession().getAttribute("Utente");
 		try {
@@ -48,26 +54,54 @@ public class GestioneAdmin extends HttpServlet {
 			doRetrieveOcchiali(request,response);
 		if(action.equalsIgnoreCase("dati"))
 			doRetrieveDati(request,response);
-		//Qui aggiungiamo i 3 handler per le modifiche
+		if(action.equalsIgnoreCase("modCertificato"))
+			doModificaCertificato(request,response);
+		if(action.equalsIgnoreCase("cliente"))
+			doRetrieveCliente(request,response);
+		
+		RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Admin.jsp");
+		x.forward(request, response);
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
+	
+	private void doRetrieveCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		String cf=request.getParameter("cf");
+		Certificato c=certificato.doRetrieveByKey(cf);
+		if(c==null)
+			request.setAttribute("trovato","false");
+		else {
+		request.setAttribute("trovato","true");
+		request.setAttribute("certificatoCliente",c);
+		modifyLabel("Certificato", request, response);
+		}
+	}
+
+	private void doModificaCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		String v=request.getParameter("valido");
+		Boolean valido=Boolean.parseBoolean(v);
+		String code=request.getParameter("code");
+		Certificato c=certificato.doRetrieveByKey(code);
+		c.setValidato(true);
+		c.setValido(valido);
+		certificato.doUpdate(c);
+		modifyLabel("Certificato", request, response);
+		if(request.getAttribute("certificati")!=null)
+			request.removeAttribute("certificati");
+	}
+
 	private void doRetrieveDati(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		AdminManager adminManager= new AdminManager();
 		Admin admin=adminManager.doRetrieveByKey(su.getcF());
-		label="dati";
-		if(request.getAttribute("label")!=null)
-			request.removeAttribute("label");
-		request.setAttribute("label", label);
+		modifyLabel("Dati", request, response);
 		if(request.getAttribute("datiAdmin")!=null)
 			request.removeAttribute("datiAdmin");
 		request.setAttribute("datiAdmin", admin);
 	}
 
 	private void doRetrieveOcchiali(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		OcchialeNuovoManager occhialeNuovo= new OcchialeNuovoManager();
-		OcchialeRottoManager occhialeRotto= new OcchialeRottoManager();
+		
 		Collection<OcchialeNuovo> elencoNuovo=occhialeNuovo.doRetrieveIfNotCompleted("IDOcchiale");
 		Collection<OcchialeRotto> elencoRotto=occhialeRotto.doRetrieveIfNotCompleted("IDOcchiale");
 		if(request.getAttribute("occhialiNuovi")!=null)
@@ -76,23 +110,26 @@ public class GestioneAdmin extends HttpServlet {
 			request.removeAttribute("occhialiRotti");
 		request.setAttribute("occhialiNuovi", elencoNuovo);
 		request.setAttribute("occhialiRotti", elencoRotto);
-		label="occhiali";
-		if(request.getAttribute("label")!=null)
-			request.removeAttribute("label");
-		request.setAttribute("label", label);
+		modifyLabel("Occhiali", request, response);
 		
 	}
 
 	private void doRetrieveCertificati(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		CertificatoManager certificato= new CertificatoManager();
-		Collection<Certificato> elenco=certificato.doRetrieveIfNotValidated("Codice Fiscale");
-		label="certificati";
-		if(request.getAttribute("label")!=null)
-			request.removeAttribute("label");
-		request.setAttribute("label", label);
+		
+		Collection<Certificato> elenco=certificato.doRetrieveIfNotValidated("CodiceFiscale");
+		for(Certificato e: elenco)
+			System.out.println("I valori sono: "+e.isValidato() + " " + e.isValido() + " " + e.getcF());
+		modifyLabel("Certificato", request, response);
 		if(request.getAttribute("certificati")!=null)
 			request.removeAttribute("certificati");
 		request.setAttribute("certificati", elenco);
+	}
+	
+	private void modifyLabel(String l,HttpServletRequest request, HttpServletResponse response) {
+		label=l;
+		if(request.getAttribute("label")!=null)
+			request.removeAttribute("label");
+		request.setAttribute("label", label);
 	}
 
 	/**
