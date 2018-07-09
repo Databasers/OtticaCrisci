@@ -41,7 +41,7 @@ CREATE TABLE `certificato` (
 
 LOCK TABLES `certificato` WRITE;
 /*!40000 ALTER TABLE `certificato` DISABLE KEYS */;
-INSERT INTO `certificato` VALUES ('CRSGPP78I52W687F','www.yahoo.it',1,NULL);
+INSERT INTO `certificato` VALUES ('CRSGPP78I52W687F','www.yahoo.it',0,1);
 /*!40000 ALTER TABLE `certificato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,15 +143,15 @@ CREATE TABLE `lavorazione_deposito` (
   `DataIngresso` date NOT NULL,
   `DataUscita` date DEFAULT NULL,
   `PosizioneOcchiale` varchar(10) NOT NULL,
-  `Occhiale_nuovo.IDOcchiale` int(15) unsigned DEFAULT NULL,
-  `Occhiale_rotto.IDOcchiale` int(15) unsigned DEFAULT NULL,
+  `Occhiale_nuovoIDOcchiale` int(15) unsigned DEFAULT NULL,
+  `Occhiale_rottoIDOcchiale` int(15) unsigned DEFAULT NULL,
   `IDFrame` int(15) unsigned DEFAULT NULL,
   PRIMARY KEY (`CodiceLavorazione`),
-  KEY `Occhiale_nuovo.IDOcchiale` (`Occhiale_nuovo.IDOcchiale`),
-  KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rotto.IDOcchiale`),
+  KEY `Occhiale_nuovo.IDOcchiale` (`Occhiale_nuovoIDOcchiale`),
+  KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rottoIDOcchiale`),
   KEY `IDFrame` (`IDFrame`),
-  CONSTRAINT `lavorazione_deposito_ibfk_1` FOREIGN KEY (`Occhiale_nuovo.IDOcchiale`) REFERENCES `occhiale_nuovo` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `lavorazione_deposito_ibfk_2` FOREIGN KEY (`Occhiale_rotto.IDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `lavorazione_deposito_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `lavorazione_deposito_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `lavorazione_deposito_ibfk_3` FOREIGN KEY (`IDFrame`) REFERENCES `frame` (`IDFrame`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -177,15 +177,15 @@ CREATE TABLE `lavorazione_laboratorio` (
   `CodiceLavorazione` int(15) unsigned NOT NULL AUTO_INCREMENT,
   `CodiceAddetto` int(15) unsigned NOT NULL,
   `TipoLavorazione` varchar(15) NOT NULL,
-  `DataInizio` date NOT NULL,
-  `DataFine` date DEFAULT NULL,
-  `Occhiale_nuovo.IDOcchiale` int(15) unsigned DEFAULT NULL,
-  `Occhiale_rotto.IDOcchiale` int(15) unsigned DEFAULT NULL,
+  `DataIngresso` date NOT NULL,
+  `DataUscita` date DEFAULT NULL,
+  `Occhiale_nuovoIDOcchiale` int(15) unsigned DEFAULT NULL,
+  `Occhiale_rottoIDOcchiale` int(15) unsigned DEFAULT NULL,
   PRIMARY KEY (`CodiceLavorazione`),
-  KEY `Occhiale_nuovo.IDOcchiale` (`Occhiale_nuovo.IDOcchiale`),
-  KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rotto.IDOcchiale`),
-  CONSTRAINT `lavorazione_laboratorio_ibfk_1` FOREIGN KEY (`Occhiale_nuovo.IDOcchiale`) REFERENCES `occhiale_nuovo` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `lavorazione_laboratorio_ibfk_2` FOREIGN KEY (`Occhiale_rotto.IDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `Occhiale_nuovo.IDOcchiale` (`Occhiale_nuovoIDOcchiale`),
+  KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rottoIDOcchiale`),
+  CONSTRAINT `lavorazione_laboratorio_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `lavorazione_laboratorio_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -262,7 +262,7 @@ CREATE TABLE `occhiale_nuovo` (
 
 LOCK TABLES `occhiale_nuovo` WRITE;
 /*!40000 ALTER TABLE `occhiale_nuovo` DISABLE KEYS */;
-INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T','0000-00-00',''),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T','0000-00-00',''),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T','0000-00-00',''),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T','0000-00-00',''),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T','0000-00-00',''),(6,300,NULL,6,6,'LRIDDA97E54F839T','0000-00-00',''),(7,400,NULL,7,7,'RMMNTN96T21F839N','0000-00-00',''),(8,200,NULL,8,8,'RMMNTN96T21F839N','0000-00-00',''),(9,350,NULL,9,9,'LRANTR94S69B963J','0000-00-00',''),(10,500,NULL,10,10,'LRANTR94S69B963J','0000-00-00',''),(11,169,NULL,11,18,'CRSLGU97P06F924H','0000-00-00','');
+INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T','0000-00-00','Consegnato'),(6,300,NULL,6,6,'LRIDDA97E54F839T','0000-00-00','In Deposito'),(7,400,NULL,7,7,'RMMNTN96T21F839N','0000-00-00','In Deposito'),(8,200,NULL,8,8,'RMMNTN96T21F839N','0000-00-00','In Deposito'),(9,350,NULL,9,9,'LRANTR94S69B963J','0000-00-00','In Lavorazione'),(10,500,NULL,10,10,'LRANTR94S69B963J','0000-00-00','In Lavorazione'),(11,169,NULL,11,18,'CRSLGU97P06F924H','0000-00-00','In Lavorazione');
 /*!40000 ALTER TABLE `occhiale_nuovo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,6 +280,7 @@ CREATE TABLE `occhiale_rotto` (
   `DataConsegna` date NOT NULL,
   `EntitàDanno` varchar(150) NOT NULL,
   `CodiceFiscale` varchar(16) NOT NULL,
+  `Stato` varchar(45) NOT NULL,
   PRIMARY KEY (`IDOcchiale`),
   KEY `CodiceFiscale` (`CodiceFiscale`),
   CONSTRAINT `occhiale_rotto_ibfk_1` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`CodiceFiscale`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -292,7 +293,7 @@ CREATE TABLE `occhiale_rotto` (
 
 LOCK TABLES `occhiale_rotto` WRITE;
 /*!40000 ALTER TABLE `occhiale_rotto` DISABLE KEYS */;
-INSERT INTO `occhiale_rotto` VALUES (1,250,'2018-01-08','2017-12-01','grave danno alla lente','GVNDRT78S14F839Z'),(2,100,'2017-11-30','2017-11-05','lieve danno alla lente','PLADCN80E11A089R'),(3,70,NULL,'2017-11-05','lieve danno al frame','FRNSST80R50C129B'),(4,70,NULL,'2017-09-09','lieve danno al frame','SLVFNC81A41A509P'),(5,100,NULL,'2017-08-10','lieve danno alla lente','LGUCSC97P06F924V');
+INSERT INTO `occhiale_rotto` VALUES (1,250,'2018-01-08','2017-12-01','grave danno alla lente','GVNDRT78S14F839Z','Consegnato'),(2,100,'2017-11-30','2017-11-05','lieve danno alla lente','PLADCN80E11A089R','Consegnato'),(3,70,NULL,'2017-11-05','lieve danno al frame','FRNSST80R50C129B','In Laboratorio'),(4,70,NULL,'2017-09-09','lieve danno al frame','SLVFNC81A41A509P','In Deposito'),(5,100,NULL,'2017-08-10','lieve danno alla lente','LGUCSC97P06F924V','In Laboratorio');
 /*!40000 ALTER TABLE `occhiale_rotto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -305,4 +306,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-07 12:55:17
+-- Dump completed on 2018-07-09 21:54:19
