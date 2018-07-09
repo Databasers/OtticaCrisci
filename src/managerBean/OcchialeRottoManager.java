@@ -41,6 +41,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
 				temp.setTipoDanno(rs.getString("EntitàDanno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
+				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
 			}while(rs.next());
 		}finally {
@@ -79,6 +80,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
 				temp.setTipoDanno(rs.getString("EntitàDanno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
+				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
 			}while(rs.next());
 		}finally {
@@ -117,6 +119,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			temp.setDataRitiro(rs.getDate("DataRitiro"));
 			temp.setDataConsegna(rs.getDate("DataConsegna"));
 			temp.setTipoDanno(rs.getString("EntitàDanno"));
+			temp.setStato(rs.getString("Stato"));
 			temp.setcF(rs.getString("CodiceFiscale"));
 						
 		}finally {
@@ -158,6 +161,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
 				temp.setTipoDanno(rs.getString("EntitàDanno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
+				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
 			}
 		}finally {
@@ -178,7 +182,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?)";
+		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?,?)";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
@@ -189,6 +193,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			preparedStatement.setDate(4, product.getDataConsegna());
 			preparedStatement.setString(5, product.getTipoDanno());
 			preparedStatement.setString(6, product.getcF());
+			preparedStatement.setString(7, product.getStato());
 			
 
 			System.out.println("doSave: "+ preparedStatement.toString());
@@ -215,7 +220,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 		String insertSQL = "UPDATE " + TableName
 				+ " SET IDOcchiale = ?, Prezzo = ?, DataRitiro= ?, DataConsegna = ?, EntitàDanno= ?, "
-				+ " CodiceFiscale= ? "
+				+ " CodiceFiscale= ?, Stato=  ? "
 				+ " WHERE Id = ?";
 
 		try {
@@ -227,7 +232,8 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			preparedStatement.setDate(4, product.getDataConsegna());
 			preparedStatement.setString(5, product.getTipoDanno());
 			preparedStatement.setString(6, product.getcF());
-			preparedStatement.setInt(9, product.getId());
+			preparedStatement.setString(7, product.getStato());;
+			preparedStatement.setInt(8, product.getId());
 
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());

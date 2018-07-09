@@ -7,7 +7,7 @@ import java.sql.Date;
 public class OcchialeRotto extends Occhiale{
 
 	Date dataConsegna,dataRitiro;
-	String tipoDanno;
+	String tipoDanno,stato;
 	
 
 	public Date getDataConsegna() {
@@ -27,6 +27,12 @@ public class OcchialeRotto extends Occhiale{
 	}
 	public void setTipoDanno(String tipoDanno) {
 		this.tipoDanno = tipoDanno;
+	}
+	public String getStato() {
+		return stato;
+	}
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 
 	

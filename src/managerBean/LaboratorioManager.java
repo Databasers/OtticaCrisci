@@ -15,6 +15,46 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 
 	private static final String TableName="LavorazioneLaboratorio";
 	
+	public LavorazioneLaboratorio doRetrieveSpecificProcessing(Integer IDOcchialeNuovo, Integer IDOcchialeRotto) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		LavorazioneLaboratorio temp=new LavorazioneLaboratorio();
+		
+		String sql="SELECT* FROM "+TableName+" WHERE DataUscita is null AND Occhiale_nuovoIDOcchiale= ? AND Occhiale_rottoIDOcchiale= ? ";
+		
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			preparedStatement.setInt(1, IDOcchialeNuovo);
+			preparedStatement.setInt(2, IDOcchialeRotto);
+			System.out.println("Query: " + preparedStatement.toString());
+			
+			ResultSet rs= preparedStatement.executeQuery();
+			
+			rs.next();
+			temp.setCodAddetto(rs.getInt("CodiceAddetto"));
+			temp.setCodLavorazione(rs.getInt("CodiceLavorazione"));
+			temp.setDataInizio(rs.getDate("DataIngresso"));
+			temp.setDataFine(rs.getDate("DataUscita"));
+			temp.setTipo(rs.getString("TipoLavorazione"));
+			temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovo.IDOcchiale"));
+			temp.setoR_idOcchiale(rs.getInt("Occhiale_rotto.IDOcchiale"));
+			
+
+		}finally {
+			try {
+			if(preparedStatement!=null)
+				preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return temp;
+	}
+	
+	
 	@Override
 	public LavorazioneLaboratorio doRetrieveByKey(Integer code) throws SQLException {
 		Connection connection=null;

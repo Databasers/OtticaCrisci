@@ -7,6 +7,9 @@
 </head>
 <body>
 
+	
+
+
 	<%	String label=(String)request.getAttribute("label");
 	if(label==null){
 		%> <%@ include file="AdminCertificato.jsp" %>
@@ -18,6 +21,11 @@
 			<%@ include file="AdminCertificato.jsp" %>
 	
 	<%	}
+		if(label.equalsIgnoreCase("occhiali")){
+			%>
+				<%@ include file="AdminCertificato.jsp" %>
+		
+		<%	}
 		} %> 
 	
 	

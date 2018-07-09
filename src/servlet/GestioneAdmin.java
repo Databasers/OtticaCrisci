@@ -1,7 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import javax.servlet.RequestDispatcher;
@@ -13,11 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Admin;
 import bean.Certificato;
+import bean.LavorazioneDeposito;
+import bean.LavorazioneLaboratorio;
 import bean.OcchialeNuovo;
 import bean.OcchialeRotto;
 import bean.SessioneUtente;
 import managerBean.AdminManager;
 import managerBean.CertificatoManager;
+import managerBean.DepositoManager;
+import managerBean.LaboratorioManager;
 import managerBean.OcchialeNuovoManager;
 import managerBean.OcchialeRottoManager;
 
@@ -56,6 +63,8 @@ public class GestioneAdmin extends HttpServlet {
 			doRetrieveDati(request,response);
 		if(action.equalsIgnoreCase("modCertificato"))
 			doModificaCertificato(request,response);
+		if(action.equalsIgnoreCase("modOcchiali"))
+			doModificaOcchiali(request,response);
 		if(action.equalsIgnoreCase("cliente"))
 			doRetrieveCliente(request,response);
 		
@@ -66,21 +75,93 @@ public class GestioneAdmin extends HttpServlet {
 		}
 	}
 	
-	private void doRetrieveCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		String cf=request.getParameter("cf");
-		Certificato c=certificato.doRetrieveByKey(cf);
-		if(c==null)
-			request.setAttribute("trovato","false");
-		else {
-		request.setAttribute("trovato","true");
-		request.setAttribute("certificatoCliente",c);
-		modifyLabel("Certificato", request, response);
+	private void doModificaOcchiali(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		System.out.println("Inizio la modifica degli occhiali");
+		String tabella=request.getParameter("tabella");
+		String code=request.getParameter("code");
+		int codice=Integer.parseInt(code);
+		Integer IDOcchialeNuovo;
+		Integer IDOcchialeRotto;
+		if(tabella.equalsIgnoreCase("occhiale_nuovo")) {
+			IDOcchialeNuovo=codice;
+			IDOcchialeRotto=null;
 		}
+		else {
+			IDOcchialeNuovo=null;
+			IDOcchialeRotto=codice;
+		}
+		
+		String azione=request.getParameter("spostamento");
+		System.out.println("L'azione da fare e': " + azione); 
+		if(azione.equalsIgnoreCase("deposito"))
+			modifica(request, response, IDOcchialeNuovo, IDOcchialeRotto,"deposito",false);
+		if(azione.equalsIgnoreCase("laboratorio"))
+			modifica(request, response, IDOcchialeNuovo, IDOcchialeRotto,"laboratorio",false);
+		if(azione.equalsIgnoreCase("completato")) {
+			Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
+			OcchialeNuovo occhialeN;
+			OcchialeRotto occhialeR;
+			String stato;
+			if(tabella.equalsIgnoreCase("occhiale_nuovo")) {
+				occhialeN= occhialeNuovo.doRetrieveByKey(IDOcchialeNuovo);
+				occhialeN.setDataRitiro(data);
+				stato=occhialeN.getStato();
+				occhialeN.setStato("completato");
+				occhialeNuovo.doSave(occhialeN);
+			}else {
+				occhialeR= occhialeRotto.doRetrieveByKey(IDOcchialeRotto);
+				occhialeR.setDataRitiro(data);
+				stato=occhialeR.getStato();
+				occhialeR.setStato("completato");
+				occhialeRotto.doSave(occhialeR);
+			}
+			if(stato.equalsIgnoreCase("In lavorazione"))
+				modifica(request, response, IDOcchialeNuovo, IDOcchialeRotto,"deposito",true);
+			else
+				modifica(request, response, IDOcchialeNuovo, IDOcchialeRotto,"laboratorio",true);
+		}
+		
+	}
+		
+	private void modifica(HttpServletRequest request, HttpServletResponse response, Integer IDOcchialeNuovo, Integer IDOcchialeRotto,String tabella,boolean completato) throws SQLException {
+		System.out.println("Inizio la modifica");
+		LavorazioneLaboratorio l;
+		LavorazioneDeposito d;
+		LaboratorioManager managerL= new LaboratorioManager();
+		DepositoManager managerD= new DepositoManager();
+		Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
+		if(tabella.equalsIgnoreCase("laboratorio")) {
+			d=managerD.doRetrieveSpecificProcessing(IDOcchialeNuovo, IDOcchialeRotto, null);
+			d.setDataUscita(data);
+			managerD.doSave(d);
+			if(!completato) {
+				l= new LavorazioneLaboratorio(null, 3, "montaggio", data, null, IDOcchialeNuovo, IDOcchialeRotto);
+				managerL.doSave(l);
+			}
+			
+		}	
+		if(tabella.equalsIgnoreCase("deposito")) {
+			l=managerL.doRetrieveSpecificProcessing(IDOcchialeNuovo, IDOcchialeRotto);
+			l.setDataFine(data);
+			managerL.doSave(l);
+			if(!completato) {
+				d= new LavorazioneDeposito(null, 7, IDOcchialeNuovo, IDOcchialeRotto, null, "5x", data, null);
+				managerD.doSave(d);
+			}
+		}	
+		
+	}
+	
+
+	private void doRetrieveCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		//da fare in ajax se abbiamo tempo
+		
 	}
 
 	private void doModificaCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String v=request.getParameter("valido");
 		Boolean valido=Boolean.parseBoolean(v);
+		System.out.println("Il valore di valido è: " + valido);
 		String code=request.getParameter("code");
 		Certificato c=certificato.doRetrieveByKey(code);
 		c.setValidato(true);

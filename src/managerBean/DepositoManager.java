@@ -8,12 +8,56 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import bean.LavorazioneDeposito;
+import bean.LavorazioneLaboratorio;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
 public class DepositoManager  implements ProductModel<LavorazioneDeposito, Integer> {
 
 	private static final String TableName="LavorazioneDeposito";
+	
+	public LavorazioneDeposito doRetrieveSpecificProcessing(Integer IDOcchialeNuovo, Integer IDOcchialeRotto, Integer IDFrame) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		LavorazioneDeposito temp=new LavorazioneDeposito();
+		
+		String sql="SELECT* FROM "+TableName+" WHERE DataUscita is null AND Occhiale_nuovoIDOcchiale= ? AND Occhiale_rottoIDOcchiale= ? AND IDFrame=?";
+		
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			preparedStatement.setInt(1, IDOcchialeNuovo);
+			preparedStatement.setInt(2, IDOcchialeRotto);
+			preparedStatement.setInt(3, IDFrame);
+			System.out.println("Query: " + preparedStatement.toString());
+			
+			ResultSet rs= preparedStatement.executeQuery();
+			
+			rs.next();
+			temp.setCodAddetto(rs.getInt("CodiceAddetto"));
+			temp.setCodLavorazione(rs.getInt("CodiceLavorazione"));
+			temp.setDataIngresso(rs.getDate("DataIngresso"));
+			temp.setDataUscita(rs.getDate("DataUscita"));
+			temp.setPos(rs.getString("PosizioneOcchiale"));
+			temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovo.IDOcchiale"));
+			temp.setoR_idOcchiale(rs.getInt("Occhiale_rotto.IDOcchiale"));
+			temp.setIdFrame(rs.getInt("IDFrame"));
+
+		}finally {
+			try {
+			if(preparedStatement!=null)
+				preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return temp;
+	}
+	
+	
+	
 	
 	@Override
 	public LavorazioneDeposito doRetrieveByKey(Integer code) throws SQLException {

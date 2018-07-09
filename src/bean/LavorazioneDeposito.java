@@ -8,6 +8,21 @@ public class LavorazioneDeposito {
 	String pos;
 	Date dataIngresso,dataUscita;
 	
+	public LavorazioneDeposito(Integer lavorazione,Integer addetto,Integer ON,Integer OR, Integer f, String posizione, Date ingresso, Date uscita) {
+		codAddetto=addetto;
+		codLavorazione=lavorazione;
+		oR_idOcchiale=OR;
+		oN_idOcchiale=ON;
+		idFrame=f;
+		pos=posizione;
+		dataIngresso=ingresso;
+		dataUscita=uscita;
+	}
+	
+	public LavorazioneDeposito() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getCodAddetto() {
 		return codAddetto;
 	}
