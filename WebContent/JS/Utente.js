@@ -6,8 +6,6 @@ function check(){
 	if(u == d){
 		var re = new XMLHttpRequest();
 		re.open("get","/GestioneUtente?action=modificaPassword&pwd="+u,true);
-		re.setRequestHeader("connection","close");
-		re.send(null);
 		
 	}
 	else{

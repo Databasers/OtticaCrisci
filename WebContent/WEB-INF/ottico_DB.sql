@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `ottico` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ottico`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ottico
 -- ------------------------------------------------------
--- Server version	5.7.21-log
+-- Server version	8.0.11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +29,7 @@ CREATE TABLE `certificato` (
   `Validato` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`CodiceFiscale`),
   UNIQUE KEY `Url_UNIQUE` (`Url`),
-  CONSTRAINT `CodiceFiscale` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`CodiceFiscale`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `CodiceFiscale` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`codicefiscale`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -58,7 +56,6 @@ CREATE TABLE `cliente` (
   `Cognome` varchar(20) NOT NULL,
   `Password` varchar(45) NOT NULL,
   `Gradazione` int(10) unsigned DEFAULT NULL,
-  `test` binary(160) DEFAULT NULL,
   PRIMARY KEY (`CodiceFiscale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -69,7 +66,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('aaaa','luigi','ferri','iiiii',15,'005defb57c2884322d1a684d04ec526b2ee76706\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0'),('BBBBB','luigi','ferri','iiiii',15,'005defb57c2884322d1a684d04ec526b2ee76706\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0'),('CCCGZN93L08F839T','Graziano','Ciccarelli','',NULL,NULL),('CRSGPP78I52W687F','Giuseppe','Crisci','azz',NULL,NULL),('CRSLGU97P06F924H','Luigi','Crisci','prova',NULL,NULL),('FRNSST80R50C129B','Francesca','Esposito','',NULL,NULL),('GVNDRT78S14F839Z','Giovanni','De Martino','',NULL,NULL),('LGUCSC97P06F924V','Luigi','Crisci','',NULL,NULL),('LRANTR94S69B963J','Laura','Notaro','',NULL,NULL),('LRIDDA97E54F839T','Ilaria','Addeo','',NULL,NULL),('PLADCN80E11A089R','Paolo','De Canio','',NULL,NULL),('RMMNTN96T21F839N','Antonio','Auriemma','',NULL,NULL),('SLVFNC81A41A509P','Silvia','Francescani','',NULL,NULL);
+INSERT INTO `cliente` VALUES ('aaaa','luigi','ferri','iiiii',15),('BBBBB','luigi','ferri','iiiii',15),('CCCGZN93L08F839T','Graziano','Ciccarelli','',NULL),('CRSGPP78I52W687F','Giuseppe','Crisci','azz',NULL),('CRSLGU97P06F924H','Luigi','Crisci','prova',NULL),('FRNSST80R50C129B','Francesca','Esposito','',NULL),('GVNDRT78S14F839Z','Giovanni','De Martino','',NULL),('LGUCSC97P06F924V','Luigi','Crisci','',NULL),('LRANTR94S69B963J','Laura','Notaro','',NULL),('LRIDDA97E54F839T','Ilaria','Addeo','',NULL),('PLADCN80E11A089R','Paolo','De Canio','',NULL),('RMMNTN96T21F839N','Antonio','Auriemma','',NULL),('SLVFNC81A41A509P','Silvia','Francescani','',NULL);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +113,7 @@ CREATE TABLE `frame` (
   `UrlImmagine` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`IDFrame`),
   KEY `PartitaIVA` (`PartitaIVA`),
-  CONSTRAINT `frame_ibfk_1` FOREIGN KEY (`PartitaIVA`) REFERENCES `fornitore` (`PartitaIVA`) ON UPDATE CASCADE
+  CONSTRAINT `frame_ibfk_1` FOREIGN KEY (`PartitaIVA`) REFERENCES `fornitore` (`partitaiva`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -150,9 +147,9 @@ CREATE TABLE `lavorazione_deposito` (
   KEY `Occhiale_nuovo.IDOcchiale` (`Occhiale_nuovoIDOcchiale`),
   KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rottoIDOcchiale`),
   KEY `IDFrame` (`IDFrame`),
-  CONSTRAINT `lavorazione_deposito_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `lavorazione_deposito_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `lavorazione_deposito_ibfk_3` FOREIGN KEY (`IDFrame`) REFERENCES `frame` (`IDFrame`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `lavorazione_deposito_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`idocchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `lavorazione_deposito_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`idocchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `lavorazione_deposito_ibfk_3` FOREIGN KEY (`IDFrame`) REFERENCES `frame` (`idframe`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -184,8 +181,8 @@ CREATE TABLE `lavorazione_laboratorio` (
   PRIMARY KEY (`CodiceLavorazione`),
   KEY `Occhiale_nuovo.IDOcchiale` (`Occhiale_nuovoIDOcchiale`),
   KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rottoIDOcchiale`),
-  CONSTRAINT `lavorazione_laboratorio_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `lavorazione_laboratorio_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `lavorazione_laboratorio_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`idocchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `lavorazione_laboratorio_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`idocchiale`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -216,7 +213,7 @@ CREATE TABLE `lente` (
   `PartitaIva` int(15) unsigned NOT NULL,
   PRIMARY KEY (`IDLente`),
   KEY `PartitaIva` (`PartitaIva`),
-  CONSTRAINT `lente_ibfk_1` FOREIGN KEY (`PartitaIva`) REFERENCES `fornitore` (`PartitaIVA`) ON UPDATE CASCADE
+  CONSTRAINT `lente_ibfk_1` FOREIGN KEY (`PartitaIva`) REFERENCES `fornitore` (`partitaiva`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -250,9 +247,9 @@ CREATE TABLE `occhiale_nuovo` (
   UNIQUE KEY `IDLente` (`IDLente`),
   UNIQUE KEY `IDFrame` (`IDFrame`),
   KEY `CodiceFiscale` (`CodiceFiscale`),
-  CONSTRAINT `occhiale_nuovo_ibfk_1` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`CodiceFiscale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `occhiale_nuovo_ibfk_2` FOREIGN KEY (`IDFrame`) REFERENCES `frame` (`IDFrame`) ON UPDATE CASCADE,
-  CONSTRAINT `occhiale_nuovo_ibfk_3` FOREIGN KEY (`IDLente`) REFERENCES `lente` (`IDLente`) ON UPDATE CASCADE
+  CONSTRAINT `occhiale_nuovo_ibfk_1` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`codicefiscale`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `occhiale_nuovo_ibfk_2` FOREIGN KEY (`IDFrame`) REFERENCES `frame` (`idframe`) ON UPDATE CASCADE,
+  CONSTRAINT `occhiale_nuovo_ibfk_3` FOREIGN KEY (`IDLente`) REFERENCES `lente` (`idlente`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -278,12 +275,12 @@ CREATE TABLE `occhiale_rotto` (
   `Prezzo` int(15) unsigned NOT NULL,
   `DataRitiro` date DEFAULT NULL,
   `DataConsegna` date NOT NULL,
-  `EntitàDanno` varchar(150) NOT NULL,
+  `EntitÃ Danno` varchar(150) NOT NULL,
   `CodiceFiscale` varchar(16) NOT NULL,
   `Stato` varchar(45) NOT NULL,
   PRIMARY KEY (`IDOcchiale`),
   KEY `CodiceFiscale` (`CodiceFiscale`),
-  CONSTRAINT `occhiale_rotto_ibfk_1` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`CodiceFiscale`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `occhiale_rotto_ibfk_1` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`codicefiscale`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -306,4 +303,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-10 11:32:21
+-- Dump completed on 2018-07-10 17:15:24

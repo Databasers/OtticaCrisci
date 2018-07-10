@@ -19,7 +19,6 @@ div#registrazione{
 <!-- TEST PER CONTROLLARE SE FUNZIONAVA IL LOGIN -->
 
 <%
-
 	String x= (String)request.getAttribute("Done");
 	System.out.print("Il valore e': " + x);
 	if(x!=null && x=="falso"){
@@ -32,8 +31,8 @@ div#registrazione{
 
 <div id="login">
 <form id="login" action="http://localhost:8080/OtticaCrisci/GestioneLogin?action=login" method="Post">
-	<input type="text" placeholder="username" name="username"><br>
-	<input type="password" placeholder="passowrd" name="password"><br>
+	<input type="text" placeholder="codicefiscale" name="username"><br>
+	<input type="password" placeholder="password" name="password"><br>
 	<input type="submit">
 
 </form>
@@ -55,7 +54,7 @@ div#registrazione{
 	<input type="text" placeholder="Codice Fiscale" name="codicefiscale"><br>
 	<input type="text" placeholder="Nome" name="nome"><br>
 	<input type="text" placeholder="Cognome" name="cognome"><br>
-	<input type="password" placeholder="passowrd" name="password"><br>
+	<input type="password" placeholder="password" name="password"><br>
 	<input type="submit">
 
 

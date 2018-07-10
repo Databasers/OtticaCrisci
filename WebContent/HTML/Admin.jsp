@@ -1,12 +1,23 @@
-<<<<<<< HEAD
+
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="AdminOcchiali.jsp" %>
 <script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
+	<%!SessioneUtente su = null;%>
+	
+	<% 
+	su =(SessioneUtente) session.getAttribute("Utente");
+		if(su==null)
+		{
+			response.sendRedirect("Login.jsp");
+		}
+	%>
+
 	<!-- 
 		Ma non ne ho proprio idea, qua non abbiamo visto nulla
 		Anyway, Deve poter inserire nuovi frame, gestire gli ordini e le operazioni di lav.Laboratorio e lav. Deposito
@@ -27,10 +38,10 @@
 	 
 	 <table>
 	 	<tr>
-	 		<td><div><button onclick="nascondi('Frame')">Nuovo Frame</a></div></td>		<!-- Inserire magari la griglia -->
-	 		<td><div><button onclick="nascondi('Ordini')">Ordini</a></div></td>
-	 		<td><div><button onclick="nascondi('Certificati')">Certificati</a></div></td>
-	 		<td><div><button onclick="nascondi('Utenti')">Utenti</a></div></td>
+	 		<td><div><button onclick="nascondi('Frame')">Nuovo Frame</button></div></td>		<!-- Inserire magari la griglia -->
+	 		<td><div><button onclick="nascondi('Ordini')">Ordini</button></div></td>
+	 		<td><div><button onclick="nascondi('Certificati')">Certificati</button></div></td>
+	 		<td><div><button onclick="nascondi('Utenti')">Utenti</button></div></td>
 	 	</tr>
 	 </table>
 	 
@@ -54,25 +65,3 @@
 	<div id="Utenti" style="display:none"><h2>Utenti</h2></div>
 
 </body>
-</html>
-=======
-<%@ page import="bean.*,managerBean.*,java.util.*" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-
-	
-<%@ include file="AdminOcchiali.jsp" %>
-
-	
-	
-	
-	
-	
-	
-	
->>>>>>> f04ce4be624deb6b89f8d6d4f28904305ad17070

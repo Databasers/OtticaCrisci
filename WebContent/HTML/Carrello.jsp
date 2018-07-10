@@ -33,7 +33,7 @@
 				<td>
 				<img src = <%= oggetto.getMarchio()%> > <%=""+ oggetto.getMarchio()  + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%>
 				 <%= oggetto.getPrezzo()%>
-				 <button type="submit" formaction="/gestione?action=delCart&id="+ <%=oggetto.getId()%>>Rimuovi</button>
+				 <button type="submit" formaction="/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
 				 </td>
 			</tr>
 			

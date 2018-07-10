@@ -11,6 +11,7 @@
 
 <script type="text/javascript" src="../JS/Utente.js"></script>
 <script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../JS/ajax.js"></script>
 </head>
 <body>
 	<%!SessioneUtente su = null;%>
@@ -59,17 +60,7 @@
 	</div>
 
   
-<<<<<<< HEAD
   <!-- Qui inizia la pagina di Servlet, dentro c'è un esempio di chiamata ajax -->
-=======
-  
-  
-  
-  
-  
-  
-  <!-- Qui inizia la pagina di Servlet, dentro c'Ã¨ un esempio di chiamata ajax -->
->>>>>>> f04ce4be624deb6b89f8d6d4f28904305ad17070
   
   <script type="text/javascript">
 
@@ -95,7 +86,6 @@ function displayResults(listXML, id) {
 	 
 }
 </script>
-<script type="text/javascript" src="../JS/ajax.js"></script>
 
 
 </head>
