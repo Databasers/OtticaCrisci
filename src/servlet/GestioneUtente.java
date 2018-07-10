@@ -47,6 +47,7 @@ public class GestioneUtente extends HttpServlet {
 		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("Utente");
 		try {
 			cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
+			System.out.println("Il codice fiscale di cliente è " + cliente.getcF());
 			String action=(String)request.getParameter("action");
 			if(action.equalsIgnoreCase("ajax"))
 				doAjax(request,response);

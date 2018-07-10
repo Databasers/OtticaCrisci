@@ -58,15 +58,15 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
-		
-		String sql= "SELECT * FROM "+TableName+" WHERE codiceFiscale=?";
+		String sql= "SELECT * FROM "+TableName+" WHERE codiceFiscale= ?";
 			
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
-			
-			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			preparedStatement.setString(1, codiceFiscale);
+			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
+			
+			
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {
 				OcchialeRotto temp= new OcchialeRotto();

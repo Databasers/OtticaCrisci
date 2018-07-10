@@ -63,9 +63,9 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
-			
-			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			preparedStatement.setString(1, codiceFiscale);
+			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
+			
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {
 				OcchialeNuovo temp= new OcchialeNuovo();
