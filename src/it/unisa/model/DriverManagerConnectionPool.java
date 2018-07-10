@@ -29,7 +29,7 @@ public class DriverManagerConnectionPool {
 		String password = "PentiumD";
 
 		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ 
-				port+"/"+db+"?zeroDateTimeBehavior=convertToNull", username, password);		
+				port+"/"+db+"?zeroDateTimeBehavior=convertToNull&useSSL=false", username, password);		
 
 		System.out.println("Create a new DB connection");
 		newConnection.setAutoCommit(false);

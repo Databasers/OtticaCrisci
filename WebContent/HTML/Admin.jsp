@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,3 +55,24 @@
 
 </body>
 </html>
+=======
+<%@ page import="bean.*,managerBean.*,java.util.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	
+<%@ include file="AdminOcchiali.jsp" %>
+
+	
+	
+	
+	
+	
+	
+	
+>>>>>>> f04ce4be624deb6b89f8d6d4f28904305ad17070

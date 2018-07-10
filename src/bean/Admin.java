@@ -1,15 +1,21 @@
 package bean;
 
+import java.sql.Date;
+
 public class Admin {
 
 	private String nome,cognome,cF,password;
-
+	private Date dataAssunzione,dataNascita;
+	private int telefono;
 	
-	public Admin(String cf2, String nome2, String cognome2, String password2) {
+	public Admin(String cf2, String nome2, String cognome2, String password2, Date assunzione, Date nascita,Integer telefono) {
 		cF=cf2;
 		nome=nome2;
 		cognome=cognome2;
 		password=password2;
+		dataAssunzione=assunzione;
+		dataNascita=nascita;
+		this.telefono=telefono;
 	}
 
 
@@ -63,6 +69,36 @@ public class Admin {
 	@Override
 	public String toString() {
 		return "Admin [nome=" + nome + ", cognome=" + cognome + ", cF=" + cF + ", password=" + password + "]";
+	}
+
+
+	public Date getDataAssunzione() {
+		return dataAssunzione;
+	}
+
+
+	public void setDataAssunzione(Date dataAssunzione) {
+		this.dataAssunzione = dataAssunzione;
+	}
+
+
+	public Date getDataNascita() {
+		return dataNascita;
+	}
+
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+
+
+	public int getTelefono() {
+		return telefono;
+	}
+
+
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
 	}
 	
 	

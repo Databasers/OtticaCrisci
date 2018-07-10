@@ -19,6 +19,7 @@ div#registrazione{
 <!-- TEST PER CONTROLLARE SE FUNZIONAVA IL LOGIN -->
 
 <%
+
 	String x= (String)request.getAttribute("Done");
 	System.out.print("Il valore e': " + x);
 	if(x!=null && x=="falso"){
