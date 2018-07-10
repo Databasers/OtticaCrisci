@@ -98,6 +98,40 @@ public class FrameManager implements ProductModel<Frame, Integer> {
 		
 		return c;
 	}
+	
+	public void doSaveAI(Frame product) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String sql="INSERT INTO "+TableName+" VALUES(null,?,?,?,?,?,?)";
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			preparedStatement.setString(1, product.getModello());
+			preparedStatement.setString(2, product.getColore());
+			preparedStatement.setInt(3, product.getPeso());
+			preparedStatement.setString(4, product.getMateriale());
+			preparedStatement.setInt(5, product.getPrezzo());
+			preparedStatement.setInt(6, product.getPartitaIva());
+			preparedStatement.setString(7, product.getMarchio());
+			preparedStatement.setString(8, product.getUrlImmagine());
+			
+			
+			System.out.println("doSave: "+ preparedStatement.toString());
+			preparedStatement.executeUpdate();
+
+			connection.commit();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+
+	}
 
 	@Override
 	public void doSave(Frame product) throws SQLException {

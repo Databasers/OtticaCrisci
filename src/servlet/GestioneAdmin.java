@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.RequestDispatcher;
@@ -16,14 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Admin;
 import bean.Certificato;
+import bean.Frame;
 import bean.LavorazioneDeposito;
 import bean.LavorazioneLaboratorio;
+import bean.Lente;
 import bean.OcchialeNuovo;
 import bean.OcchialeRotto;
 import bean.SessioneUtente;
 import managerBean.AdminManager;
 import managerBean.CertificatoManager;
 import managerBean.DepositoManager;
+import managerBean.FrameManager;
 import managerBean.LaboratorioManager;
 import managerBean.OcchialeNuovoManager;
 import managerBean.OcchialeRottoManager;
@@ -67,6 +71,8 @@ public class GestioneAdmin extends HttpServlet {
 			doModificaCertificato(request,response);
 		if(action.equalsIgnoreCase("modOcchiali"))
 			doModificaOcchiali(request,response);
+		if(action.equalsIgnoreCase("frame"))
+			doFrame(request,response);
 		
 		RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Admin.jsp");
 		x.forward(request, response);
@@ -74,6 +80,52 @@ public class GestioneAdmin extends HttpServlet {
 			// TODO: handle exception
 		}
 	}
+	
+	/**
+	 * Inserisce un nuovo frame in deposito
+	 * @param request
+	 * @param response
+	 * @throws SQLException
+	 */
+	private void doFrame(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		//`IDFrame`, `Modello`, `Colore`, `Peso`, `Materiale`, `Prezzo`, `PartitaIVA`, `Marchio`, `UrlImmagine`
+		String modello=request.getParameter("modello");
+		String colore=request.getParameter("colore");
+		Integer peso=Integer.parseInt(request.getParameter("peso"));
+		String materiale=request.getParameter("materiale");
+		Integer prezzo=Integer.parseInt(request.getParameter("prezzo"));		
+		Integer partitaIva=Integer.parseInt(request.getParameter("partitaIva"));
+		String marchio=request.getParameter("marchio");
+		String urlImmagine=request.getParameter("urlImmagine");
+		
+		Frame f=createAndRetrieveFrame(modello, colore, peso, materiale, prezzo, partitaIva, marchio, urlImmagine);
+		@SuppressWarnings("deprecation")
+		Date data=new Date(LocalDateTime.now().getYear()-1900, LocalDateTime.now().getMonthValue()-1, LocalDateTime.now().getDayOfMonth());
+		LavorazioneDeposito d= new LavorazioneDeposito(null, 15, null, null, f.getId(), "s8", data, null);
+	}
+	
+	/**
+	 * Crea un nuovo frame e lo restituisce
+	 * @param modello
+	 * @param colore
+	 * @param peso
+	 * @param materiale
+	 * @param prezzo
+	 * @param partitaIva
+	 * @param marchio
+	 * @param urlImmagine
+	 * @return
+	 * @throws SQLException
+	 */
+	private synchronized Frame createAndRetrieveFrame(String modello,String colore,Integer peso,String materiale,Integer prezzo,Integer partitaIva,String marchio,String urlImmagine) throws SQLException {
+		FrameManager frame= new FrameManager();
+		Frame f= new Frame(null,modello,colore,peso,materiale,prezzo,partitaIva,marchio,urlImmagine);
+		frame.doSaveAI(f);
+		ArrayList<Frame> elenco=(ArrayList<Frame>) frame.doRetrieveAll("IDFrame");
+		f=elenco.get(elenco.size()-1);
+		return f;
+	}
+
 	/**
 	 * Funziona, non toccare nulla
 	 * @param request
@@ -248,9 +300,6 @@ public class GestioneAdmin extends HttpServlet {
 		request.setAttribute("label", label);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

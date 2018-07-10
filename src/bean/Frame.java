@@ -6,6 +6,24 @@ public class Frame {
 	String modello,colore,marchio,materiale,urlImmagine;
 	int PartitaIva;
 	
+	public Frame(Integer object, String modello2, String colore2, Integer peso2, String materiale2, Integer prezzo2,
+			Integer partitaIva2, String marchio2, String urlImmagine2) {
+		
+		this.id=object;
+		this.modello=modello;
+		colore=colore2;
+		peso=peso2;
+		materiale=materiale2;
+		prezzo=prezzo2;
+		PartitaIva=partitaIva2;
+		marchio=marchio2;
+		urlImmagine=urlImmagine2;		
+	}
+	
+	public Frame() {
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
