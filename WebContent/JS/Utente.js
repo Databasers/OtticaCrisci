@@ -1,8 +1,12 @@
+
+
 function check(){
 	var u = document.password.Nu.value;
 	var d = document.password.Ri.value;
 	if(u == d){
-		//EXEChecazzo ci scrivo qua?
+		var re = new XMLHttpRequest();
+		re.open("get","/GestioneUtente?action=modificaPassword&pwd="+u,true);
+		
 	}
 	else{
 		alert("La password non corrisponde");
@@ -10,3 +14,9 @@ function check(){
 		document.password.Ri.style = "background: red";
 	}
 }
+
+function cambia(a, b){
+	$("#"+a).hide();
+	$("#"+b).fadeIn();
+	
+	}

@@ -10,6 +10,8 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="../JS/Utente.js"></script>
+<script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../JS/ajax.js"></script>
 </head>
 <body>
 	<%!SessioneUtente su = null;%>
@@ -26,45 +28,39 @@
 	%>
 	
 	
-	
 	<div id = "Contenitore-menu">
 		<div id = "Selettore">
 			<ul>
-				<li><span><a href="Marchi.html">Anagrafica</a></span></li>
-				<li><span><a href="Marchi.html">Ordini</a></span></li>
-				<li><span><a href="Marchi.html">Riparazioni</a></span></li>
+				<li><span><button onclick="cambia('Ordini', 'Anagrafica')">Anagrafica</button></span></li>
+				<li><span><button onclick="cambia('Anagrafica', 'Ordini')">Ordini</button></span></li>
 			</ul>
 		</div>
 		
 		
 		
-		<div id = "Ordini">
-			<!-- Inserire script per ritrovare gli ordini e stamparli -->
+		<div id = "Ordini" class="Tab" style="display: none;">
+		<table>
+			<tr>
+				<!-- Alan please insert roba per la request degli ordini vecchi -->
+			</tr>
+		</table>
+			Cose che hanno a che fare con gli ordini
 		</div>
-		<div id = "Anagrafica">
+		<div id = "Anagrafica" class="Tab">
 			<p><!-- Nome utente, codice fiscale --></p>
 			<form name = "password">
 				
 				<span>Cambio password</span><br>
-				<span>Nuova password	<input type ="text" name="Nu" value = "test"></span><br>
+				<span>Nuova password 	<input type ="text" name="Nu" value = "test"></span><br>
 				<span>Ripeti			<input type ="text" name="Ri" value = "due"></span><br>
 				
 				<button type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
 			</form> 
 		</div>
-		<div id = "Riparazione">
-			<p> Contattaci per riparare i tuoi occhiali o vieni in negozio!</p>
-		</div>
 	</div>
 
   
-  
-  
-  
-  
-  
-  
-  <!-- Qui inizia la pagina di Servlet, dentro c'Ã¨ un esempio di chiamata ajax -->
+  <!-- Qui inizia la pagina di Servlet, dentro c'è un esempio di chiamata ajax -->
   
   <script type="text/javascript">
 
@@ -90,7 +86,6 @@ function displayResults(listXML, id) {
 	 
 }
 </script>
-<script type="text/javascript" src="../JS/ajax.js"></script>
 
 
 </head>
