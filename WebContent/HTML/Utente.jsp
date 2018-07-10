@@ -31,7 +31,7 @@
 		<div id = "Ordini" class="Tab" style="display: none;">
 		<table>
 			<tr>
-		
+				<!-- Alan please insert roba per la request degli ordini vecchi -->
 			</tr>
 		</table>
 			Cose che hanno a che fare con gli ordini
@@ -50,7 +50,7 @@
 	</div>
 
   
-  <!-- Qui inizia la pagina di Servlet, dentro c'Ã¨ un esempio di chiamata ajax -->
+  <!-- Qui inizia la pagina di Servlet, dentro c'è un esempio di chiamata ajax -->
   
   <script type="text/javascript">
 
