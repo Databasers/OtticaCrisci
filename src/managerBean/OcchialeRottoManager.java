@@ -18,6 +18,42 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 	private static final String TableName="Occhiale_rotto";
 	
+	public Collection<OcchialeRotto> doRetrieveIfNotCompleted(String order) throws SQLException{
+		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String sql= "SELECT * FROM "+TableName+" WHERE DataRitiro IS NULL";
+			
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
+			ResultSet rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				OcchialeRotto temp= new OcchialeRotto();
+				temp.setId(rs.getInt("IDOcchiale"));
+				temp.setPrezzo(rs.getInt("Prezzo"));
+				temp.setDataRitiro(rs.getDate("DataRitiro"));
+				temp.setDataConsegna(rs.getDate("DataConsegna"));
+				temp.setTipoDanno(rs.getString("Entit‡Danno"));
+				temp.setcF(rs.getString("CodiceFiscale"));
+				temp.setStato(rs.getString("Stato"));
+				c.add(temp);
+			}
+		}finally {
+			try {
+				if(preparedStatement!=null)
+					preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return c;
+	}
+	
 	public Collection<OcchialeRotto> doRetrieveByCondition(String codiceFiscale) throws SQLException{
 		Collection<OcchialeRotto> c= new LinkedList<OcchialeRotto>();
 		Connection connection=null;
@@ -32,9 +68,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			preparedStatement.setString(1, codiceFiscale);
 			ResultSet rs=preparedStatement.executeQuery();
-			if(!rs.next()) //se il resultSet Ë vuoto
-				c=null;
-			 do{
+			while(rs.next()) {
 				OcchialeRotto temp= new OcchialeRotto();
 				temp.setId(rs.getInt("IDOcchiale"));
 				temp.setPrezzo(rs.getInt("Prezzo"));
@@ -42,8 +76,9 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
 				temp.setTipoDanno(rs.getString("Entit‡Danno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
+				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
-			}while(rs.next());
+			}
 		}finally {
 			try {
 				if(preparedStatement!=null)
@@ -63,7 +98,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		PreparedStatement preparedStatement=null;
 		OcchialeRotto temp=new OcchialeRotto();
 		
-		String sql="SELECT* FROM "+TableName+" WHERE Id=?  ";
+		String sql="SELECT* FROM "+TableName+" WHERE IdOcchiale=?  ";
 		
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
@@ -80,6 +115,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			temp.setDataRitiro(rs.getDate("DataRitiro"));
 			temp.setDataConsegna(rs.getDate("DataConsegna"));
 			temp.setTipoDanno(rs.getString("Entit‡Danno"));
+			temp.setStato(rs.getString("Stato"));
 			temp.setcF(rs.getString("CodiceFiscale"));
 						
 		}finally {
@@ -121,6 +157,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
 				temp.setTipoDanno(rs.getString("Entit‡Danno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
+				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
 			}
 		}finally {
@@ -141,7 +178,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?)";
+		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?,?)";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
@@ -152,6 +189,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			preparedStatement.setDate(4, product.getDataConsegna());
 			preparedStatement.setString(5, product.getTipoDanno());
 			preparedStatement.setString(6, product.getcF());
+			preparedStatement.setString(7, product.getStato());
 			
 
 			System.out.println("doSave: "+ preparedStatement.toString());
@@ -178,8 +216,8 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 		String insertSQL = "UPDATE " + TableName
 				+ " SET IDOcchiale = ?, Prezzo = ?, DataRitiro= ?, DataConsegna = ?, Entit‡Danno= ?, "
-				+ " CodiceFiscale= ? "
-				+ " WHERE Id = ?";
+				+ " CodiceFiscale= ?, Stato=  ? "
+				+ " WHERE IdOcchiale = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -190,7 +228,8 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			preparedStatement.setDate(4, product.getDataConsegna());
 			preparedStatement.setString(5, product.getTipoDanno());
 			preparedStatement.setString(6, product.getcF());
-			preparedStatement.setInt(9, product.getId());
+			preparedStatement.setString(7, product.getStato());;
+			preparedStatement.setInt(8, product.getId());
 
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
@@ -215,7 +254,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + TableName + " WHERE Id = ?";
+		String deleteSQL = "DELETE FROM " + TableName + " WHERE IdOcchiale = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();

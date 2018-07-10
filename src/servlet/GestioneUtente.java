@@ -41,12 +41,12 @@ public class GestioneUtente extends HttpServlet {
         occhialeRottoManager= new OcchialeRottoManager();
     }
 
-	//Inserire chiamata asincrona per restituzione frame e lente di ordine
-    //Inserire filtro per sessione
+	
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("utente");
+		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("Utente");
 		try {
-			//cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
+			cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
 			String action=(String)request.getParameter("action");
 			if(action.equalsIgnoreCase("ajax"))
 				doAjax(request,response);
@@ -59,6 +59,8 @@ public class GestioneUtente extends HttpServlet {
 						doRetrieveOrdini(request,response);
 					if(action.equalsIgnoreCase("retrieve"))
 						doRetrieve(request,response);
+					if(action.equalsIgnoreCase("delCertificato"))
+						doDelCertificato(request,response);
 					RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
 					x.forward(request, response);
 				}
@@ -71,6 +73,18 @@ public class GestioneUtente extends HttpServlet {
 	}
 
 	
+
+	private void doDelCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		Certificato c=certificatoManager.doRetrieveByKey(cliente.getcF());
+		if(!c.isValido() && c.isValidato() ) { //se non è valido ma è stato controllato
+			File x= new File("C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati"+File.separator+c.getcF());
+			certificatoManager.doDelete(c.getcF());
+			x.delete();
+			if(request.getAttribute("certificato")!=null)
+				request.removeAttribute("certificato");
+		}
+		
+	}
 
 	/**
 	 * Gestione ajax per dettagli su di un ordine
@@ -114,8 +128,8 @@ public class GestioneUtente extends HttpServlet {
 			risposta.append("<PesoL>"+lente.getPeso()+"</PesoL>");
 			risposta.append("<IDLente>"+lente.getId()+"</IDLente>");
 			risposta.append("<Diottria>"+lente.getDiottria()+"</Diottria>");
-			risposta.append("<MaterialeL>"+lente.getMateriale()+"</Materiale>");
-			risposta.append("<PrezzoL>"+lente.getPrezzo()+"</Prezzo>");
+			risposta.append("<MaterialeL>"+lente.getMateriale()+"</MaterialeL>");
+			risposta.append("<PrezzoL>"+lente.getPrezzo()+"</PrezzoL>");
 			risposta.append("<TipoLente>"+lente.getTipo()+"</TipoLente>");
 		}
 		else {
@@ -138,17 +152,18 @@ public class GestioneUtente extends HttpServlet {
 	 */
 	private void doRetrieve(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		doRetrieveOrdini(request, response);
-		if(certificatoManager.doRetrieveByKey(cliente.getcF())==null)
-			request.setAttribute("certificatoInserito", false);
+		Certificato c;
+		if((c=certificatoManager.doRetrieveByKey(cliente.getcF()))==null)
+			request.setAttribute("certificato", null);
 		else
-			request.setAttribute("certificatoInserito", true);
+			request.setAttribute("certificato", c);
 		
 	}
 
 
 	/**
 	 * Invia alla pagina Utente.jsp gli ordini effettuati dal cliente, sia occhiali nuovi che rotti
-	 * Sessione:
+	 * Request:
 	 * OcchialiNuovi: Collection<OcchialeNuovo>, null se vuoto
 	 * OcchialiRotti: Collection<OcchialeRotto>, null se vuoto
 	 * @param request
@@ -164,31 +179,46 @@ public class GestioneUtente extends HttpServlet {
 			request.getSession().removeAttribute("OcchialiRotti");
 		Collection<OcchialeNuovo> occhialeN=occhialeNuovoManager.doRetrieveByCondition(cliente.getcF());
 		Collection<OcchialeRotto> occhialeR= occhialeRottoManager.doRetrieveByCondition(cliente.getcF());
-		request.getSession().setAttribute("OcchialiNuovi", occhialeN);
-		request.getSession().setAttribute("OcchialiRotti", occhialeR);
+		request.setAttribute("OcchialiNuovi", occhialeN);
+		request.setAttribute("OcchialiRotti", occhialeR);
 	}
 
-
+	/**
+	 * Aggiunge un certificato inviato dall'utente
+	 * Se ne è già presente uno, restituisce quello presente
+	 * Se inserito uno non valido, ritorna il certificato con valore null
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 * @throws SQLException
+	 */
 	private void doAddCertificato(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {
+		Certificato c;
+		if(request.getAttribute("certificato")!=null) //elimino possibili rimasuglie
+			request.removeAttribute("certificato");
 		//controllo se esiste già un certificato
-		if(certificatoManager.doRetrieveByKey(cliente.getcF())==null) //Ho bisogno di mandare un messaggio all'utente, dato che nascondo l'accesso al form?
+		if((c=certificatoManager.doRetrieveByKey(cliente.getcF()))==null) //Ho bisogno di mandare un messaggio all'utente, dato che nascondo l'accesso al form?
 		{	
-		String saveDir="C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati";
+		String saveDir="C:\\Users\\giggi\\eclipse-workspace\\OtticaCrisci\\Data\\Certificati";
 		for(Part certificato: request.getParts()) //tanto lo fa una sola volta
 		{
 			String filename= certificato.getSubmittedFileName();
-			//Da aggiugere gestione dell'estensione
-			saveDir+=File.separator+cliente.getcF();
+			String estensione=filename.substring(filename.indexOf('.'));
+			System.out.println("Estensione del file: "+ estensione);
+			saveDir+=File.separator+cliente.getcF()+estensione;
 			if(filename!=null && !filename.equals("")) {
 				certificato.write(saveDir); 
 				System.out.println("Directory di salvataggio: " + saveDir);
-				certificatoManager.doSave(new Certificato( cliente.getcF(),saveDir,false));
-				request.setAttribute("certificatoInserito", true);
+				certificatoManager.doSave(c=new Certificato( cliente.getcF(),saveDir,false));
+				request.setAttribute("certificato", c);
 			}
 			else
-				request.setAttribute("certificatoInserito", false);
+				request.setAttribute("certificato", null);
 		}
 		}
+		else
+			request.setAttribute("certificato", c);
 	}
 
 	/**

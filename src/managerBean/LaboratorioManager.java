@@ -13,7 +13,56 @@ import it.unisa.model.ProductModel;
 
 public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, Integer> {
 
-	private static final String TableName="LavorazioneLaboratorio";
+	private static final String TableName="Lavorazione_Laboratorio";
+	
+	public LavorazioneLaboratorio doRetrieveSpecificProcessing(Integer IDOcchialeNuovo, Integer IDOcchialeRotto) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		LavorazioneLaboratorio temp=new LavorazioneLaboratorio();
+		
+		String sql = null;
+		if(IDOcchialeNuovo!=null)
+			 sql="SELECT* FROM "+TableName+" WHERE DataUscita is null AND Occhiale_nuovoIDOcchiale= ?";
+		else { 
+				if(IDOcchialeRotto!=null)
+					sql="SELECT* FROM "+TableName+" WHERE DataUscita is null AND Occhiale_rottoIDOcchiale= ?";
+		}
+		
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			if(IDOcchialeNuovo!=null)
+				preparedStatement.setInt(1, IDOcchialeNuovo);
+			else { 
+					if(IDOcchialeRotto!=null)
+						preparedStatement.setInt(1, IDOcchialeRotto);
+			}
+			System.out.println("Query: " + preparedStatement.toString());
+			
+			ResultSet rs= preparedStatement.executeQuery();
+			
+			rs.next();
+			temp.setCodAddetto(rs.getInt("CodiceAddetto"));
+			temp.setCodLavorazione(rs.getInt("CodiceLavorazione"));
+			temp.setDataInizio(rs.getDate("DataIngresso"));
+			temp.setDataFine(rs.getDate("DataUscita"));
+			temp.setTipo(rs.getString("TipoLavorazione"));
+			temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovoIDOcchiale"));
+			temp.setoR_idOcchiale(rs.getInt("Occhiale_rottoIDOcchiale"));
+			
+
+		}finally {
+			try {
+			if(preparedStatement!=null)
+				preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return temp;
+	}
+	
 	
 	@Override
 	public LavorazioneLaboratorio doRetrieveByKey(Integer code) throws SQLException {
@@ -38,8 +87,8 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 			temp.setDataInizio(rs.getDate("DataIngresso"));
 			temp.setDataFine(rs.getDate("DataUscita"));
 			temp.setTipo(rs.getString("TipoLavorazione"));
-			temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovo.IDOcchiale"));
-			temp.setoR_idOcchiale(rs.getInt("Occhiale_rotto.IDOcchiale"));
+			temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovoIDOcchiale"));
+			temp.setoR_idOcchiale(rs.getInt("Occhiale_rottoIDOcchiale"));
 			
 
 		}finally {
@@ -80,8 +129,8 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 				temp.setDataInizio(rs.getDate("DataIngresso"));
 				temp.setDataFine(rs.getDate("DataUscita"));
 				temp.setTipo(rs.getString("TipoLavorazione"));
-				temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovo.IDOcchiale"));
-				temp.setoR_idOcchiale(rs.getInt("Occhiale_rotto.IDOcchiale"));
+				temp.setoN_idOcchiale(rs.getInt("Occhiale_nuovoIDOcchiale"));
+				temp.setoR_idOcchiale(rs.getInt("Occhiale_rottoIDOcchiale"));
 
 				c.add(temp);
 			}
@@ -101,19 +150,17 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 	public void doSave(LavorazioneLaboratorio product) throws SQLException {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
-		
-		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?,?)";
+		if(product.getoN_idOcchiale()!=null) {
+		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?,?,?,null)";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
-			
 			preparedStatement.setInt(1, product.getCodLavorazione());
 			preparedStatement.setInt(2, product.getCodAddetto());
 			preparedStatement.setString(3, product.getTipo());
 			preparedStatement.setDate(4, product.getDataInizio());
 			preparedStatement.setDate(5, product.getDataFine());
 			preparedStatement.setInt(6, product.getoN_idOcchiale());
-			preparedStatement.setInt(7, product.getoR_idOcchiale());
 			
 			System.out.println("doSave: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
@@ -127,6 +174,104 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
+		}
+		if(product.getoR_idOcchiale()!=null) {
+			//`CodiceLavorazione`, `CodiceAddetto`, `TipoLavorazione`, `DataIngresso`, `DataUscita`, `Occhiale_nuovoIDOcchiale`, `Occhiale_rottoIDOcchiale`
+			String sql="INSERT INTO "+TableName+"  VALUES(?,?,?,?,?,null,?)";
+			try {
+				connection=DriverManagerConnectionPool.getConnection();
+				preparedStatement= connection.prepareStatement(sql);
+				
+				preparedStatement= connection.prepareStatement(sql);
+				preparedStatement.setInt(1, product.getCodLavorazione());
+				preparedStatement.setInt(2, product.getCodAddetto());
+				preparedStatement.setString(3, product.getTipo());
+				preparedStatement.setDate(4, product.getDataInizio());
+				preparedStatement.setDate(5, product.getDataFine());
+				preparedStatement.setInt(6, product.getoR_idOcchiale());
+				
+				System.out.println("doSave: "+ preparedStatement.toString());
+				preparedStatement.executeUpdate();
+
+				connection.commit();
+			}catch (Exception e) {
+				e.printStackTrace();
+			} 
+			finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					DriverManagerConnectionPool.releaseConnection(connection);
+				}
+			}
+			}
+
+	}
+	
+	public void doSaveAI(LavorazioneLaboratorio product) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		if(product.getoN_idOcchiale()!=null) {
+		System.out.println("Inizio doSave in laboratorio");
+		//`CodiceLavorazione`, `CodiceAddetto`, `TipoLavorazione`, `DataIngresso`, `DataUscita`, `Occhiale_nuovoIDOcchiale`, `Occhiale_rottoIDOcchiale`
+		String sql="INSERT INTO "+TableName+" VALUES(null,?,?,?,?,?,null)";
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			System.out.println("Inizio a settare i parametri");
+			preparedStatement.setInt(1, product.getCodAddetto());
+			System.out.println("2");
+			preparedStatement.setString(2, product.getTipo());
+			System.out.println("3");
+			preparedStatement.setDate(3, product.getDataInizio());
+			System.out.println("4");
+			preparedStatement.setDate(4, product.getDataFine());
+			System.out.println("5");
+			preparedStatement.setInt(5, product.getoN_idOcchiale());
+			
+			System.out.println("doSave: "+ preparedStatement.toString());
+			preparedStatement.executeUpdate();
+
+			connection.commit();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		}
+		if(product.getoR_idOcchiale()!=null) {
+			//`CodiceLavorazione`, `CodiceAddetto`, `TipoLavorazione`, `DataIngresso`, `DataUscita`, `Occhiale_nuovoIDOcchiale`, `Occhiale_rottoIDOcchiale`
+			String sql="INSERT INTO "+TableName+"  VALUES(null,?,?,?,?,null,?)";
+			try {
+				connection=DriverManagerConnectionPool.getConnection();
+				preparedStatement= connection.prepareStatement(sql);
+				
+				preparedStatement.setInt(1, product.getCodAddetto());
+				preparedStatement.setString(2, product.getTipo());
+				preparedStatement.setDate(3, product.getDataInizio());
+				preparedStatement.setDate(4, product.getDataFine());
+				preparedStatement.setInt(5, product.getoR_idOcchiale());
+				
+				System.out.println("doSave: "+ preparedStatement.toString());
+				preparedStatement.executeUpdate();
+
+				connection.commit();
+			}catch (Exception e) {
+				e.printStackTrace();
+			} 
+			finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					DriverManagerConnectionPool.releaseConnection(connection);
+				}
+			}
+			}
 
 	}
 
@@ -134,11 +279,11 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 	public void doUpdate(LavorazioneLaboratorio product) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-
+		
+		if(product.getoN_idOcchiale()!=0) {
 		String insertSQL = "UPDATE " + TableName
-				+ " SET CodiceLavorazione = ?, CodiceAddetto = ?, DataIngresso= ?, DataUscita= ?, "
-				+ " PosizioneOcchiale= ?, Occhiale_nuovo.IDOcchiale= ?, Occhiale_rotto.IDOcchiale=?, "
-				+ " IDFrame= ? "
+				+ " SET CodiceLavorazione = ?, CodiceAddetto = ?,TipoLavorazione= ?, DataIngresso= ?, DataUscita= ?, "
+				+ "  Occhiale_nuovoIDOcchiale= ? "
 				+ " WHERE CodiceLavorazione = ?";
 
 		try {
@@ -151,7 +296,7 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 			preparedStatement.setDate(4, product.getDataInizio());
 			preparedStatement.setDate(5, product.getDataFine());
 			preparedStatement.setInt(6, product.getoN_idOcchiale());
-			preparedStatement.setInt(7, product.getoR_idOcchiale());
+			preparedStatement.setInt(7, product.getCodLavorazione());
 
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());
@@ -166,7 +311,39 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
-		
+		}
+		if(product.getoR_idOcchiale()!=0) {
+			String insertSQL = "UPDATE " + TableName
+					+ " SET CodiceLavorazione = ?, CodiceAddetto = ?,TipoLavorazione= ?, DataIngresso= ?, DataUscita= ?, "
+					+ "  Occhiale_rottoIDOcchiale= ? "
+					+ " WHERE CodiceLavorazione = ?";
+
+			try {
+				connection = DriverManagerConnectionPool.getConnection();
+				preparedStatement = connection.prepareStatement(insertSQL);
+				
+				preparedStatement.setInt(1, product.getCodLavorazione());
+				preparedStatement.setInt(2, product.getCodAddetto());
+				preparedStatement.setString(3, product.getTipo());
+				preparedStatement.setDate(4, product.getDataInizio());
+				preparedStatement.setDate(5, product.getDataFine());
+				preparedStatement.setInt(6, product.getoR_idOcchiale());
+				preparedStatement.setInt(7, product.getCodLavorazione());
+
+				
+				System.out.println("doUpdate: "+ preparedStatement.toString());
+				preparedStatement.executeUpdate();
+
+				connection.commit();
+			} finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					DriverManagerConnectionPool.releaseConnection(connection);
+				}
+			}
+			}
 	}
 
 	@Override

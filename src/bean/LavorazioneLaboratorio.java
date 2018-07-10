@@ -4,20 +4,33 @@ import java.sql.Date;
 
 public class LavorazioneLaboratorio {
 	
-	int codAddetto,codLavorazione,oR_idOcchiale,oN_idOcchiale;
+	Integer codAddetto,codLavorazione,oR_idOcchiale,oN_idOcchiale;
 	Date dataInizio,dataFine;
 	String tipo;
 	
-	public int getCodAddetto() {
+	public LavorazioneLaboratorio() { }
+	
+	public LavorazioneLaboratorio(Integer codLavorazione1, Integer nextInt, String tipo1, Date data, Date object2, Integer id,
+			Integer object3) {
+		codLavorazione=codLavorazione1;
+		codAddetto=nextInt;
+		tipo=tipo1;
+		dataInizio=data;
+		dataFine=object2;
+		oN_idOcchiale=id;
+		oR_idOcchiale=object3;
+		
+	}
+	public Integer getCodAddetto() {
 		return codAddetto;
 	}
-	public void setCodAddetto(int codAddetto) {
+	public void setCodAddetto(Integer codAddetto) {
 		this.codAddetto = codAddetto;
 	}
-	public int getCodLavorazione() {
+	public Integer getCodLavorazione() {
 		return codLavorazione;
 	}
-	public void setCodLavorazione(int codLavorazione) {
+	public void setCodLavorazione(Integer codLavorazione) {
 		this.codLavorazione = codLavorazione;
 	}
 	public Date getDataInizio() {
@@ -39,16 +52,16 @@ public class LavorazioneLaboratorio {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public int getoR_idOcchiale() {
+	public Integer getoR_idOcchiale() {
 		return oR_idOcchiale;
 	}
-	public void setoR_idOcchiale(int oR_idOcchiale) {
+	public void setoR_idOcchiale(Integer oR_idOcchiale) {
 		this.oR_idOcchiale = oR_idOcchiale;
 	}
-	public int getoN_idOcchiale() {
+	public Integer getoN_idOcchiale() {
 		return oN_idOcchiale;
 	}
-	public void setoN_idOcchiale(int oN_idOcchiale) {
+	public void setoN_idOcchiale(Integer oN_idOcchiale) {
 		this.oN_idOcchiale = oN_idOcchiale;
 	}
 	

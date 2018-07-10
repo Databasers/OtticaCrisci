@@ -16,6 +16,43 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 
 	private static final String TableName="Occhiale_nuovo";
 	
+	public Collection<OcchialeNuovo> doRetrieveIfNotCompleted(String order) throws SQLException{
+		Collection<OcchialeNuovo> c= new LinkedList<OcchialeNuovo>();
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String sql= "SELECT * FROM "+TableName+" WHERE DataRitiro IS NULL";
+			
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
+			ResultSet rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				OcchialeNuovo temp= new OcchialeNuovo();
+				temp.setId(rs.getInt("IDOcchiale"));
+				temp.setPrezzo(rs.getInt("Prezzo"));
+				temp.setDataRitiro(rs.getDate("DataRitiro"));
+				temp.setIdLente(rs.getInt("IDLente"));
+				temp.setIdFrame(rs.getInt("IDFrame"));
+				temp.setcF(rs.getString("CodiceFiscale"));
+				temp.setDataOrdine(rs.getDate("DataOrdine"));
+				temp.setStato(rs.getString("Stato"));
+				c.add(temp);
+			}
+		}finally {
+			try {
+				if(preparedStatement!=null)
+					preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return c;
+	}
+	
 	public Collection<OcchialeNuovo> doRetrieveByCondition(String codiceFiscale) throws SQLException{
 		Collection<OcchialeNuovo> c= new LinkedList<OcchialeNuovo>();
 		Connection connection=null;
@@ -30,9 +67,7 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			preparedStatement.setString(1, codiceFiscale);
 			ResultSet rs=preparedStatement.executeQuery();
-			if(!rs.next()) //se il resultSet è vuoto
-				c=null;
-			 do{
+			while(rs.next()) {
 				OcchialeNuovo temp= new OcchialeNuovo();
 				temp.setId(rs.getInt("IDOcchiale"));
 				temp.setPrezzo(rs.getInt("Prezzo"));
@@ -43,7 +78,7 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 				temp.setDataOrdine(rs.getDate("DataOrdine"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
-			}while(rs.next());
+			}
 		}finally {
 			try {
 				if(preparedStatement!=null)
