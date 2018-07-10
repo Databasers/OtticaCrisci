@@ -8,25 +8,8 @@
 <body>
 
 	
+<%@ include file="AdminOcchiali.jsp" %>
 
-
-	<%	String label=(String)request.getAttribute("label");
-	if(label==null){
-		%> <%@ include file="AdminCertificato.jsp" %>
-	<% } 
-	else{
-		%><p><%=label %></p> <% 
-		if(label.equalsIgnoreCase("certificato")){
-		%>
-			<%@ include file="AdminCertificato.jsp" %>
-	
-	<%	}
-		if(label.equalsIgnoreCase("occhiali")){
-			%>
-				<%@ include file="AdminCertificato.jsp" %>
-		
-		<%	}
-		} %> 
 	
 	
 	

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class LavorazioneDeposito {
 
-	int codAddetto,codLavorazione,oR_idOcchiale,oN_idOcchiale,idFrame;
+	Integer codAddetto,codLavorazione,oR_idOcchiale,oN_idOcchiale,idFrame;
 	String pos;
 	Date dataIngresso,dataUscita;
 	
@@ -23,16 +23,16 @@ public class LavorazioneDeposito {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getCodAddetto() {
+	public Integer getCodAddetto() {
 		return codAddetto;
 	}
-	public void setCodAddetto(int codAddetto) {
+	public void setCodAddetto(Integer codAddetto) {
 		this.codAddetto = codAddetto;
 	}
-	public int getCodLavorazione() {
+	public Integer getCodLavorazione() {
 		return codLavorazione;
 	}
-	public void setCodLavorazione(int codLavorazione) {
+	public void setCodLavorazione(Integer codLavorazione) {
 		this.codLavorazione = codLavorazione;
 	}
 	public String getPos() {
@@ -53,22 +53,22 @@ public class LavorazioneDeposito {
 	public void setDataUscita(Date dataUscita) {
 		this.dataUscita = dataUscita;
 	}
-	public int getoR_idOcchiale() {
+	public Integer getoR_idOcchiale() {
 		return oR_idOcchiale;
 	}
-	public void setoR_idOcchiale(int oR_idOcchiale) {
+	public void setoR_idOcchiale(Integer oR_idOcchiale) {
 		this.oR_idOcchiale = oR_idOcchiale;
 	}
-	public int getoN_idOcchiale() {
+	public Integer getoN_idOcchiale() {
 		return oN_idOcchiale;
 	}
-	public void setoN_idOcchiale(int oN_idOcchiale) {
+	public void setoN_idOcchiale(Integer oN_idOcchiale) {
 		this.oN_idOcchiale = oN_idOcchiale;
 	}
-	public int getIdFrame() {
+	public Integer getIdFrame() {
 		return idFrame;
 	}
-	public void setIdFrame(int idFrame) {
+	public void setIdFrame(Integer idFrame) {
 		this.idFrame = idFrame;
 	}
 	

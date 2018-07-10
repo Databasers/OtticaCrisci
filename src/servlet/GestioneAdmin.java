@@ -40,6 +40,8 @@ public class GestioneAdmin extends HttpServlet {
     OcchialeNuovoManager occhialeNuovo;
 	OcchialeRottoManager occhialeRotto;
 	CertificatoManager certificato;
+	LaboratorioManager managerL= new LaboratorioManager();
+	DepositoManager managerD= new DepositoManager();
 	
     public GestioneAdmin() {
         super();
@@ -65,8 +67,6 @@ public class GestioneAdmin extends HttpServlet {
 			doModificaCertificato(request,response);
 		if(action.equalsIgnoreCase("modOcchiali"))
 			doModificaOcchiali(request,response);
-		if(action.equalsIgnoreCase("cliente"))
-			doRetrieveCliente(request,response);
 		
 		RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Admin.jsp");
 		x.forward(request, response);
@@ -98,7 +98,7 @@ public class GestioneAdmin extends HttpServlet {
 		if(azione.equalsIgnoreCase("laboratorio"))
 			modifica(request, response, IDOcchialeNuovo, IDOcchialeRotto,"laboratorio",false);
 		if(azione.equalsIgnoreCase("completato")) {
-			Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
+			Date data=new Date(LocalDateTime.now().getYear()-1900, LocalDateTime.now().getMonthValue()-1, LocalDateTime.now().getDayOfMonth());
 			OcchialeNuovo occhialeN;
 			OcchialeRotto occhialeR;
 			String stato;
@@ -107,13 +107,13 @@ public class GestioneAdmin extends HttpServlet {
 				occhialeN.setDataRitiro(data);
 				stato=occhialeN.getStato();
 				occhialeN.setStato("completato");
-				occhialeNuovo.doSave(occhialeN);
+				occhialeNuovo.doUpdate(occhialeN);
 			}else {
 				occhialeR= occhialeRotto.doRetrieveByKey(IDOcchialeRotto);
 				occhialeR.setDataRitiro(data);
 				stato=occhialeR.getStato();
 				occhialeR.setStato("completato");
-				occhialeRotto.doSave(occhialeR);
+				occhialeRotto.doUpdate(occhialeR);
 			}
 			if(stato.equalsIgnoreCase("In lavorazione"))
 				modifica(request, response, IDOcchialeNuovo, IDOcchialeRotto,"deposito",true);
@@ -124,29 +124,58 @@ public class GestioneAdmin extends HttpServlet {
 	}
 		
 	private void modifica(HttpServletRequest request, HttpServletResponse response, Integer IDOcchialeNuovo, Integer IDOcchialeRotto,String tabella,boolean completato) throws SQLException {
-		System.out.println("Inizio la modifica");
+		System.out.println("Inizio la modifica: ON="+IDOcchialeNuovo+" OR="+IDOcchialeRotto+" DoveInserire="+tabella+" completato="+completato);
 		LavorazioneLaboratorio l;
 		LavorazioneDeposito d;
-		LaboratorioManager managerL= new LaboratorioManager();
-		DepositoManager managerD= new DepositoManager();
-		Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
+		@SuppressWarnings("deprecation")
+		Date data=new Date(LocalDateTime.now().getYear()-1900, LocalDateTime.now().getMonthValue()-1, LocalDateTime.now().getDayOfMonth());
 		if(tabella.equalsIgnoreCase("laboratorio")) {
+			System.out.println("Inizio in laboratorio");
 			d=managerD.doRetrieveSpecificProcessing(IDOcchialeNuovo, IDOcchialeRotto, null);
+			System.out.println("Processato il dato");
 			d.setDataUscita(data);
-			managerD.doSave(d);
+			managerD.doUpdate(d);
 			if(!completato) {
+				System.out.println("Entro dopo completato");
 				l= new LavorazioneLaboratorio(null, 3, "montaggio", data, null, IDOcchialeNuovo, IDOcchialeRotto);
-				managerL.doSave(l);
+				System.out.println("Salvo in laboratorio");
+				managerL.doSaveAI(l);
+				System.out.println("ON:" + IDOcchialeNuovo + "  OR:" + IDOcchialeRotto);
+				if(IDOcchialeNuovo!=null) {
+					OcchialeNuovo on=occhialeNuovo.doRetrieveByKey(IDOcchialeNuovo);
+					on.setStato("In Lavorazione");
+					occhialeNuovo.doUpdate(on);
+				}
+				else {
+					OcchialeRotto on=occhialeRotto.doRetrieveByKey(IDOcchialeRotto);
+					on.setStato("In Lavorazione");
+					occhialeRotto.doUpdate(on);
+				}	
 			}
 			
 		}	
 		if(tabella.equalsIgnoreCase("deposito")) {
+			System.out.println("Inizio in deposito");
 			l=managerL.doRetrieveSpecificProcessing(IDOcchialeNuovo, IDOcchialeRotto);
+			System.out.println("Processato il dato");
 			l.setDataFine(data);
-			managerL.doSave(l);
+			System.out.println("ID ON:"+l.getoN_idOcchiale()+"  OR:" +l.getoR_idOcchiale());
+			managerL.doUpdate(l);
 			if(!completato) {
+				System.out.println("Entro dopo completato");
 				d= new LavorazioneDeposito(null, 7, IDOcchialeNuovo, IDOcchialeRotto, null, "5x", data, null);
-				managerD.doSave(d);
+				System.out.println("Salvo in deposito");
+				managerD.doSaveAI(d);
+				if(IDOcchialeNuovo!=null) {
+					OcchialeNuovo on=occhialeNuovo.doRetrieveByKey(IDOcchialeNuovo);
+					on.setStato("In Lavorazione");
+					occhialeNuovo.doUpdate(on);
+				}
+				else {
+					OcchialeRotto on=occhialeRotto.doRetrieveByKey(IDOcchialeRotto);
+					on.setStato("In Lavorazione");
+					occhialeRotto.doUpdate(on);
+				}
 			}
 		}	
 		

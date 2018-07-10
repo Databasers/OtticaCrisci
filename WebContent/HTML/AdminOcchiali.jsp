@@ -33,16 +33,12 @@
 			  <td>Deposito
 			  <%} %>
 			<td><%=c.getDataOrdine() %>
-			<td><select name="spostamento"> 
-				<option value="completato">completato 
+			<td><a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=completato&tabella=occhiale_nuovo&code=<%=c.getId() %>"> Completato </a>
 				<%if(c.getStato().equalsIgnoreCase("In lavorazione")){ %>
-						<option value="deposito" selected>In deposito				
+						<a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=deposito&tabella=occhiale_nuovo&code=<%=c.getId() %>"> Deposito </a>				
 				<%} else{ %>
-						<option value="laboratorio" >In laboratorio
+						<a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=laboratorio&tabella=occhiale_nuovo&code=<%=c.getId() %>"> Laboratorio </a>
 					<%} %>
-					</select>
-			<td><a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&tabella=occhiale_nuovo&code=<%=c.getId() %>">Modifica</a>
-			<td>
 		</tr>
 		<% } %>
 		<%
@@ -59,16 +55,12 @@
 			  <td>Deposito
 			  <%} %>
 			<td>
-			<td><select name="spostamento"> 
-				<option value="completato">completato 
+			<td><a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=completato&tabella=occhiale_rotto&code=<%=c.getId() %>"> Completato </a>
 				<%if(c.getStato().equalsIgnoreCase("In lavorazione")){ %>
-						<option value="deposito" selected>In deposito				
+						<a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=deposito&tabella=occhiale_rotto&code=<%=c.getId() %>"> Deposito </a>				
 				<%} else{ %>
-						<option value="laboratorio" >In laboratorio
+						<a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=laboratorio&tabella=occhiale_rotto&code=<%=c.getId() %>"> Laboratorio </a>
 					<%} %>
-					</select>
-			<td><a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&tabella=occhiale_rotto&code=<%=c.getId() %>">Modifica</a>
-			<td>
 		</tr>
 		<% } %>
 	</table>

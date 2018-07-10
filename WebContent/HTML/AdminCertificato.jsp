@@ -19,6 +19,7 @@
 		}
 		
 	%>
+	
 	<table border="1px solid black">
 		<%
 		for(Certificato c: elenco){
