@@ -200,7 +200,6 @@ public class DepositoManager  implements ProductModel<LavorazioneDeposito, Integ
 					preparedStatement.setDate(3, product.getDataUscita());
 					preparedStatement.setString(4, product.getPos());
 					preparedStatement.setInt(5, product.getoR_idOcchiale());
-					preparedStatement.setInt(6, product.getCodLavorazione());
 					
 					
 					System.out.println("doUpdate: "+ preparedStatement.toString());
@@ -227,8 +226,6 @@ public class DepositoManager  implements ProductModel<LavorazioneDeposito, Integ
 					preparedStatement.setDate(3, product.getDataUscita());
 					preparedStatement.setString(4, product.getPos());
 					preparedStatement.setInt(5, product.getIdFrame());
-					preparedStatement.setInt(6, product.getCodLavorazione());
-					
 					
 					System.out.println("doUpdate: "+ preparedStatement.toString());
 					preparedStatement.executeUpdate();
@@ -294,7 +291,6 @@ public class DepositoManager  implements ProductModel<LavorazioneDeposito, Integ
 					preparedStatement.setDate(4, product.getDataUscita());
 					preparedStatement.setString(5, product.getPos());
 					preparedStatement.setInt(6, product.getoR_idOcchiale());
-					preparedStatement.setInt(7, product.getCodLavorazione());
 					
 					
 					System.out.println("doUpdate: "+ preparedStatement.toString());
@@ -322,7 +318,6 @@ public class DepositoManager  implements ProductModel<LavorazioneDeposito, Integ
 					preparedStatement.setDate(4, product.getDataUscita());
 					preparedStatement.setString(5, product.getPos());
 					preparedStatement.setInt(6, product.getIdFrame());
-					preparedStatement.setInt(7, product.getCodLavorazione());
 					
 					
 					System.out.println("doUpdate: "+ preparedStatement.toString());

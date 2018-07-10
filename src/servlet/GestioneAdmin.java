@@ -74,7 +74,12 @@ public class GestioneAdmin extends HttpServlet {
 			// TODO: handle exception
 		}
 	}
-	
+	/**
+	 * Funziona, non toccare nulla
+	 * @param request
+	 * @param response
+	 * @throws SQLException
+	 */
 	private void doModificaOcchiali(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		System.out.println("Inizio la modifica degli occhiali");
 		String tabella=request.getParameter("tabella");
@@ -129,6 +134,7 @@ public class GestioneAdmin extends HttpServlet {
 		LavorazioneDeposito d;
 		@SuppressWarnings("deprecation")
 		Date data=new Date(LocalDateTime.now().getYear()-1900, LocalDateTime.now().getMonthValue()-1, LocalDateTime.now().getDayOfMonth());
+		
 		if(tabella.equalsIgnoreCase("laboratorio")) {
 			System.out.println("Inizio in laboratorio");
 			d=managerD.doRetrieveSpecificProcessing(IDOcchialeNuovo, IDOcchialeRotto, null);
@@ -168,12 +174,12 @@ public class GestioneAdmin extends HttpServlet {
 				managerD.doSaveAI(d);
 				if(IDOcchialeNuovo!=null) {
 					OcchialeNuovo on=occhialeNuovo.doRetrieveByKey(IDOcchialeNuovo);
-					on.setStato("In Lavorazione");
+					on.setStato("In Deposito");
 					occhialeNuovo.doUpdate(on);
 				}
 				else {
 					OcchialeRotto on=occhialeRotto.doRetrieveByKey(IDOcchialeRotto);
-					on.setStato("In Lavorazione");
+					on.setStato("In Deposito");
 					occhialeRotto.doUpdate(on);
 				}
 			}

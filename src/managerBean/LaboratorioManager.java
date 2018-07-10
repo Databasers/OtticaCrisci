@@ -314,7 +314,7 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 		}
 		if(product.getoR_idOcchiale()!=0) {
 			String insertSQL = "UPDATE " + TableName
-					+ " SET CodiceLavorazione = ?, CodiceAddetto = ?,TipoLavorazione= ? DataIngresso= ?, DataUscita= ?, "
+					+ " SET CodiceLavorazione = ?, CodiceAddetto = ?,TipoLavorazione= ?, DataIngresso= ?, DataUscita= ?, "
 					+ "  Occhiale_rottoIDOcchiale= ? "
 					+ " WHERE CodiceLavorazione = ?";
 

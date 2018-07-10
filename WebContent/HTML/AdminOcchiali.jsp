@@ -12,14 +12,19 @@
 <%
 		Collection<OcchialeNuovo> elencoN=(Collection<OcchialeNuovo>)request.getAttribute("occhialiNuovi");
 		Collection<OcchialeRotto> elencoR=(Collection<OcchialeRotto>)request.getAttribute("occhialiRotti");
-		if(elencoN==null || elencoR==null){
+		if(elencoN==null && elencoR==null){
 			response.sendRedirect("/OtticaCrisci/GestioneAdmin?action=occhiali");
 			return;
 		}
-		
+	
+	if(elencoN.isEmpty() && elencoR.isEmpty()){
+		%><h3>Non ci sono ordini da gestire</h3>
+	<%} 
+	else{
 	%>
 	<table border="1px solid black">
 		<%
+		if(!elencoN.isEmpty()){
 		for(OcchialeNuovo c: elencoN){
 		%>
 		<tr>
@@ -40,8 +45,9 @@
 						<a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=laboratorio&tabella=occhiale_nuovo&code=<%=c.getId() %>"> Laboratorio </a>
 					<%} %>
 		</tr>
-		<% } %>
+		<% }} %>
 		<%
+		if(!elencoR.isEmpty()){
 		for(OcchialeRotto c: elencoR){
 		%>
 		<tr>
@@ -54,7 +60,7 @@
 			  %>
 			  <td>Deposito
 			  <%} %>
-			<td>
+			<td><%=c.getDataConsegna() %>
 			<td><a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=completato&tabella=occhiale_rotto&code=<%=c.getId() %>"> Completato </a>
 				<%if(c.getStato().equalsIgnoreCase("In lavorazione")){ %>
 						<a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=deposito&tabella=occhiale_rotto&code=<%=c.getId() %>"> Deposito </a>				
@@ -62,7 +68,7 @@
 						<a href="/OtticaCrisci/GestioneAdmin?action=modOcchiali&spostamento=laboratorio&tabella=occhiale_rotto&code=<%=c.getId() %>"> Laboratorio </a>
 					<%} %>
 		</tr>
-		<% } %>
+		<% }}} %>
 	</table>
 
 </body>

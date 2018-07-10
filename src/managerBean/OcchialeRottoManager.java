@@ -31,9 +31,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			
 			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			ResultSet rs=preparedStatement.executeQuery();
-			if(!rs.next()) //se il resultSet è vuoto
-				c=null;
-			 do{
+			while(rs.next()) {
 				OcchialeRotto temp= new OcchialeRotto();
 				temp.setId(rs.getInt("IDOcchiale"));
 				temp.setPrezzo(rs.getInt("Prezzo"));
@@ -43,7 +41,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setcF(rs.getString("CodiceFiscale"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
-			}while(rs.next());
+			}
 		}finally {
 			try {
 				if(preparedStatement!=null)
@@ -70,9 +68,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			preparedStatement.setString(1, codiceFiscale);
 			ResultSet rs=preparedStatement.executeQuery();
-			if(!rs.next()) //se il resultSet è vuoto
-				c=null;
-			 do{
+			while(rs.next()) {
 				OcchialeRotto temp= new OcchialeRotto();
 				temp.setId(rs.getInt("IDOcchiale"));
 				temp.setPrezzo(rs.getInt("Prezzo"));
@@ -82,7 +78,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setcF(rs.getString("CodiceFiscale"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
-			}while(rs.next());
+			}
 		}finally {
 			try {
 				if(preparedStatement!=null)
@@ -102,7 +98,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		PreparedStatement preparedStatement=null;
 		OcchialeRotto temp=new OcchialeRotto();
 		
-		String sql="SELECT* FROM "+TableName+" WHERE Id=?  ";
+		String sql="SELECT* FROM "+TableName+" WHERE IdOcchiale=?  ";
 		
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
@@ -221,7 +217,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		String insertSQL = "UPDATE " + TableName
 				+ " SET IDOcchiale = ?, Prezzo = ?, DataRitiro= ?, DataConsegna = ?, EntitàDanno= ?, "
 				+ " CodiceFiscale= ?, Stato=  ? "
-				+ " WHERE Id = ?";
+				+ " WHERE IdOcchiale = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -258,7 +254,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + TableName + " WHERE Id = ?";
+		String deleteSQL = "DELETE FROM " + TableName + " WHERE IdOcchiale = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();

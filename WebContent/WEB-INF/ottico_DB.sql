@@ -162,7 +162,7 @@ CREATE TABLE `lavorazione_deposito` (
 
 LOCK TABLES `lavorazione_deposito` WRITE;
 /*!40000 ALTER TABLE `lavorazione_deposito` DISABLE KEYS */;
-INSERT INTO `lavorazione_deposito` VALUES (1,5,'2017-12-05','2017-12-15','A1',1,NULL,NULL),(2,5,'2017-04-01','2017-04-11','B3',2,NULL,NULL),(3,4,'2017-12-30','2018-01-08','Z1',NULL,1,NULL),(4,2,'2017-11-25','2017-11-30','Z2',NULL,2,NULL),(5,4,'2017-09-05','2017-10-05','C11',NULL,NULL,16),(6,13,'2017-03-16','2017-05-16','B12',NULL,NULL,17),(9,2,'2017-09-30',NULL,'Z3',NULL,4,NULL),(11,12,'2017-06-03',NULL,'A8',6,NULL,NULL),(12,12,'2017-05-05',NULL,'C6',7,NULL,NULL),(13,5,'2017-09-01','2017-09-08','C14',3,NULL,NULL),(14,5,'2017-10-08','2017-10-15','B5',4,NULL,NULL),(15,12,'2017-11-09','2017-11-11','C6',5,NULL,NULL),(16,1,'2018-01-11',NULL,'X',8,NULL,NULL),(17,1,'2018-01-11',NULL,'X',NULL,NULL,13),(18,1,'2018-01-11',NULL,'X',NULL,NULL,14);
+INSERT INTO `lavorazione_deposito` VALUES (1,5,'2017-12-05','2017-12-15','A1',1,NULL,NULL),(2,5,'2017-04-01','2017-04-11','B3',2,NULL,NULL),(3,4,'2017-12-30','2018-01-08','Z1',NULL,1,NULL),(4,2,'2017-11-25','2017-11-30','Z2',NULL,2,NULL),(5,4,'2017-09-05','2017-10-05','C11',NULL,NULL,16),(6,13,'2017-03-16','2017-05-16','B12',NULL,NULL,17),(9,2,'2017-09-30',NULL,'Z3',NULL,4,NULL),(11,12,'2017-06-03','2018-07-10','A8',6,NULL,NULL),(12,12,'2017-05-05',NULL,'C6',7,NULL,NULL),(13,5,'2017-09-01','2017-09-08','C14',3,NULL,NULL),(14,5,'2017-10-08','2017-10-15','B5',4,NULL,NULL),(15,12,'2017-11-09','2017-11-11','C6',5,NULL,NULL),(16,1,'2018-01-11',NULL,'X',8,NULL,NULL),(17,1,'2018-01-11',NULL,'X',NULL,NULL,13),(18,1,'2018-01-11',NULL,'X',NULL,NULL,14);
 /*!40000 ALTER TABLE `lavorazione_deposito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +186,7 @@ CREATE TABLE `lavorazione_laboratorio` (
   KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rottoIDOcchiale`),
   CONSTRAINT `lavorazione_laboratorio_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `lavorazione_laboratorio_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +195,7 @@ CREATE TABLE `lavorazione_laboratorio` (
 
 LOCK TABLES `lavorazione_laboratorio` WRITE;
 /*!40000 ALTER TABLE `lavorazione_laboratorio` DISABLE KEYS */;
-INSERT INTO `lavorazione_laboratorio` VALUES (1,11,'riparazione','2017-11-05',NULL,NULL,3),(2,7,'riparazione','2017-09-09','2017-09-30',NULL,4),(3,5,'riparazione','2017-12-01','2017-12-30',NULL,1),(4,4,'riparazione','2017-11-05','2017-11-25',NULL,2),(5,1,'riparazione','2017-08-10',NULL,NULL,5),(6,11,'montaggio','2017-11-29','2017-12-05',1,NULL),(7,11,'montaggio','2017-03-20','2017-04-01',2,NULL),(8,1,'montaggio','2017-03-29','2018-03-29',8,NULL),(9,4,'montaggio','2017-12-30',NULL,9,NULL),(10,5,'montaggio','2017-11-09',NULL,10,NULL),(11,6,'montaggio','2017-05-20','2017-06-03',6,NULL),(12,7,'montaggio','2017-04-20','2017-05-05',7,NULL),(13,11,'montaggio','2017-08-20','2017-09-01',3,NULL),(14,11,'montaggio','2017-09-30','2017-10-08',4,NULL),(15,10,'montaggio','2017-10-31','2017-11-09',5,NULL),(16,1,'montaggio','2018-03-29',NULL,11,NULL);
+INSERT INTO `lavorazione_laboratorio` VALUES (1,11,'riparazione','2017-11-05',NULL,NULL,3),(2,7,'riparazione','2017-09-09','2017-09-30',NULL,4),(3,5,'riparazione','2017-12-01','2017-12-30',NULL,1),(4,4,'riparazione','2017-11-05','2017-11-25',NULL,2),(5,1,'riparazione','2017-08-10',NULL,NULL,5),(6,11,'montaggio','2017-11-29','2017-12-05',1,NULL),(7,11,'montaggio','2017-03-20','2017-04-01',2,NULL),(8,1,'montaggio','2017-03-29','2018-03-29',8,NULL),(9,4,'montaggio','2017-12-30',NULL,9,NULL),(10,5,'montaggio','2017-11-09',NULL,10,NULL),(11,6,'montaggio','2017-05-20','2017-06-03',6,NULL),(12,7,'montaggio','2017-04-20','2017-05-05',7,NULL),(13,11,'montaggio','2017-08-20','2017-09-01',3,NULL),(14,11,'montaggio','2017-09-30','2017-10-08',4,NULL),(15,10,'montaggio','2017-10-31','2017-11-09',5,NULL),(16,1,'montaggio','2018-03-29',NULL,11,NULL),(17,3,'montaggio','2018-07-10',NULL,6,NULL);
 /*!40000 ALTER TABLE `lavorazione_laboratorio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,7 +262,7 @@ CREATE TABLE `occhiale_nuovo` (
 
 LOCK TABLES `occhiale_nuovo` WRITE;
 /*!40000 ALTER TABLE `occhiale_nuovo` DISABLE KEYS */;
-INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T','0000-00-00','Consegnato'),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T','0000-00-00','Consegnato'),(6,300,NULL,6,6,'LRIDDA97E54F839T','0000-00-00','In Deposito'),(7,400,NULL,7,7,'RMMNTN96T21F839N','0000-00-00','In Deposito'),(8,200,NULL,8,8,'RMMNTN96T21F839N','0000-00-00','In Deposito'),(9,350,NULL,9,9,'LRANTR94S69B963J','0000-00-00','In Lavorazione'),(10,500,NULL,10,10,'LRANTR94S69B963J','0000-00-00','In Lavorazione'),(11,169,NULL,11,18,'CRSLGU97P06F924H','0000-00-00','In Lavorazione');
+INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T','2018-06-12','Consegnato'),(6,300,NULL,6,6,'LRIDDA97E54F839T','2018-06-12','In Deposito'),(7,400,NULL,7,7,'RMMNTN96T21F839N','2018-06-12','In Deposito'),(8,200,NULL,8,8,'RMMNTN96T21F839N','2018-06-12','In Deposito'),(9,350,NULL,9,9,'LRANTR94S69B963J','2018-06-12','In Lavorazione'),(10,500,NULL,10,10,'LRANTR94S69B963J','2018-06-12','In Lavorazione'),(11,169,NULL,11,18,'CRSLGU97P06F924H','2018-06-12','In Lavorazione');
 /*!40000 ALTER TABLE `occhiale_nuovo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +293,7 @@ CREATE TABLE `occhiale_rotto` (
 
 LOCK TABLES `occhiale_rotto` WRITE;
 /*!40000 ALTER TABLE `occhiale_rotto` DISABLE KEYS */;
-INSERT INTO `occhiale_rotto` VALUES (1,250,'2018-01-08','2017-12-01','grave danno alla lente','GVNDRT78S14F839Z','Consegnato'),(2,100,'2017-11-30','2017-11-05','lieve danno alla lente','PLADCN80E11A089R','Consegnato'),(3,70,NULL,'2017-11-05','lieve danno al frame','FRNSST80R50C129B','In Laboratorio'),(4,70,NULL,'2017-09-09','lieve danno al frame','SLVFNC81A41A509P','In Deposito'),(5,100,NULL,'2017-08-10','lieve danno alla lente','LGUCSC97P06F924V','In Laboratorio');
+INSERT INTO `occhiale_rotto` VALUES (1,250,'2018-01-08','2017-12-01','grave danno alla lente','GVNDRT78S14F839Z','Consegnato'),(2,100,'2017-11-30','2017-11-05','lieve danno alla lente','PLADCN80E11A089R','Consegnato'),(3,70,NULL,'2017-11-05','lieve danno al frame','FRNSST80R50C129B','In Lavorazione'),(4,70,NULL,'2017-09-09','lieve danno al frame','SLVFNC81A41A509P','In Deposito'),(5,100,NULL,'2017-08-10','lieve danno alla lente','LGUCSC97P06F924V','In Lavorazione');
 /*!40000 ALTER TABLE `occhiale_rotto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -306,4 +306,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-09 21:54:19
+-- Dump completed on 2018-07-10 11:32:21

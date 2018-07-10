@@ -29,9 +29,7 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 			
 			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			ResultSet rs=preparedStatement.executeQuery();
-			if(!rs.next()) //se il resultSet è vuoto
-				c=null;
-			 do{
+			while(rs.next()) {
 				OcchialeNuovo temp= new OcchialeNuovo();
 				temp.setId(rs.getInt("IDOcchiale"));
 				temp.setPrezzo(rs.getInt("Prezzo"));
@@ -42,7 +40,7 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 				temp.setDataOrdine(rs.getDate("DataOrdine"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
-			}while(rs.next());
+			}
 		}finally {
 			try {
 				if(preparedStatement!=null)
@@ -69,9 +67,7 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 			System.out.println("doRetrieveByCondition: "+ preparedStatement.toString());
 			preparedStatement.setString(1, codiceFiscale);
 			ResultSet rs=preparedStatement.executeQuery();
-			if(!rs.next()) //se il resultSet è vuoto
-				c=null;
-			 do{
+			while(rs.next()) {
 				OcchialeNuovo temp= new OcchialeNuovo();
 				temp.setId(rs.getInt("IDOcchiale"));
 				temp.setPrezzo(rs.getInt("Prezzo"));
@@ -82,7 +78,7 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 				temp.setDataOrdine(rs.getDate("DataOrdine"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
-			}while(rs.next());
+			}
 		}finally {
 			try {
 				if(preparedStatement!=null)
