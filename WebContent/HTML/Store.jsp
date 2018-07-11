@@ -30,7 +30,7 @@
 	//Qui va cambiato, personalmente penserei ad un metodo che mostra solo da una posizione ad un altra in questo modo possiamo fare delle
 	//"pagine" nel negozio che possono essere anche di lunghezza diverse in base a cosa preferisce l'utente. Tutto questo sarebbe fantastico
 	//ma io di certo non tengo sbatta di mettermi a fare una cosa del genere da solo senza chiedere a voi, che poi sbaglio qualcosa e devo
-	//riscrivere tutto, dio che palle la vita.
+	//riscrivere tutto. Dio che palle la vita.
 		if(select == "colonna"){%>
 			<hr/>
 			<%while (!lista.isEmpty()) {

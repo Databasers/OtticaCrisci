@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@page import="com.sun.xml.internal.txw2.Document"%>
 <%@page import="org.apache.catalina.ant.SessionsTask"%>
-<%@page import="bean.SessioneUtente"%>
 <%@page import="bean.*"%>
 <%@page import="java.util.*"%>
 <%@page import="it.unisa.model.Carrello"%>
@@ -16,9 +15,6 @@
 </head>
 <body>
 	<%!SessioneUtente su = null;%>
-	
-	
-
 	
 	<% 
 	su =(SessioneUtente) session.getAttribute("Utente");
@@ -45,7 +41,7 @@
 		}
 	%>
 	
-	
+
 	<div id = "Contenitore-menu">
 		<div id = "Selettore">
 			<ul>
@@ -56,33 +52,44 @@
 		
 		
 		
-		<div id = "Ordini" class="Tab" >
+		<div id = "Ordini">
 		<%if(!elencoN.isEmpty()) {%>
+		Occhiali nuovi
 		<table>
 			<%for(OcchialeNuovo e: elencoN){ %>
 			<tr>
-			
-				<!-- Inserisci le cose in tabella e il pulsante per aprire il riepilogo -->
-			
+				<td>
+				
+				<p ><%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
+				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeNuovo');">
+				Mostra di più</input>
+				
+				</td>
 			</tr>
 			<%} %>
 		</table>
 		<%}
 		    if(!elencoR.isEmpty()){ %>
+		    Occhiali rotti
 		   <table>
 		   		<%for(OcchialeRotto e: elencoR){ %>
 		   		<tr>
-		   			<!-- Inserisci le cose in tabella e il pulsante per aprire il riepilogo -->
+		   			<td>
+				
+						<p><%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
+						<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeRotto');">
+						Mostra di più</input>
+					</td>
 		   		</tr>
 		   	<%} %>
 		   </table>
 		   <%}%>
-			Cose che hanno a che fare con gli ordini
 		</div>
+		<p id="modAjax"><p>
 		
 		
 		
-		<div id = "Anagrafica" class="Tab" style="display: none;">
+		<div id = "Anagrafica">
 			<p><!-- Nome utente, codice fiscale --></p>
 			<form name = "password">
 				
@@ -94,7 +101,7 @@
 			</form> 
 		</div>
 	</div>
-
+	<br>
   
   <!-- Qui inizia la pagina di Servlet, dentro c'è un esempio di chiamata ajax -->
   
@@ -112,9 +119,15 @@
 function displayResults(listXML, id) {
 	try { 
 		var obj = document.getElementById(id);		
+		var tag =["URLImmagine" ,"IDFrame", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"]
+		
 		if(obj != null) {
-			var rdfs = listXML.getElementsByTagName("IDLente")[0].firstChild.nodeValue; 
-			obj.innerHTML =rdfs;
+			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
+			obj.innerHTML ="<img src =" +rdfs +">";
+			for( var i = 1; i < tag.length; i++){
+				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
+				obj.innerHTML += " " + rdfs;
+			}
 			console.log("Handle results");
 		}
 	} catch(e1) {
@@ -127,12 +140,9 @@ function displayResults(listXML, id) {
 </head>
 <body>
 
-	<!-- 
-		Manco questa abbiamo visto per motivi randomici, si accettano proposte
-	 -->
 	 
 	 <%
-	 	Boolean aggiunto =(Boolean)request.getAttribute("certificatoInserito");
+	 	Boolean aggiunto = (Boolean) request.getAttribute("certificatoInserito");
 	 	if(aggiunto!=null)
 	 		if(aggiunto){
 	 			%>
@@ -140,24 +150,17 @@ function displayResults(listXML, id) {
 	 		<% }
 	 		else{
 	 			%>
-	 			<h3>Certificatoo non aggiunto</h3>
+	 			<div><h3>Inserisci certificato</h3>
+					<form id="certificato" action="http://localhost:8080/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
+						<input type="file" accept=".jpg,.pdf" name="certificato">
+						<input type="submit">
+					</form>
+				</div>
 	 		<% }
 	 	%>
 
-
-	<form id="certificato" action="http://localhost:8080/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
-		<input type="file" accept=".jpg,.pdf" name="certificato">
-		<input type="submit">
-	</form>
 	
 
-	<!-- Questo pulsante prende dal server le informazioni su un occchiale nuovo,le salva in xml e le invia. Per usarlo
-		inviare i parametri nella forma idOcchiale-occchialeNuovo 
-		Basta semplicemente implementarlo per ogni ordine e collegarlo ad un <p>, cosa già fatta ma ovviamente da redenre
-		meglio a schermo-->
-	<br><br>
-	<p id="modAjax"> </p>
-	<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '3-occhialeNuovo');">
 
 </body>
 </html>

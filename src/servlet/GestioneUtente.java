@@ -141,7 +141,7 @@ public class GestioneUtente extends HttpServlet {
 		}
 		risposta.append("</info>");
 		response.getWriter().write(risposta.toString());
-		System.out.println("Ajax server completato");
+		System.out.println("Accesso terminato");
 	}
 
 	/**

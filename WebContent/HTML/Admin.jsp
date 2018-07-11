@@ -18,11 +18,6 @@
 		}
 	%>
 
-	<!-- 
-		Ma non ne ho proprio idea, qua non abbiamo visto nulla
-		Anyway, Deve poter inserire nuovi frame, gestire gli ordini e le operazioni di lav.Laboratorio e lav. Deposito
-		Deve poter verificare i certificati e bannare gli utenti come solo un vero amministratore sa fare 
-	 -->
 	 <script>
 	 	function nascondi(a){
 	 		var ogg = ['Frame', 'Ordini', 'Certificati', 'Utenti'];
@@ -30,7 +25,6 @@
 	 			$("#"+ogg[i]).hide();
 	 		}
 	 		$("#"+a).fadeIn();
-	 		
 	 	}
 	 </script>
 	 
