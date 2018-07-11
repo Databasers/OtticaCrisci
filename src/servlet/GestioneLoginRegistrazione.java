@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Admin;
 import bean.Cliente;
 import bean.SessioneUtente;
 import it.unisa.model.DriverManagerConnectionPool;
+import managerBean.AdminManager;
 import managerBean.ClienteManager;
 
 @WebServlet("/GestioneLogin")
@@ -23,11 +25,12 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
 	ClienteManager cManager;
+	AdminManager aManager;
    
     public GestioneLoginRegistrazione() {
         super();
         cManager= new ClienteManager();
-        
+        aManager= new AdminManager();
     }
 
 	
@@ -50,7 +53,11 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 				doLoginAdmin(request, response);
 			}
 			if(((String)request.getParameter("action")).equals("registrazione")) {
-				doRegistrazione(request, response);
+				try {
+					doRegistrazione(request, response);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -74,28 +81,18 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		x.forward(request, response); 
 	}
 
-	//Bisogna eliminare gli accessi al db
 	private void doLoginAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username, password;
 		username=request.getParameter("username");
 		password=request.getParameter("password");
+		
 		try {
-			Connection connessione=DriverManagerConnectionPool.getConnection();
-			PreparedStatement statement;
-			String query;
-				query="SELECT CodiceFiscale,Nome,cognome,Password FROM Cliente WHERE CodiceFiscale=? AND Password=?";
-				statement=connessione.prepareStatement(query);
-				statement.setString(1, username);
-				statement.setString(2, password);
-				System.out.println("Executing query: " + statement.toString());
-				ResultSet rs=statement.executeQuery();
-				if(!rs.next()) throw new Exception(); //eccezione se non c'è corrispondenza nel db
-				Cliente c= new Cliente(rs.getString("CodiceFiscale"), rs.getString("Nome"), rs.getString("Cognome"), rs.getString("Password"));
+			Admin c=aManager.doRetrieveIfRegistered(username, password);
 			SessioneUtente su= new SessioneUtente(c, "Admin"); //creo l'oggetto sessione
-			request.getSession().setAttribute("admin", su);
+			request.getSession().setAttribute("Utente", su);
 			response.sendRedirect(request.getContextPath() + "\\HTML\\Admin.html"); 	
 		} catch (Exception e) {
-			System.out.println("Query errata");
+			System.out.println("Utente non registrato");
 			request.setAttribute("Done", "falso");
 			RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Login.jsp"); //ritento il login
 			x.forward(request, response);
@@ -109,13 +106,13 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		username=request.getParameter("username");
 		password=request.getParameter("password");
 		try {
-			Cliente c=checkLogin(username,password); //controllo se i dati sono corretti
+			Cliente c=cManager.doRetrieveIfRegistered(username, password);
 			SessioneUtente su= new SessioneUtente(c, "Utente"); //creo l'oggetto sessione
 			request.getSession().setAttribute("Utente", su);
 			System.out.println("Login effettuato!");
 			response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 	
 		} catch (Exception e) {
-			System.out.println("Query errata");
+			System.out.println("Utente non registrato");
 			request.setAttribute("Done", "falso");
 			RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Login.jsp"); //ritento il login
 			x.forward(request, response);
@@ -123,58 +120,31 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 	}
 	
 	
-	private void doRegistrazione(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	private void doRegistrazione(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException
 	{
 		String cf,nome,cognome,password;
 		cf=request.getParameter("codicefiscale");
 		password=request.getParameter("password");
 		cognome=request.getParameter("cognome");
 		nome=request.getParameter("nome");
-		
-		//controllo se esiste un Utente con lo stesso codice fiscale
-		String sql="Select codicefiscale from cliente where codicefiscale=?";
-		Connection connessione;
+		Cliente c;
 		try {
-			connessione = DriverManagerConnectionPool.getConnection();
-			PreparedStatement statement;
-			statement=connessione.prepareStatement(sql);
-			statement.setString(1, cf);
-			ResultSet rs=statement.executeQuery();
-			if(!rs.next()) { //se non esistono altri utenti con lo stesso codice
-				System.out.println("Registrazione Utente");
-				Cliente c=new Cliente(cf,nome,cognome,password);
-				cManager.doSave(c);
-				SessioneUtente su= new SessioneUtente(c, "Utente");
-				request.getSession().setAttribute("Utente",su);
-				response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
-			}
-			else
-			{
+				c=cManager.doRetrieveByKey(cf);
 				System.out.println("Utente già registrato");
 				request.setAttribute("alreadyRegistered","true"); //Già registrato
 				RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Login.jsp");
 				x.forward(request, response); 
-			}
 		} catch (SQLException e) {
-		
-			e.printStackTrace();
+			
+			System.out.println("Registrazione Utente");
+			c=new Cliente(cf,nome,cognome,password,0);
+			cManager.doSave(c);
+			SessioneUtente su= new SessioneUtente(c, "Utente");
+			request.getSession().setAttribute("Utente",su);
+			response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
 		}
 	}
-	
-	private Cliente checkLogin(String username, String password) throws Exception {
-		Connection connessione=DriverManagerConnectionPool.getConnection();
-		PreparedStatement statement;
-		String query;
-			query="SELECT CodiceFiscale,Nome,cognome,Password FROM Cliente WHERE CodiceFiscale=? AND Password=?";
-			statement=connessione.prepareStatement(query);
-			statement.setString(1, username);
-			statement.setString(2, password);
-			System.out.println("Executing query: " + statement.toString());
-			ResultSet rs=statement.executeQuery();
-			if(!rs.next()) throw new Exception(); //eccezione se non c'è corrispondenza nel db
-			Cliente c= new Cliente(rs.getString("CodiceFiscale"), rs.getString("Nome"), rs.getString("Cognome"), rs.getString("Password"));
-			return c;
-	}
+
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
