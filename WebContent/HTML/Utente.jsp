@@ -63,7 +63,7 @@
 				<p ><%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
 				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeNuovo');">
 				Mostra di più</input>
-				<p id="modAjax"><p>
+				
 				</td>
 			</tr>
 			<%} %>
@@ -79,13 +79,13 @@
 						<p><%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
 						<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeRotto');">
 						Mostra di più</input>
-						<p id ="modAjax"></p>
 					</td>
 		   		</tr>
 		   	<%} %>
 		   </table>
 		   <%}%>
 		</div>
+		<p id="modAjax"><p>
 		
 		
 		
