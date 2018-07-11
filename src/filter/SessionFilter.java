@@ -8,8 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.SessioneUtente;
 
@@ -46,9 +48,11 @@ public class SessionFilter implements Filter {
 		if(su==null || su.getRuolo().equalsIgnoreCase("Admin")) {
 			httpResponse.sendRedirect("HTML/Login.jsp");
 		}
-		else
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
+		else {
+			
+			chain.doFilter(request, response);
+		}
+		
 	
 	}
 

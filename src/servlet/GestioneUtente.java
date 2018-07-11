@@ -15,6 +15,7 @@ import bean.Lente;
 import bean.OcchialeNuovo;
 import bean.OcchialeRotto;
 import bean.SessioneUtente;
+import it.unisa.model.Carrello;
 import managerBean.CertificatoManager;
 import managerBean.ClienteManager;
 import managerBean.FrameManager;
@@ -49,6 +50,19 @@ public class GestioneUtente extends HttpServlet {
 			cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
 			System.out.println("Il codice fiscale di cliente è " + cliente.getcF());
 			String action=(String)request.getParameter("action");
+			
+			//DA ELIMINARE
+			Carrello<Frame> carrello= (Carrello<Frame>) request.getSession().getAttribute("carrello");
+			if(carrello==null) {
+				carrello= new Carrello<Frame>();
+				request.getSession().setAttribute("carrello", carrello);
+			}
+			//Fine test
+			
+			FrameManager m= new FrameManager();
+			carrello.addElement((m.doRetrieveAll("")).iterator().next());
+			request.getSession().setAttribute("carrello", carrello);
+			
 			if(action.equalsIgnoreCase("ajax"))
 				doAjax(request,response);
 			else {

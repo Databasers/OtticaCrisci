@@ -5,13 +5,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Admin;
 import bean.Cliente;
@@ -150,5 +153,42 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
+	
+	/**
+	 * 
+	 * @author BalusC
+	 */
+	public static String getCookieValue(HttpServletRequest request, String name) {
+	    Cookie[] cookies = request.getCookies();
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if (name.equals(cookie.getName())) {
+	                return cookie.getValue();
+	            }
+	        }
+	    }
+	    return null;
+	}
+
+	/**
+	 * 
+	 * @author BalusC
+	 */
+	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
+	    Cookie cookie = new Cookie(name, value);
+	    cookie.setPath("/");
+	    cookie.setMaxAge(maxAge);
+	    response.addCookie(cookie);
+	}
+
+	/**
+	 * 
+	 * @author BalusC
+	 */
+	public static void removeCookie(HttpServletResponse response, String name) {
+	    addCookie(response, name, null, 0);
+	}
+
 
 }

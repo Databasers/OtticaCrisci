@@ -54,7 +54,7 @@ public class GestioneCarrello extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Recupero il carrello se esiste, altrimenti lo creo
 		request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
-		carrello= (Carrello) request.getSession().getAttribute("carrello");
+		carrello= (Carrello<Frame>) request.getSession().getAttribute("carrello");
 		if(carrello==null) {
 			carrello= new Carrello<Frame>();
 			request.getSession().setAttribute("carrello", carrello);

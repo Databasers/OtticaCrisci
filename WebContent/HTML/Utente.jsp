@@ -23,6 +23,7 @@
 			response.sendRedirect("Login.jsp");
 			return;
 		}
+	
 		
 		Collection<OcchialeNuovo> elencoN=(Collection<OcchialeNuovo>)request.getSession().getAttribute("OcchialiNuovi");
 		Collection<OcchialeRotto> elencoR=(Collection<OcchialeRotto>)request.getSession().getAttribute("OcchialiRotti");
@@ -35,9 +36,10 @@
 			request.getSession().removeAttribute("OcchialiNuovi");
 			request.getSession().removeAttribute("OcchialiRotti");
 			System.out.println("Elimino gli elementi dalla sessione");
-			for(OcchialeNuovo e: elencoN){ %>
-				<p>Codice=<%=e.getcF() %></p>
-		<%}
+		}
+		Cookie[] x= request.getCookies();
+		for(Cookie e: x){
+			System.out.println(e.getName()+": "+e.getValue()+" età massima: "+e.getMaxAge());
 		}
 	%>
 	
