@@ -16,7 +16,7 @@ function check(){
 }
 
 function cambia(a, b){
-	$("#"+a).hide();
+	$("#"+a).fadeOut();
 	$("#"+b).fadeIn();
 	
 	}

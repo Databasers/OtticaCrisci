@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@page import="com.sun.xml.internal.txw2.Document"%>
 <%@page import="org.apache.catalina.ant.SessionsTask"%>
-<%@page import="bean.SessioneUtente"%>
 <%@page import="bean.*"%>
 <%@page import="java.util.*"%>
 <%@page import="it.unisa.model.Carrello"%>
@@ -16,9 +15,6 @@
 </head>
 <body>
 	<%!SessioneUtente su = null;%>
-	
-	
-
 	
 	<% 
 	su =(SessioneUtente) session.getAttribute("Utente");
@@ -37,7 +33,7 @@
 		}
 	%>
 	
-	
+
 	<div id = "Contenitore-menu">
 		<div id = "Selettore">
 			<ul>
@@ -48,14 +44,17 @@
 		
 		
 		
-		<div id = "Ordini" class="Tab" >
+		<div id = "Ordini">
 		<%if(!elencoN.isEmpty()) {%>
 		<table>
 			<%for(OcchialeNuovo e: elencoN){ %>
 			<tr>
-			
-				<!-- Inserisci le cose in tabella e il pulsante per aprire il riepilogo -->
-			
+				<td>
+				
+				<p id="modAjax"> </p>
+				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '3-occhialeNuovo');">
+				
+				</td>
 			</tr>
 			<%} %>
 		</table>
@@ -74,7 +73,7 @@
 		
 		
 		
-		<div id = "Anagrafica" class="Tab" style="display: none;">
+		<div id = "Anagrafica">
 			<p><!-- Nome utente, codice fiscale --></p>
 			<form name = "password">
 				
@@ -119,9 +118,6 @@ function displayResults(listXML, id) {
 </head>
 <body>
 
-	<!-- 
-		Manco questa abbiamo visto per motivi randomici, si accettano proposte
-	 -->
 	 
 	 <%
 	 	Boolean aggiunto =(Boolean)request.getAttribute("certificatoInserito");
@@ -132,7 +128,7 @@ function displayResults(listXML, id) {
 	 		<% }
 	 		else{
 	 			%>
-	 			<h3>Certificatoo non aggiunto</h3>
+	 			<h3>Certificato non aggiunto</h3>
 	 		<% }
 	 	%>
 
@@ -143,9 +139,9 @@ function displayResults(listXML, id) {
 	</form>
 	
 
-	<!-- Questo pulsante prende dal server le informazioni su un occchiale nuovo,le salva in xml e le invia. Per usarlo
-		inviare i parametri nella forma idOcchiale-occchialeNuovo 
-		Basta semplicemente implementarlo per ogni ordine e collegarlo ad un <p>, cosa già fatta ma ovviamente da redenre
+	<!-- Questo pulsante prende dal server le informazioni su un occhiale nuovo,le salva in xml e le invia. Per usarlo
+		inviare i parametri nella forma idOcchiale-occhialeNuovo 
+		Basta semplicemente implementarlo per ogni ordine e collegarlo ad un <p>, cosa già fatta ma ovviamente da redendere
 		meglio a schermo-->
 	<br><br>
 	<p id="modAjax"> </p>
