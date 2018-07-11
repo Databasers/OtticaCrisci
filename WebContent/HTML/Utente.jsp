@@ -2,7 +2,8 @@
 <%@page import="com.sun.xml.internal.txw2.Document"%>
 <%@page import="org.apache.catalina.ant.SessionsTask"%>
 <%@page import="bean.SessioneUtente"%>
-<%@page import="bean.Frame"%>
+<%@page import="bean.*"%>
+<%@page import="java.util.*"%>
 <%@page import="it.unisa.model.Carrello"%>
 <html>
 <head>
@@ -24,6 +25,15 @@
 		if(su==null)
 		{
 			response.sendRedirect("Login.jsp");
+			return;
+		}
+		
+		Collection<OcchialeNuovo> elencoN=(Collection<OcchialeNuovo>)request.getAttribute("OcchialiNuovi");
+		Collection<OcchialeRotto> elencoR=(Collection<OcchialeRotto>)request.getAttribute("OcchialiRotti");
+		Certificato c=(Certificato) request.getAttribute("certificato");
+		if(elencoN==null || elencoR==null){
+			response.sendRedirect("/OtticaCrisci/GestioneUtente?action=retrieve");
+			return;
 		}
 	%>
 	
@@ -38,15 +48,33 @@
 		
 		
 		
-		<div id = "Ordini" class="Tab" style="display: none;">
+		<div id = "Ordini" class="Tab" >
+		<%if(!elencoN.isEmpty()) {%>
 		<table>
+			<%for(OcchialeNuovo e: elencoN){ %>
 			<tr>
-				<!-- Alan please insert roba per la request degli ordini vecchi -->
+			
+				<!-- Inserisci le cose in tabella e il pulsante per aprire il riepilogo -->
+			
 			</tr>
+			<%} %>
 		</table>
+		<%}
+		    if(!elencoR.isEmpty()){ %>
+		   <table>
+		   		<%for(OcchialeRotto e: elencoR){ %>
+		   		<tr>
+		   			<!-- Inserisci le cose in tabella e il pulsante per aprire il riepilogo -->
+		   		</tr>
+		   	<%} %>
+		   </table>
+		   <%}%>
 			Cose che hanno a che fare con gli ordini
 		</div>
-		<div id = "Anagrafica" class="Tab">
+		
+		
+		
+		<div id = "Anagrafica" class="Tab" style="display: none;">
 			<p><!-- Nome utente, codice fiscale --></p>
 			<form name = "password">
 				
@@ -115,6 +143,10 @@ function displayResults(listXML, id) {
 	</form>
 	
 
+	<!-- Questo pulsante prende dal server le informazioni su un occchiale nuovo,le salva in xml e le invia. Per usarlo
+		inviare i parametri nella forma idOcchiale-occchialeNuovo 
+		Basta semplicemente implementarlo per ogni ordine e collegarlo ad un <p>, cosa già fatta ma ovviamente da redenre
+		meglio a schermo-->
 	<br><br>
 	<p id="modAjax"> </p>
 	<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '3-occhialeNuovo');">

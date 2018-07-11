@@ -11,6 +11,13 @@ public class SessioneUtente {
 		ruolo=r;
 	}
 
+	public SessioneUtente(Admin c, String r) {
+		cF=c.getcF();
+		nome=c.getNome();
+		cognome=c.getCognome();
+		ruolo=r;
+	}
+
 	public String getcF() {
 		return cF;
 	}

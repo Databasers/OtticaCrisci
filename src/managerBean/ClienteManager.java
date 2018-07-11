@@ -15,6 +15,45 @@ public class ClienteManager implements ProductModel<Cliente,String> {
 
 	private static final String TableName="Cliente";
 	
+	
+	public Cliente doRetrieveIfRegistered(String code,String password) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		Cliente temp=new Cliente();
+		
+		String sql="SELECT* FROM "+TableName+" WHERE CodiceFiscale=? AND Password= ?  ";
+		
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			preparedStatement.setString(1, code);
+			preparedStatement.setString(2, password);
+			System.out.println("Query: " + preparedStatement.toString());
+			
+			ResultSet rs= preparedStatement.executeQuery();
+			
+			rs.next();
+			temp.setcF(rs.getString("CodiceFiscale"));
+			temp.setNome(rs.getString("Nome"));
+			temp.setCognome(rs.getString("Cognome"));
+			temp.setPassword(rs.getString("Password"));
+			temp.setGradazione(rs.getInt("Gradazione"));
+			
+				
+		}finally {
+			try {
+			if(preparedStatement!=null)
+				preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return temp;
+	}
+	
+	
 	@Override
 	public Cliente doRetrieveByKey(String code) throws SQLException {
 		Connection connection=null;

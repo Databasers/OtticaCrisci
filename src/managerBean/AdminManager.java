@@ -15,6 +15,45 @@ public class AdminManager implements ProductModel<Admin,String> {
 
 	private static final String TableName="Admin";
 	
+	public Admin doRetrieveIfRegistered(String code, String password) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		Admin temp=new Admin();
+		
+		String sql="SELECT* FROM "+TableName+" WHERE CodiceFiscale=? AND Password= ? ";
+		
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			preparedStatement.setString(1, code);
+			preparedStatement.setString(2, password);
+			System.out.println("Query: " + preparedStatement.toString());
+			
+			ResultSet rs= preparedStatement.executeQuery();
+			
+			rs.next();
+			temp.setcF(rs.getString("CodiceFiscale"));
+			temp.setNome(rs.getString("Nome"));
+			temp.setCognome(rs.getString("Cognome"));
+			temp.setPassword(rs.getString("Password"));
+			temp.setDataAssunzione(rs.getDate("DataAssunzione"));
+			temp.setDataNascita(rs.getDate("DataNascita"));
+			temp.setTelefono(rs.getInt("Telefono"));
+			
+				
+		}finally {
+			try {
+			if(preparedStatement!=null)
+				preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return temp;
+	}
+	
 	@Override
 	public Admin doRetrieveByKey(String code) throws SQLException {
 		Connection connection=null;

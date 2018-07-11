@@ -10,11 +10,12 @@ public class Cliente {
 	}
 
 
-	public Cliente(String cf2, String nome2, String cognome2, String password2) {
+	public Cliente(String cf2, String nome2, String cognome2, String password2, Integer gradazione) {
 		cF=cf2;
 		nome=nome2;
 		cognome=cognome2;
 		password=password2;
+		this.gradazione=gradazione;
 	}
 
 
