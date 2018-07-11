@@ -24,12 +24,20 @@
 			return;
 		}
 		
-		Collection<OcchialeNuovo> elencoN=(Collection<OcchialeNuovo>)request.getAttribute("OcchialiNuovi");
-		Collection<OcchialeRotto> elencoR=(Collection<OcchialeRotto>)request.getAttribute("OcchialiRotti");
+		Collection<OcchialeNuovo> elencoN=(Collection<OcchialeNuovo>)request.getSession().getAttribute("OcchialiNuovi");
+		Collection<OcchialeRotto> elencoR=(Collection<OcchialeRotto>)request.getSession().getAttribute("OcchialiRotti");
 		Certificato c=(Certificato) request.getAttribute("certificato");
 		if(elencoN==null || elencoR==null){
 			response.sendRedirect("/OtticaCrisci/GestioneUtente?action=retrieve");
 			return;
+		}
+		else{
+			request.getSession().removeAttribute("OcchialiNuovi");
+			request.getSession().removeAttribute("OcchialiRotti");
+			System.out.println("Elimino gli elementi dalla sessione");
+			for(OcchialeNuovo e: elencoN){ %>
+				<p>Codice=<%=e.getcF() %></p>
+		<%}
 		}
 	%>
 	
@@ -89,7 +97,7 @@
   
   <!-- Qui inizia la pagina di Servlet, dentro c'è un esempio di chiamata ajax -->
   
-  <script type="text/javascript">
+ <script type="text/javascript">
 
 	function hideCertificato(){
 		var form=document.getElementById("certificato");

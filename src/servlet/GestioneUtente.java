@@ -62,8 +62,9 @@ public class GestioneUtente extends HttpServlet {
 						doRetrieve(request,response);
 					if(action.equalsIgnoreCase("delCertificato"))
 						doDelCertificato(request,response);
-					RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
-					x.forward(request, response);
+//					RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
+//					x.forward(request, response);
+					response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
 				}
 			}
 		catch (Exception e) {
@@ -155,9 +156,9 @@ public class GestioneUtente extends HttpServlet {
 		doRetrieveOrdini(request, response);
 		Certificato c;
 		if((c=certificatoManager.doRetrieveByKey(cliente.getcF()))==null)
-			request.setAttribute("certificato", null);
+			request.getSession().setAttribute("certificato", null);
 		else
-			request.setAttribute("certificato", c);
+			request.getSession().setAttribute("certificato", c);
 		
 	}
 
@@ -180,8 +181,8 @@ public class GestioneUtente extends HttpServlet {
 			request.getSession().removeAttribute("OcchialiRotti");
 		Collection<OcchialeNuovo> occhialeN=occhialeNuovoManager.doRetrieveByCondition(cliente.getcF());
 		Collection<OcchialeRotto> occhialeR= occhialeRottoManager.doRetrieveByCondition(cliente.getcF());
-		request.setAttribute("OcchialiNuovi", occhialeN);
-		request.setAttribute("OcchialiRotti", occhialeR);
+		request.getSession().setAttribute("OcchialiNuovi",occhialeN);
+		request.getSession().setAttribute("OcchialiRotti",occhialeR);
 	}
 
 	/**
