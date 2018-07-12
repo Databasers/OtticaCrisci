@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="java.util.LinkedList"%>
-<%@page import="bean.Frame, java.util.List, servlet.GestioneCarrello"%>
+<%@page import="bean.Frame, java.util.List, servlet.GestioneCarrello, java.util.*"%>
 <html>
 <style>
 
@@ -14,6 +14,15 @@
 </head>
 <body>
 
+	<%
+		Collection<Frame> elenco=(Collection<Frame>)request.getSession().getAttribute("Frame");
+		if(elenco==null){
+			response.sendRedirect("/OtticaCrisci/GestioneNegozio?action=retrieve");
+			return;
+		}
+	%>
+
+<!--  
 	<aside class="filtri">
 		Questo è un aside per i filtri
 		<ol>
@@ -23,19 +32,18 @@
 		<button class="ok">Conferma</button>
 		
 	</aside>
-	<%! List<Frame> lista = new LinkedList<Frame>();
-		String select = "tabella";
-		GestioneCarrello gestione = new GestioneCarrello();%>
-	<%
-	//Qui va cambiato, personalmente penserei ad un metodo che mostra solo da una posizione ad un altra in questo modo possiamo fare delle
-	//"pagine" nel negozio che possono essere anche di lunghezza diverse in base a cosa preferisce l'utente. Tutto questo sarebbe fantastico
-	//ma io di certo non tengo sbatta di mettermi a fare una cosa del genere da solo senza chiedere a voi, che poi sbaglio qualcosa e devo
-	//riscrivere tutto. Dio che palle la vita.
-		if(select == "colonna"){%>
-			<hr/>
-			<%while (!lista.isEmpty()) {
-				Frame x = lista.remove(0);
+	-->
+	
+	<%  Frame[] lista=elenco.toArray(new Frame[0]);
+		String select = "colonna";
+		GestioneCarrello gestione = new GestioneCarrello();
+		
+		if(select.equals("colonna")){%>
+			<table border="1px solid black">
+			<%for(Frame x: lista) {
+				
 				%>
+				<!-- 
 				<div id="sinistra" style="float: left">
 				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> x.getModello() x.getMateriale() x.getColore()"%></p>
 				</div>
@@ -44,15 +52,21 @@
 				<button type="submit" formaction="/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</button>
 				</div>
 				<hr/>
-<%			} 
-		} 
+				 -->
+				<tr>
+					<td>  id = <%=x.getId()%>, modello=<%=x.getModello() %>
+					<td><a href="/OtticaCrisci/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</a>
+<%			} %>
+		</table>
+		
+		<% } 
 		else if(select == "tabella"){%>
 		<table width = 100%>
 			<tr>
 				<td width=50%>
-			<% int h = lista.size()/2;
+			<% int h = lista.length/2;
 			for(int i = 0; i< h; i++){
-				Frame x = lista.remove(i);%>
+				Frame x = lista[i];%>
 				<div id="sinistra" style="float: left">
 				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> <%=x.getModello()%> <%=x.getMateriale()%> <%=x.getColore()%></p>
 				</div>
@@ -62,8 +76,8 @@
 				</div>
 			<% } %>
 				<td>
-				<%while (!lista.isEmpty()) {
-					Frame x = lista.remove(0);
+				<%for(int i=h; i<lista.length; i++) {
+					Frame x = lista[i];
 					%>
 					<div id="sinistra" style="float: left">
 					<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> <%=x.getModello()%> <%=x.getMateriale()%> <%=x.getColore()%></p>

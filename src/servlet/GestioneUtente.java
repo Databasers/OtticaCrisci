@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.UUID;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,12 +18,14 @@ import bean.Lente;
 import bean.OcchialeNuovo;
 import bean.OcchialeRotto;
 import bean.SessioneUtente;
+import it.unisa.model.Carrello;
 import managerBean.CertificatoManager;
 import managerBean.ClienteManager;
 import managerBean.FrameManager;
 import managerBean.LenteManager;
 import managerBean.OcchialeNuovoManager;
 import managerBean.OcchialeRottoManager;
+import utilities.CookieManager;
 
 @WebServlet("/GestioneUtente")
 @MultipartConfig(fileSizeThreshold= 1024*1024*2, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*50 )
@@ -49,6 +54,7 @@ public class GestioneUtente extends HttpServlet {
 			cliente=clienteManager.doRetrieveByKey(su.getcF()); //recupero il cliente che riguarda questa chiamata
 			System.out.println("Il codice fiscale di cliente è " + cliente.getcF());
 			String action=(String)request.getParameter("action");
+			
 			if(action.equalsIgnoreCase("ajax"))
 				doAjax(request,response);
 			else {
@@ -62,8 +68,6 @@ public class GestioneUtente extends HttpServlet {
 						doRetrieve(request,response);
 					if(action.equalsIgnoreCase("delCertificato"))
 						doDelCertificato(request,response);
-//					RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
-//					x.forward(request, response);
 					response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
 				}
 			}

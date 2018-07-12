@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import utilities.*;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,12 +10,15 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +48,7 @@ public class GestioneCarrello extends HttpServlet {
 	OcchialeNuovoManager occhialeNuovo= new OcchialeNuovoManager();
 	LaboratorioManager lavorazioneManager= new LaboratorioManager();
 	Carrello<Frame> carrello;
+	String uuid=UUID.randomUUID().toString();
 	
     public GestioneCarrello() {
         super();
@@ -54,7 +59,7 @@ public class GestioneCarrello extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Recupero il carrello se esiste, altrimenti lo creo
 		request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
-		carrello= (Carrello) request.getSession().getAttribute("carrello");
+		carrello= (Carrello<Frame>) request.getSession().getAttribute("carrello");
 		if(carrello==null) {
 			carrello= new Carrello<Frame>();
 			request.getSession().setAttribute("carrello", carrello);
@@ -68,7 +73,6 @@ public class GestioneCarrello extends HttpServlet {
 					//Aggiungiamo al carrello
 					int id = Integer.parseInt(request.getParameter("id"));
 					carrello.addElement(model.doRetrieveByKey(id));
-					
 				}
 				else if(action.equalsIgnoreCase("delCart")) {
 					//Cancella dal carrello
@@ -77,19 +81,37 @@ public class GestioneCarrello extends HttpServlet {
 				}
 				else if(action.equalsIgnoreCase("checkout")) {
 					doCheckout(request,response);
+					response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
 				}
 			}
-				request.getSession().setAttribute("carrello", carrello);
 				
+			request.getSession().setAttribute("carrello", carrello);
+			//Creo il cookie carrello e lo salvo nella hash map, se è loggato
+			SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("Utente");
+			if(su!=null) {
+				
+				HashMap<String,Carrello> mappa=(HashMap<String,Carrello>)request.getServletContext().getAttribute("carrello");
+				mappa.put(uuid, carrello);
+				CookieManager.addCookie(response, "CarrelloCookie"+su.getcF(), uuid, 60*60);
+				request.getServletContext().setAttribute("carrello", mappa);
+			}	
+			if(action.equalsIgnoreCase("addCart")) {
+				response.sendRedirect(request.getContextPath() + "\\HTML\\Store.jsp"); 
+			}
+			if(action.equalsIgnoreCase("delCart")) {
+				response.sendRedirect(request.getContextPath() + "\\HTML\\Carrello.jsp"); 
+			}
+			
+			
 		} catch(SQLException e) {
 			System.out.println("Error: "+ e.getMessage());
 			request.setAttribute("error", e.getMessage());
 		}
 		
 		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Carrello.jsp");
-		dispatcher.forward(request, response);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		
+		
 
 		
 	}
@@ -97,7 +119,7 @@ public class GestioneCarrello extends HttpServlet {
 	//Bisogna sistemare l'attributo TipoLente
 	private void doCheckout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		String dispatcher="/HTML/Utente.jsp";
-		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("su");
+		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("Utente");
 		if(su==null || !su.getRuolo().equalsIgnoreCase("utente")) { //se non è loggato
 			dispatcher="/HTML/Login.jsp";
 		}
@@ -116,13 +138,18 @@ public class GestioneCarrello extends HttpServlet {
 				//creo la lavorazione in laboratorio
 				LavorazioneLaboratorio tmp= new LavorazioneLaboratorio(null,(new Random()).nextInt(50),"montaggio",data,null,occhiale.getId(),null);
 				lavorazioneManager.doSave(tmp);
+				
+				CookieManager.removeCookie(response, "CarrelloCookie");
+				HashMap<String,Carrello> mappa=(HashMap<String,Carrello>)request.getServletContext().getAttribute("carrello");
+				mappa.remove(uuid);
+				request.getServletContext().removeAttribute("carrello");
+				}
 			}
-		}
-		else {
-			//Da inserire nella JSP della pagina Cliente
-			request.removeAttribute("DaValidare");
-			request.setAttribute("DaValidare", true);
-		}
+			else {
+				//Da inserire nella JSP della pagina Cliente
+				request.removeAttribute("DaValidare");
+				request.setAttribute("DaValidare", true);
+			}
 		}
 		RequestDispatcher x=getServletContext().getRequestDispatcher(dispatcher);
 		x.forward(request, response);

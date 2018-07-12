@@ -1,3 +1,5 @@
+<%@ page import="java.util.*" %>
+<%@ page import="bean.*,it.unisa.model.*" %>
 <!DOCTYPE html>
 <html>
 
@@ -10,23 +12,29 @@
 </head>
 <body>
 <%@ page import = "it.unisa.model.Carrello, bean.Frame, java.util.List, servlet.GestioneCarrello" %>
-	<%!	
-	int h = 0;
-	Carrello<Frame> carrello = new Carrello<>();
-	GestioneCarrello gestione = new GestioneCarrello();
-	%>
+
 
 	<!-- 
 		E' una tabella n * 1 dove son presenti gli articoli con foto, nome, prezzo
 		Ogni riga ha al termine un pulsante "remove"
 	-->
+	<%
+	int h = 0;
+	Carrello<Frame> carrello;
+	GestioneCarrello gestione = new GestioneCarrello();
 	
+		carrello=(Carrello<Frame>)request.getSession().getAttribute("carrello");
+		if(carrello==null) { %>
+		<p>Non ci sono elementi</p> 
+		<%}
+		else{
+		%>
 	<table>
 		<!-- Inserire variabile globale per il totale -->
 			<%
 			List<Frame> lista = carrello.getList();
-		while(!lista.isEmpty()){
-			Frame oggetto = lista.remove(0);
+			Frame[] elenco=lista.toArray(new Frame[0]);
+		for(Frame oggetto: elenco){
 			h += oggetto.getPrezzo();
 			%>
 			<tr>
@@ -39,7 +47,7 @@
 			
 		<%
 		}
-
+		}
 	%>
 	
 	</table>

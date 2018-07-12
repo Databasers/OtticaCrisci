@@ -5,13 +5,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.UUID;
 
+import utilities.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Admin;
 import bean.Cliente;
@@ -105,10 +110,18 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		String username, password;
 		username=request.getParameter("username");
 		password=request.getParameter("password");
+		HashMap<String, SessioneUtente> map=(HashMap<String, SessioneUtente>)getServletContext().getAttribute("mappa");
 		try {
 			Cliente c=cManager.doRetrieveIfRegistered(username, password);
 			SessioneUtente su= new SessioneUtente(c, "Utente"); //creo l'oggetto sessione
 			request.getSession().setAttribute("Utente", su);
+			
+			//Aggiungo la sessione utente nei cookie
+			String uuid=UUID.randomUUID().toString();
+			map.put(uuid, su);
+			CookieManager.addCookie(response, "SessioneUtenteCookie",uuid, 60*60);
+			getServletContext().setAttribute("mappa", map);
+			
 			System.out.println("Login effettuato!");
 			response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 	
 		} catch (Exception e) {
@@ -150,5 +163,6 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
 
 }
