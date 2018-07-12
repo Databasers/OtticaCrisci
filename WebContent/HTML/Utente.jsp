@@ -17,14 +17,8 @@
 	<%!SessioneUtente su = null;%>
 	
 	<% 
-	su =(SessioneUtente) session.getAttribute("Utente");
-		if(su==null)
-		{
-			response.sendRedirect("Login.jsp");
-			return;
-		}
+		su =(SessioneUtente) session.getAttribute("Utente");
 	
-		
 		Collection<OcchialeNuovo> elencoN=(Collection<OcchialeNuovo>)request.getSession().getAttribute("OcchialiNuovi");
 		Collection<OcchialeRotto> elencoR=(Collection<OcchialeRotto>)request.getSession().getAttribute("OcchialiRotti");
 		Certificato c=(Certificato) request.getAttribute("certificato");

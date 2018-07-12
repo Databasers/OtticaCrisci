@@ -20,7 +20,6 @@ div#registrazione{
 
 <%
 	String x= (String)request.getAttribute("Done");
-	System.out.print("Il valore e': " + x);
 	if(x!=null && x=="falso"){
 	%>
 	
@@ -43,7 +42,6 @@ div#registrazione{
 <h3>Registrazione</h3><br>
 <%
 	String registered= (String)request.getAttribute("alreadyRegistered");
-	System.out.print("Il valore di registered e': " + registered);
 	if(registered!=null && registered=="true"){
 	%>
 	<h3><font color="red">Questo utente esiste già</font></h3>

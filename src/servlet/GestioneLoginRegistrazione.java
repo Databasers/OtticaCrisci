@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.UUID;
 
+import utilities.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -108,10 +110,18 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		String username, password;
 		username=request.getParameter("username");
 		password=request.getParameter("password");
+		HashMap<String, SessioneUtente> map=(HashMap<String, SessioneUtente>)getServletContext().getAttribute("mappa");
 		try {
 			Cliente c=cManager.doRetrieveIfRegistered(username, password);
 			SessioneUtente su= new SessioneUtente(c, "Utente"); //creo l'oggetto sessione
 			request.getSession().setAttribute("Utente", su);
+			
+			//Aggiungo la sessione utente nei cookie
+			String uuid=UUID.randomUUID().toString();
+			map.put(uuid, su);
+			CookieManager.addCookie(response, "SessioneUtenteCookie",uuid, 60*60);
+			getServletContext().setAttribute("mappa", map);
+			
 			System.out.println("Login effettuato!");
 			response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 	
 		} catch (Exception e) {
@@ -154,41 +164,5 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	
-	/**
-	 * 
-	 * @author BalusC
-	 */
-	public static String getCookieValue(HttpServletRequest request, String name) {
-	    Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            if (name.equals(cookie.getName())) {
-	                return cookie.getValue();
-	            }
-	        }
-	    }
-	    return null;
-	}
-
-	/**
-	 * 
-	 * @author BalusC
-	 */
-	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
-	    Cookie cookie = new Cookie(name, value);
-	    cookie.setPath("/");
-	    cookie.setMaxAge(maxAge);
-	    response.addCookie(cookie);
-	}
-
-	/**
-	 * 
-	 * @author BalusC
-	 */
-	public static void removeCookie(HttpServletResponse response, String name) {
-	    addCookie(response, name, null, 0);
-	}
-
 
 }

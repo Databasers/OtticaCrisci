@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.UUID;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -22,6 +25,7 @@ import managerBean.FrameManager;
 import managerBean.LenteManager;
 import managerBean.OcchialeNuovoManager;
 import managerBean.OcchialeRottoManager;
+import utilities.CookieManager;
 
 @WebServlet("/GestioneUtente")
 @MultipartConfig(fileSizeThreshold= 1024*1024*2, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*50 )
@@ -51,18 +55,6 @@ public class GestioneUtente extends HttpServlet {
 			System.out.println("Il codice fiscale di cliente è " + cliente.getcF());
 			String action=(String)request.getParameter("action");
 			
-			//DA ELIMINARE
-			Carrello<Frame> carrello= (Carrello<Frame>) request.getSession().getAttribute("carrello");
-			if(carrello==null) {
-				carrello= new Carrello<Frame>();
-				request.getSession().setAttribute("carrello", carrello);
-			}
-			//Fine test
-			
-			FrameManager m= new FrameManager();
-			carrello.addElement((m.doRetrieveAll("")).iterator().next());
-			request.getSession().setAttribute("carrello", carrello);
-			
 			if(action.equalsIgnoreCase("ajax"))
 				doAjax(request,response);
 			else {
@@ -76,8 +68,6 @@ public class GestioneUtente extends HttpServlet {
 						doRetrieve(request,response);
 					if(action.equalsIgnoreCase("delCertificato"))
 						doDelCertificato(request,response);
-//					RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Utente.jsp");
-//					x.forward(request, response);
 					response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
 				}
 			}

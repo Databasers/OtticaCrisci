@@ -1,4 +1,5 @@
 <%@ page import="java.util.*" %>
+<%@ page import="bean.*,it.unisa.model.*" %>
 <!DOCTYPE html>
 <html>
 
