@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import managerBean.*;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.Frame;
+import bean.Opzioni;
 
 /**
  * Servlet implementation class GestioneNegozio
@@ -49,7 +51,19 @@ public class GestioneNegozio extends HttpServlet {
 		if(request.getSession().getAttribute("Frame")!=null)
 			request.getSession().removeAttribute("Frame");
 		FrameManager m= new FrameManager();
-		Collection<Frame> elenco=m.doRetrieveAll("");
+		ArrayList<String> s= new ArrayList<>();
+		s.add("Colore");
+		s.add("Prezzo");
+		s.add("Materiale");
+		s.add("Modello");
+		s.add("Marchio");
+		s.add("Peso");
+		s.add("UrlImmagine");
+		s.add("IDFrame");
+		System.out.println("Prima del costruttore");
+		Opzioni opzioni=new Opzioni(true, s, null, false, null, false,false, null);
+		System.out.println("Dopo del costruttore");
+		Collection<Frame> elenco=m.doRetrieveByCond(opzioni);
 		request.getSession().setAttribute("Frame", elenco);
 	}
 

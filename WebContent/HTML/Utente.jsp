@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@page import="com.sun.xml.internal.txw2.Document"%>
 <%@page import="org.apache.catalina.ant.SessionsTask"%>
 <%@page import="bean.*"%>
 <%@page import="java.util.*"%>

@@ -29,7 +29,7 @@ div#registrazione{
 	%>
 
 <div id="login">
-<form id="login" action="http://localhost:8080/OtticaCrisci/GestioneLogin?action=login" method="Post">
+<form id="login" action="http://localhost/OtticaCrisci/GestioneLogin?action=login" method="Post">
 	<input type="text" placeholder="codicefiscale" name="username"><br>
 	<input type="password" placeholder="password" name="password"><br>
 	<input type="submit">
@@ -48,7 +48,7 @@ div#registrazione{
 <% }
 	request.removeAttribute("alreadyRegistered");
 %>
-<form  action="http://localhost:8080/OtticaCrisci/GestioneLogin?action=registrazione" method="Post">
+<form  action="http://localhost/OtticaCrisci/GestioneLogin?action=registrazione" method="Post">
 	<input type="text" placeholder="Codice Fiscale" name="codicefiscale"><br>
 	<input type="text" placeholder="Nome" name="nome"><br>
 	<input type="text" placeholder="Cognome" name="cognome"><br>

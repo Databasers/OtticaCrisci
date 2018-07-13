@@ -4,16 +4,135 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import bean.Frame;
+import bean.Opzioni;
+import bean.Where;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
 public class FrameManager implements ProductModel<Frame, Integer> {
 
 	private static final String TableName="Frame";
+	
+public Collection<Frame> doRetrieveByCond(Opzioni opzioni) throws SQLException {
+		
+		Collection<Frame> c= new LinkedList<Frame>();
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String sql="Select ";
+		if(opzioni.isDistinct())
+			sql+=" distinct ";
+		for(String s: opzioni.getTab()) {
+			sql+=" "+s+",";
+		}
+		sql=sql.substring(0, sql.length()-1);
+		sql+=" from Frame";
+		
+		if(opzioni.getWhere()!=null) {
+			sql+=" where ";
+			for(Where e: opzioni.getWhere()) {
+				if(sql.substring(sql.length()-13, sql.length()-1).equalsIgnoreCase("Frame where "))
+					sql+=" "+e.getClausola()+"= "+e.getValore();
+				else
+					sql+=" AND "+e.getClausola()+"= "+e.getValore();
+			}
+		}
+		
+		if(opzioni.isIn()) {
+			sql+=" AND ";
+			if(opzioni.isNot())
+				sql+=" NOT";
+			sql+=" IN (";
+			
+		//parte la subQuery
+		Opzioni subQuery=opzioni.getSubQuery();
+		sql+=" Select ";
+		if(subQuery.isDistinct())
+			sql+=" distinct ";
+		for(String s: subQuery.getTab()) {
+			sql+=" "+s+",";
+		}
+		sql=sql.substring(0, sql.length()-1);
+		sql+=" from Occhiale_nuovo";
+		
+		if(subQuery.getWhere()!=null) {
+			sql+=" where ";
+			for(Where e: subQuery.getWhere()) {
+				if(sql.substring(sql.length()-13, sql.length()-1).equalsIgnoreCase("Frame where "))
+					sql+=" "+e.getClausola()+"= "+e.getValore();
+				else
+					sql+=" AND "+e.getClausola()+"= "+e.getValore();
+			}
+		}
+		if(subQuery.isIn()) {
+			sql+=" AND ";
+			if(subQuery.isNot())
+				sql+=" NOT";
+			sql+=" IN (";
+		}
+		}
+		
+		ArrayList<String> elenco= opzioni.getTab();
+		try {
+			connection=DriverManagerConnectionPool.getConnection();
+			preparedStatement= connection.prepareStatement(sql);
+			
+			System.out.println("doRetrieveByCond: "+ preparedStatement.toString());
+			
+			ResultSet rs=preparedStatement.executeQuery();
+			System.out.println("Quesry effettuata");
+			while(rs.next()) {
+				Frame temp= new Frame();
+				temp.setId(rs.getInt("IDFrame"));
+				if(elenco.contains("Colore")) {
+				temp.setColore(rs.getString("Colore"));
+				}
+				if(elenco.contains("Marchio")) {
+					temp.setMarchio(rs.getString("Marchio"));
+				}
+				if(elenco.contains("Modello")) {
+					temp.setModello(rs.getString("Modello"));
+				}
+				if(elenco.contains("Peso")) {
+					temp.setPeso(rs.getInt("Peso"));
+				}
+				if(elenco.contains("Prezzo")) {
+					temp.setPeso(rs.getInt("Prezzo"));
+				}
+				if(elenco.contains("PartitaIva")) {
+					temp.setPartitaIva(rs.getInt("PartitaIva"));
+				}
+				if(elenco.contains("Materiale")) {
+					temp.setMateriale(rs.getString("Materiale"));
+				}
+				if(elenco.contains("UrlImmagine")) {
+					temp.setUrlImmagine(rs.getString("UrlImmagine"));
+				}
+				
+				c.add(temp);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(preparedStatement!=null)
+					preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return c;
+	}
+	
 	
 	@Override
 	public Frame doRetrieveByKey(Integer code) throws SQLException {
