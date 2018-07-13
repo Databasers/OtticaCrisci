@@ -114,7 +114,10 @@ public class LenteManager implements ProductModel<Lente, Integer> {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
 			
-			preparedStatement.setInt(1, product.getId());
+			if(product.getId()==null)
+				preparedStatement.setNull(1, java.sql.Types.INTEGER);
+			else
+				preparedStatement.setInt(1, product.getId());
 			preparedStatement.setInt(2, product.getDiottria());
 			preparedStatement.setString(3, product.getMateriale());
 			preparedStatement.setInt(4, product.getPeso());

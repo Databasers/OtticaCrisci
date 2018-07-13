@@ -68,10 +68,11 @@ public class CarrelloFilter implements Filter {
 					httpRequest.getSession().setAttribute("carrello", carrello);
 					CookieManager.removeCookie(httpResponse, "CarrelloCookie"+su.getcF());
 					CookieManager.addCookie(httpResponse, "CarrelloCookie"+su.getcF(), uuid, 60*60);
-					
 				}
 			}
 		}
+		else
+			System.out.println("\nNon è loggato\n");
 		chain.doFilter(request, response);
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -134,7 +135,7 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 	@Override
 	public Collection<OcchialeNuovo> doRetrieveAll(String order) throws SQLException {
 		
-		Collection<OcchialeNuovo> c= new LinkedList<OcchialeNuovo>();
+		Collection<OcchialeNuovo> c= new ArrayList<OcchialeNuovo>();
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
@@ -184,8 +185,10 @@ public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
-			
-			preparedStatement.setInt(1, product.getId());
+			if(product.getId()==null)
+				preparedStatement.setNull(1, java.sql.Types.INTEGER);
+			else
+				preparedStatement.setInt(1, product.getId());
 			preparedStatement.setInt(2, product.getPrezzo());
 			preparedStatement.setDate(3, product.getDataRitiro());
 			preparedStatement.setInt(4, product.getIdLente());

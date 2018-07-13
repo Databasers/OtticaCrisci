@@ -34,7 +34,7 @@ public class ContexListener implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
-
+    	System.out.println("Accedo al filtro di contesto");
     	HashMap<String, SessioneUtente> map= new HashMap<>();
     	arg0.getServletContext().setAttribute("mappa", map);
     	HashMap<String, Carrello> map2= new HashMap<>();

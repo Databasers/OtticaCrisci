@@ -2,6 +2,7 @@ package it.unisa.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Carrello<T> implements Serializable{
@@ -20,10 +21,11 @@ public class Carrello<T> implements Serializable{
 	
 	public void delete(T elem)
 	{
-		for(T e: list){
-			if(e.equals(elem))
-				list.remove(elem);
-		}
+		Iterator<T> lista= list.iterator();
+		while(lista.hasNext()) 
+			if(lista.next().equals(elem))
+				lista.remove();
+		
 	}
 	
 	public List<T> getList()

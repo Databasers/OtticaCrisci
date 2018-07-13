@@ -78,6 +78,14 @@ public class Frame {
 	public void setUrlImmagine(String urlImmagine) {
 		this.urlImmagine = urlImmagine;
 	}
+	
+	public boolean equals(Object o) {
+		Frame f=(Frame) o;
+		if(f.getId()==id)
+			return true;
+		else
+			return false;
+	}
 
 	
 }

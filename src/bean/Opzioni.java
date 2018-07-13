@@ -18,6 +18,7 @@ public class Opzioni {
 		for(String e: tab2){
 			select.add(e);
 		}
+		
 		if(where2==null)
 			where=null;
 		else

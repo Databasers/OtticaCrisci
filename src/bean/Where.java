@@ -5,6 +5,10 @@ public class Where {
 	String clausola;
 	String valore;
 	
+	public Where(String clausola1, String valore1) {
+		clausola=clausola1;
+		valore=valore1;
+	}
 	public String getClausola() {
 		return clausola;
 	}

@@ -38,15 +38,15 @@ public Collection<Frame> doRetrieveByCond(Opzioni opzioni) throws SQLException {
 		if(opzioni.getWhere()!=null) {
 			sql+=" where ";
 			for(Where e: opzioni.getWhere()) {
-				if(sql.substring(sql.length()-13, sql.length()-1).equalsIgnoreCase("Frame where "))
-					sql+=" "+e.getClausola()+"= "+e.getValore();
+				if(sql.substring(sql.indexOf("where"), sql.length()).equalsIgnoreCase("where "))
+					sql+=" "+e.getClausola()+"= \""+e.getValore()+"\"";
 				else
-					sql+=" AND "+e.getClausola()+"= "+e.getValore();
+					sql+=" AND "+e.getClausola()+"= \""+e.getValore()+"\"";
 			}
 		}
 		
 		if(opzioni.isIn()) {
-			sql+=" AND ";
+			sql+=" AND IDFrame";
 			if(opzioni.isNot())
 				sql+=" NOT";
 			sql+=" IN (";
@@ -77,6 +77,7 @@ public Collection<Frame> doRetrieveByCond(Opzioni opzioni) throws SQLException {
 				sql+=" NOT";
 			sql+=" IN (";
 		}
+		sql+=" )";
 		}
 		
 		ArrayList<String> elenco= opzioni.getTab();
@@ -99,6 +100,9 @@ public Collection<Frame> doRetrieveByCond(Opzioni opzioni) throws SQLException {
 				}
 				if(elenco.contains("Modello")) {
 					temp.setModello(rs.getString("Modello"));
+				}
+				if(elenco.contains("Marchio")) {
+					temp.setModello(rs.getString("Marchio"));
 				}
 				if(elenco.contains("Peso")) {
 					temp.setPeso(rs.getInt("Peso"));

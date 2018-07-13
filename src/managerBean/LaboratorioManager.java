@@ -155,7 +155,10 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
-			preparedStatement.setInt(1, product.getCodLavorazione());
+			if(product.getCodLavorazione()==null)
+				preparedStatement.setNull(1, java.sql.Types.INTEGER);
+			else
+				preparedStatement.setInt(1, product.getCodLavorazione());
 			preparedStatement.setInt(2, product.getCodAddetto());
 			preparedStatement.setString(3, product.getTipo());
 			preparedStatement.setDate(4, product.getDataInizio());
