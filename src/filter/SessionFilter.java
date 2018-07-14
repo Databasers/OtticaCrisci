@@ -42,7 +42,7 @@ public class SessionFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		System.out.println("Accedo al filtro");
+		System.out.println("\nAccedo al filtro Sessione\n");
 		HttpServletRequest httpRequest=(HttpServletRequest) request;
 		HttpServletResponse httpResponse=(HttpServletResponse) response;
 		SessioneUtente su;
@@ -52,25 +52,40 @@ public class SessionFilter implements Filter {
 			//Controllo se esiste un cookie sessione
 			String uuid=CookieManager.getCookieValue(httpRequest, "SessioneUtenteCookie");
 			if(uuid!=null) {
+				System.out.println("Esiste il codice nel cookie");
 				HashMap<String, SessioneUtente> map=(HashMap<String, SessioneUtente>) request.getServletContext().getAttribute("mappa");
 				su=map.get(uuid);
 				if(su!=null) {
-					System.out.println("\nRipristino la sessioneUtente di "+ su.getcF());
+					System.out.println("Ripristino la sessioneUtente di "+ su.getcF());
+					System.out.println("\nFine Filtro sessione\n");
 					httpRequest.getSession().setAttribute("Utente", su);
 					CookieManager.removeCookie(httpResponse, "SessioneUtenteCookie");
 					CookieManager.addCookie(httpResponse, "SessioneUtenteCookie",uuid, 60*60);
 					chain.doFilter(request, response);
 				}
-				else
+				else {
+					System.out.println("Esiste solo il cookie");
+					System.out.println("\nFine Filtro sessione\n");
+					CookieManager.removeCookie(httpResponse, "SessioneUtenteCookie");
 					httpResponse.sendRedirect("Login.jsp");
+				}
 			}
-			else
+			else {
+				System.out.println("Il cookie non esiste");
+				System.out.println("\nFine Filtro sessione\n");
 				httpResponse.sendRedirect("Login.jsp");
+			}
 		}
 		else {
-			if(su.getRuolo().equalsIgnoreCase("Admin"))
+			System.out.println("C'è già qualcuno in sessione");
+			if(su.getRuolo().equalsIgnoreCase("Admin")) {
+				System.out.println("E' un admin");
+				System.out.println("\nFine Filtro sessione\n");
 				httpResponse.sendRedirect("Login.jsp"); //Se è un admin lo mando a loggarsi
+			}
 			else {
+				System.out.println("C'è un utente già loggato");
+				System.out.println("\nFine Filtro sessione\n");
 				chain.doFilter(request, response);
 			}
 		}

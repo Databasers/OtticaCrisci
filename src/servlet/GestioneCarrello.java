@@ -165,9 +165,10 @@ public class GestioneCarrello extends HttpServlet {
 				
 				//Inserisco tutto nel metodo;
 				Collection<Frame> elenco=model.doRetrieveByCond(opzioni);				
-				if(elenco.isEmpty())
+				if(elenco.isEmpty()) {
 					System.out.println("\nDevo Creare il frame");
-				else
+					f= createAndRetrieveFrame(f);
+				}else
 					System.out.println("\nuso il frame in deposito");
 	
 				
@@ -198,10 +199,19 @@ public class GestioneCarrello extends HttpServlet {
 		}
 	}
 		
+	private synchronized Frame createAndRetrieveFrame(Frame f) throws SQLException {
+		Frame frame= new Frame(null,f.getModello(),f.getColore(),f.getPeso(),f.getMateriale(),f.getPrezzo(),123456,f.getMarchio(),f.getUrlImmagine());
+		model.doSaveAI(frame);
+		ArrayList<Frame> elenco=(ArrayList<Frame>) model.doRetrieveAll("IDFrame");
+		frame=elenco.get(elenco.size()-1);
+		return frame;
+	}
+
+
 	/**
 	 * Crea un nuovo occhiale nuovo,la salva e la recupera dal db
 	 * Necessaria in quanto la chiave di Lente è auto-increment, pertanto alla definizione è semplicemente null
-	 * @param f
+	 * @param f.
 	 * @param gradazione
 	 * @return
 	 * @throws SQLException
