@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
 
-public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer> {
+public class OcchialeNuovoManager implements ProductModel<OcchialeNuovo, Integer>, Serializable {
 
 	private static final String TableName="Occhiale_nuovo";
 	

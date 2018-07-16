@@ -1,6 +1,8 @@
 package bean;
 
-public class SessioneUtente {
+import java.io.Serializable;
+
+public class SessioneUtente implements Serializable{
 	
 	String cF,ruolo,nome,cognome;
 	

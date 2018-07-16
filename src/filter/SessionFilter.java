@@ -1,7 +1,6 @@
 package filter;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -53,7 +52,7 @@ public class SessionFilter implements Filter {
 			String uuid=CookieManager.getCookieValue(httpRequest, "SessioneUtenteCookie");
 			if(uuid!=null) {
 				System.out.println("Esiste il codice nel cookie");
-				HashMap<String, SessioneUtente> map=(HashMap<String, SessioneUtente>) request.getServletContext().getAttribute("mappa");
+				HashMapStore<String, SessioneUtente> map=(HashMapStore<String, SessioneUtente>) request.getServletContext().getAttribute("mappa");
 				su=map.get(uuid);
 				if(su!=null) {
 					System.out.println("Ripristino la sessioneUtente di "+ su.getcF());

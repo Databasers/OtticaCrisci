@@ -1,8 +1,6 @@
 package filter;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,6 +15,7 @@ import bean.Frame;
 import bean.SessioneUtente;
 import it.unisa.model.Carrello;
 import utilities.CookieManager;
+import utilities.HashMapStore;
 
 /**
  * Servlet Filter implementation class CarrelloFilter
@@ -43,28 +42,28 @@ public class CarrelloFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		System.out.println("Accedo al filtro Carrello");
+		System.out.println("\nAccedo al filtro Carrello\n");
 		HttpServletRequest httpRequest=(HttpServletRequest) request;
 		HttpServletResponse httpResponse=(HttpServletResponse) response;
 		Carrello carrello;
-		HashMap<String, Carrello<Frame>> map=(HashMap<String, Carrello<Frame>>) request.getServletContext().getAttribute("carrello");
+		HashMapStore<String, Carrello<Frame>> map=(HashMapStore<String, Carrello<Frame>>) request.getServletContext().getAttribute("carrello");
 		carrello=(Carrello<Frame>)httpRequest.getSession().getAttribute("carrello"); 
 		SessioneUtente su=(SessioneUtente)httpRequest.getSession().getAttribute("Utente");
 		
 		if(su!=null) { //Se è loggato
 			String uuid=CookieManager.getCookieValue(httpRequest, "CarrelloCookie"+su.getcF()); //recupero il codice dal cookie
 			if(carrello==null && uuid==null) { //Se non esiste carrello in sessione nè nei cookie vado avanti
-				System.out.println("\nEntrambi null\n");
+				System.out.println("Entrambi null");
 			}
 			if(carrello==null && uuid!=null) { //se esiste solo quello nei cookie
 				carrello=map.get(uuid);
 				if(carrello==null) { //Se il cookie esiste ma nella hashMap non c'è (nel caso in cui il server sia stato restartato
-					System.out.println("\nEsiste solo il cookie\n");
+					System.out.println("Esiste solo il cookie");
 					CookieManager.removeCookie(httpResponse, "CarrelloCookie"+su.getcF()); //elimino il cookie
 							//vado avanti
 				}
 				else {
-					System.out.println("\nRipristino il carrello salvato nei cookie\n");
+					System.out.println("Ripristino il carrello salvato nei cookie");
 					httpRequest.getSession().setAttribute("carrello", carrello);
 					CookieManager.removeCookie(httpResponse, "CarrelloCookie"+su.getcF());
 					CookieManager.addCookie(httpResponse, "CarrelloCookie"+su.getcF(), uuid, 60*60);
@@ -72,7 +71,9 @@ public class CarrelloFilter implements Filter {
 			}
 		}
 		else
-			System.out.println("\nNon è loggato\n");
+			System.out.println("Non è loggato");
+		
+		System.out.println("\nFine Filtro Carrello\n");
 		chain.doFilter(request, response);
 	}
 

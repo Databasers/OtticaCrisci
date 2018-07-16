@@ -1,8 +1,9 @@
 package bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Admin {
+public class Admin implements Serializable{
 
 	private String nome,cognome,cF,password;
 	private Date dataAssunzione,dataNascita;

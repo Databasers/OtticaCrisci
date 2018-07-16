@@ -1,6 +1,8 @@
 package bean;
 
-public class Frame {
+import java.io.Serializable;
+
+public class Frame implements Serializable{
 
 	int id,prezzo,peso;
 	String modello,colore,marchio,materiale,urlImmagine;

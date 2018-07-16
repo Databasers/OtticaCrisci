@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import bean.LavorazioneLaboratorio;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
-public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, Integer> {
+public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, Integer>, Serializable {
 
 	private static final String TableName="Lavorazione_Laboratorio";
 	

@@ -1,5 +1,7 @@
 package listener;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.servlet.ServletContextEvent;
@@ -8,6 +10,7 @@ import javax.servlet.annotation.WebListener;
 
 import bean.SessioneUtente;
 import it.unisa.model.Carrello;
+import utilities.HashMapStore;
 
 /**
  * Application Lifecycle Listener implementation class ContexListener
@@ -35,10 +38,17 @@ public class ContexListener implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
     	System.out.println("Accedo al filtro di contesto");
-    	HashMap<String, SessioneUtente> map= new HashMap<>();
-    	arg0.getServletContext().setAttribute("mappa", map);
-    	HashMap<String, Carrello> map2= new HashMap<>();
-    	arg0.getServletContext().setAttribute("carrello", map2);
+    	HashMapStore<String, SessioneUtente> map;
+		try {
+			map = new HashMapStore<>("C:\\Users\\Antonio\\Documents\\Università\\Java\\su.no");
+			arg0.getServletContext().setAttribute("mappa", map);
+	    	HashMapStore<String, Carrello> map2= new HashMapStore<>("C:\\Users\\Antonio\\Documents\\Università\\Java\\cart.no");
+	    	arg0.getServletContext().setAttribute("carrello", map2);
+		} catch (Exception e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 	
 }

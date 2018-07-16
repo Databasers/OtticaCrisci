@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import bean.Where;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
-public class FrameManager implements ProductModel<Frame, Integer> {
+public class FrameManager implements ProductModel<Frame, Integer>, Serializable {
 
 	private static final String TableName="Frame";
 	

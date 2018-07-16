@@ -1,10 +1,11 @@
 package bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 // `IDOcchiale`, `Prezzo`, `DataRitiro`, `DataConsegna`, `Entit‡Danno`, `CodiceFiscale`
 
-public class OcchialeRotto extends Occhiale{
+public class OcchialeRotto extends Occhiale implements Serializable{
 
 	Date dataConsegna,dataRitiro;
 	String tipoDanno,stato;

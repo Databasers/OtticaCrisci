@@ -1,6 +1,9 @@
 package bean;
 
-public class Where {
+import java.io.Serializable;
+
+public class Where implements Serializable
+{
 
 	String clausola;
 	String valore;

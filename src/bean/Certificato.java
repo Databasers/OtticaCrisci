@@ -1,6 +1,8 @@
 package bean;
 
-public class Certificato {
+import java.io.Serializable;
+
+public class Certificato implements Serializable{
 	
 	boolean valido,validato;
 	String url,cF;

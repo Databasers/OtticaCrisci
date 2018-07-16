@@ -1,8 +1,9 @@
 package bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class LavorazioneDeposito {
+public class LavorazioneDeposito implements Serializable{
 
 	Integer codAddetto,codLavorazione,oR_idOcchiale,oN_idOcchiale,idFrame;
 	String pos;

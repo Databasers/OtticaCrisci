@@ -19,10 +19,7 @@
 		Ogni riga ha al termine un pulsante "remove"
 	-->
 	<%
-	Cookie[] x=request.getCookies();
-	for(Cookie e: x){
-		%><p>Il cookie <%=e.getName() %> vale <%=e.getValue() %></p> <% 
-	}
+	
 	
 	
 	int h = 0;

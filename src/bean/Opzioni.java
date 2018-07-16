@@ -1,9 +1,10 @@
 package bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Opzioni {
+public class Opzioni implements Serializable{
 
 	boolean distinct;
 	ArrayList<String> select= new ArrayList<>();

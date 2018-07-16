@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import it.unisa.model.ProductModel;
  * `IDLente`, `Diottria`, `Materiale`, `Peso`, `Prezzo`, `TipoLente`, `PartitaIva`
  */
 
-public class LenteManager implements ProductModel<Lente, Integer> {
+public class LenteManager implements ProductModel<Lente, Integer>, Serializable {
 
 	private static final String TableName="Lente";
 	

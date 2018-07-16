@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.UUID;
 
 import utilities.*;
@@ -110,7 +109,7 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		String username, password;
 		username=request.getParameter("username");
 		password=request.getParameter("password");
-		HashMap<String, SessioneUtente> map=(HashMap<String, SessioneUtente>)getServletContext().getAttribute("mappa");
+		HashMapStore<String, SessioneUtente> map=(HashMapStore<String, SessioneUtente>)getServletContext().getAttribute("mappa");
 		try {
 			Cliente c=cManager.doRetrieveIfRegistered(username, password);
 			SessioneUtente su= new SessioneUtente(c, "Utente"); //creo l'oggetto sessione
