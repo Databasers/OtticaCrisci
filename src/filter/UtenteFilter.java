@@ -16,7 +16,7 @@ import bean.SessioneUtente;
 /**
  * Servlet Filter implementation class UtenteFilter
  */
-@WebFilter(filterName = "/UtenteFilter", urlPatterns= {"/HTML/Utente.jsp","/GestioneUtente"})
+
 public class UtenteFilter implements Filter {
 
 	/**
@@ -46,17 +46,19 @@ public class UtenteFilter implements Filter {
 		if(su==null) {
 			System.out.println("Non è loggato");
 			System.out.println("\n Fine filtro Utente \n");
-			httpResponse.sendRedirect("HTML/Login.jsp");
+			httpResponse.sendRedirect("/OtticaCrisci/HTML/Login.jsp");
 		}
-		if(su.getRuolo().equalsIgnoreCase("Admin")) {
+		else{
+			if(su.getRuolo().equalsIgnoreCase("Admin")) {
 			System.out.println("E' un admin che vuole scroccare qualcosa. FERMALO, FILTRO");
 			System.out.println("\n Fine filtro Utente \n");
-			httpResponse.sendRedirect("HTML/Homepage.jsp");
+			httpResponse.sendRedirect("/OtticaCrisci/HTML/Homepage.jsp");
 		}
 		else
 		// pass the request along the filter chain
 		System.out.println("\n Fine filtro Utente \n");
 		chain.doFilter(request, response);
+		}
 	}
 
 	/**

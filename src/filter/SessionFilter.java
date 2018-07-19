@@ -19,7 +19,7 @@ import bean.SessioneUtente;
 /**
  * Servlet Filter implementation class SessionFilter
  */
-@WebFilter(filterName="LogFilter", urlPatterns= {"/GestioneUtente","/HTML/Utente.jsp","/HTML/Login.jsp","/HTML/Carrello.jsp"})
+
 public class SessionFilter implements Filter {
 
     /**

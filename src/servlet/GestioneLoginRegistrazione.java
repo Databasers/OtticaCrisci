@@ -75,6 +75,13 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		if(request.getSession().getAttribute("Utente")==null) 
 			response.sendRedirect(request.getContextPath() + "\\HTML\\Login.jsp");  //lo manda a loggarsi
 
+		String uuid=CookieManager.getCookieValue(request, "SessioneUtenteCookie");
+		CookieManager.removeCookie(response, "SessioneUtenteCookie");
+		HashMapStore<String, SessioneUtente> map=(HashMapStore<String, SessioneUtente>)getServletContext().getAttribute("mappa");
+		if(uuid!=null)
+			map.remove(uuid);
+		getServletContext().setAttribute("mappa", map);
+		
 		request.getSession().removeAttribute("Utente");
 		request.getSession().invalidate();
 		response.sendRedirect(request.getContextPath() + "\\HTML\\Homepage.jsp"); 

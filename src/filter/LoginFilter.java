@@ -19,7 +19,7 @@ import utilities.HashMapStore;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter( filterName="/LoginFilter", urlPatterns= {"/HTML/Login.jsp","/GestioneLoginResgistrazione"} )
+
 public class LoginFilter implements Filter {
 
     /**
@@ -53,11 +53,11 @@ public class LoginFilter implements Filter {
 			if(su.getRuolo().equalsIgnoreCase("Admin")) {
 				System.out.println("E' un admin");
 				System.out.println("\n FINE FILTRO LOGIN \n");
-				httpResponse.sendRedirect("Admin.jsp");
+				httpResponse.sendRedirect("/OtticaCrisci/HTML/Admin.jsp");
 			}else {
 				System.out.println("E' un utente");
 				System.out.println("\n FINE FILTRO LOGIN \n");
-				httpResponse.sendRedirect("Utente.jsp");
+				httpResponse.sendRedirect("/OtticaCrisci/HTML/Utente.jsp");
 			}
 		}
 	}

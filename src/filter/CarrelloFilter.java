@@ -20,7 +20,7 @@ import utilities.HashMapStore;
 /**
  * Servlet Filter implementation class CarrelloFilter
  */
-@WebFilter(filterName="CarrelloFilter", urlPatterns= {"/HTML/Carrello.jsp","/gestione"})
+
 public class CarrelloFilter implements Filter {
 
     /**

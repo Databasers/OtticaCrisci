@@ -45,17 +45,20 @@ public class AdminFilter implements Filter {
 		if(su==null) {
 			System.out.println("Non è loggato");
 			System.out.println("\n Fine filtro Admin \n");
-			httpResponse.sendRedirect("HTML/Login.jsp");
+			httpResponse.sendRedirect("/OtticaCrisci/HTML/Login.jsp");
 		}
-		if(su.getRuolo().equalsIgnoreCase("Utente")) {
+		else{
+			if(su.getRuolo().equalsIgnoreCase("Utente")) {
 			System.out.println("E' un utente che vuole impossessarsi del nostro negozio. FERMALO, FILTRO");
 			System.out.println("\n Fine filtro Admin \n");
-			httpResponse.sendRedirect("HTML/Homepage.jsp");
+			httpResponse.sendRedirect("/OtticaCrisci/HTML/Homepage.jsp");
 		}
-		else
+		else {
 		// pass the request along the filter chain
 		System.out.println("\n Fine filtro Admin \n");
 		chain.doFilter(request, response);
+		}
+		}
 	}
 
 	/**
