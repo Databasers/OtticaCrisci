@@ -11,18 +11,21 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Frame;
 import bean.SessioneUtente;
+import it.unisa.model.Carrello;
+import utilities.HashMapStore;
 
 /**
- * Servlet Filter implementation class AdminFilter
+ * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(filterName="AdminFilter", urlPatterns= {"/GestioneAdmin","/HTML/Admin.jsp"})
-public class AdminFilter implements Filter {
+@WebFilter( filterName="/LoginFilter", urlPatterns= {"/HTML/Login.jsp","/GestioneLoginResgistrazione"} )
+public class LoginFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public AdminFilter() {
+    public LoginFilter() {
         // TODO Auto-generated constructor stub
     }
 
@@ -37,25 +40,26 @@ public class AdminFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("\nAccedo al filtro Admin \n");
+		System.out.println("\n FILTRO LOGIN \n");
 		HttpServletRequest httpRequest=(HttpServletRequest) request;
 		HttpServletResponse httpResponse=(HttpServletResponse) response;
-		
 		SessioneUtente su=(SessioneUtente)httpRequest.getSession().getAttribute("Utente");
-		if(su==null) {
+		if(su==null){
 			System.out.println("Non è loggato");
-			System.out.println("\n Fine filtro Admin \n");
-			httpResponse.sendRedirect("HTML/Login.jsp");
+			System.out.println("\n FINE FILTRO LOGIN \n");
+			chain.doFilter(request, response);
 		}
-		if(su.getRuolo().equalsIgnoreCase("Utente")) {
-			System.out.println("E' un utente che vuole impossessarsi del nostro negozio. FERMALO, FILTRO");
-			System.out.println("\n Fine filtro Admin \n");
-			httpResponse.sendRedirect("HTML/Homepage.jsp");
+		else {
+			if(su.getRuolo().equalsIgnoreCase("Admin")) {
+				System.out.println("E' un admin");
+				System.out.println("\n FINE FILTRO LOGIN \n");
+				httpResponse.sendRedirect("Admin.jsp");
+			}else {
+				System.out.println("E' un utente");
+				System.out.println("\n FINE FILTRO LOGIN \n");
+				httpResponse.sendRedirect("Utente.jsp");
+			}
 		}
-		else
-		// pass the request along the filter chain
-		System.out.println("\n Fine filtro Admin \n");
-		chain.doFilter(request, response);
 	}
 
 	/**

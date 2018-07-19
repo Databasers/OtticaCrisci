@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="AdminOcchiali.jsp" %>
-<script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../OtticaCrisci/JS/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../OtticaCrisci/JS/ajax.js"></script>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -17,7 +17,11 @@
 			response.sendRedirect("Login.jsp");
 		}
 	%>
+	
+	
+	<%@ include file="AdminCertificato.jsp" %>
 
+<!--  
 	 <script>
 	 	function nascondi(a){
 	 		var ogg = ['Frame', 'Ordini', 'Certificati', 'Utenti'];
@@ -32,7 +36,7 @@
 	 
 	 <table>
 	 	<tr>
-	 		<td><div><button onclick="nascondi('Frame')">Nuovo Frame</button></div></td>		<!-- Inserire magari la griglia -->
+	 		<td><div><button onclick="nascondi('Frame')">Nuovo Frame</button></div></td>		
 	 		<td><div><button onclick="nascondi('Ordini')">Ordini</button></div></td>
 	 		<td><div><button onclick="nascondi('Certificati')">Certificati</button></div></td>
 	 		<td><div><button onclick="nascondi('Utenti')">Utenti</button></div></td>
@@ -57,5 +61,5 @@
 	
 	
 	<div id="Utenti" style="display:none"><h2>Utenti</h2></div>
-
+-->
 </body>

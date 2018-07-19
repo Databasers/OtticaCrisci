@@ -29,10 +29,11 @@ div#registrazione{
 	%>
 
 <div id="login">
-<form id="login" action="http://localhost/OtticaCrisci/GestioneLogin?action=login" method="Post">
+<form id="login"  method="Post">
 	<input type="text" placeholder="codicefiscale" name="username"><br>
 	<input type="password" placeholder="password" name="password"><br>
-	<input type="submit">
+	<input type="submit" formaction="http://localhost/OtticaCrisci/GestioneLogin?action=login">
+	<input type="submit" formaction="http://localhost/OtticaCrisci/GestioneLogin?action=loginAdmin" value="Login as Admin">
 
 </form>
 </div>

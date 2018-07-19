@@ -57,7 +57,7 @@ public class CarrelloFilter implements Filter {
 			}
 			if(carrello==null && uuid!=null) { //se esiste solo quello nei cookie
 				carrello=map.get(uuid);
-				if(carrello==null) { //Se il cookie esiste ma nella hashMap non c'è (nel caso in cui il server sia stato restartato
+				if(carrello==null) { //Se il cookie esiste ma nella hashMap non c'è
 					System.out.println("Esiste solo il cookie");
 					CookieManager.removeCookie(httpResponse, "CarrelloCookie"+su.getcF()); //elimino il cookie
 							//vado avanti
@@ -72,7 +72,6 @@ public class CarrelloFilter implements Filter {
 		}
 		else
 			System.out.println("Non è loggato");
-		
 		System.out.println("\nFine Filtro Carrello\n");
 		chain.doFilter(request, response);
 	}

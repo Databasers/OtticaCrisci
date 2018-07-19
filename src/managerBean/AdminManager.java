@@ -40,7 +40,7 @@ public class AdminManager implements ProductModel<Admin,String>, Serializable {
 			temp.setPassword(rs.getString("Password"));
 			temp.setDataAssunzione(rs.getDate("DataAssunzione"));
 			temp.setDataNascita(rs.getDate("DataNascita"));
-			temp.setTelefono(rs.getInt("Telefono"));
+			temp.setTelefono(rs.getString("Telefono"));
 			
 				
 		}finally {
@@ -79,7 +79,7 @@ public class AdminManager implements ProductModel<Admin,String>, Serializable {
 			temp.setPassword(rs.getString("Password"));
 			temp.setDataAssunzione(rs.getDate("DataAssunzione"));
 			temp.setDataNascita(rs.getDate("DataNascita"));
-			temp.setTelefono(rs.getInt("Telefono"));
+			temp.setTelefono(rs.getString("Telefono"));
 			
 				
 		}finally {
@@ -121,7 +121,7 @@ public class AdminManager implements ProductModel<Admin,String>, Serializable {
 				temp.setPassword(rs.getString("Password"));
 				temp.setDataAssunzione(rs.getDate("DataAssunzione"));
 				temp.setDataNascita(rs.getDate("DataNascita"));
-				temp.setTelefono(rs.getInt("Telefono"));
+				temp.setTelefono(rs.getString("Telefono"));
 				
 				c.add(temp);
 			}
@@ -153,7 +153,7 @@ public class AdminManager implements ProductModel<Admin,String>, Serializable {
 			preparedStatement.setString(4, product.getPassword());
 			preparedStatement.setDate(5,product.getDataAssunzione());
 			preparedStatement.setDate(6, product.getDataNascita());
-			preparedStatement.setInt(7, product.getTelefono());
+			preparedStatement.setString(7, product.getTelefono());
 			System.out.println("doSave: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 
@@ -187,7 +187,7 @@ public class AdminManager implements ProductModel<Admin,String>, Serializable {
 			preparedStatement.setString(4, product.getCognome());
 			preparedStatement.setDate(5,product.getDataAssunzione());
 			preparedStatement.setDate(6, product.getDataNascita());
-			preparedStatement.setInt(7, product.getTelefono());
+			preparedStatement.setString(7, product.getTelefono());
 			preparedStatement.setString(8, product.getcF());
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());

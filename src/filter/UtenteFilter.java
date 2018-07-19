@@ -14,17 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import bean.SessioneUtente;
 
 /**
- * Servlet Filter implementation class AdminFilter
+ * Servlet Filter implementation class UtenteFilter
  */
-@WebFilter(filterName="AdminFilter", urlPatterns= {"/GestioneAdmin","/HTML/Admin.jsp"})
-public class AdminFilter implements Filter {
+@WebFilter(filterName = "/UtenteFilter", urlPatterns= {"/HTML/Utente.jsp","/GestioneUtente"})
+public class UtenteFilter implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public AdminFilter() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public UtenteFilter() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#destroy()
@@ -36,25 +36,26 @@ public class AdminFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("\nAccedo al filtro Admin \n");
-		HttpServletRequest httpRequest=(HttpServletRequest) request;
-		HttpServletResponse httpResponse=(HttpServletResponse) response;
-		
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		System.out.println("\nAccedo al filtro Utente \n");
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+
 		SessioneUtente su=(SessioneUtente)httpRequest.getSession().getAttribute("Utente");
 		if(su==null) {
 			System.out.println("Non è loggato");
-			System.out.println("\n Fine filtro Admin \n");
+			System.out.println("\n Fine filtro Utente \n");
 			httpResponse.sendRedirect("HTML/Login.jsp");
 		}
-		if(su.getRuolo().equalsIgnoreCase("Utente")) {
-			System.out.println("E' un utente che vuole impossessarsi del nostro negozio. FERMALO, FILTRO");
-			System.out.println("\n Fine filtro Admin \n");
+		if(su.getRuolo().equalsIgnoreCase("Admin")) {
+			System.out.println("E' un admin che vuole scroccare qualcosa. FERMALO, FILTRO");
+			System.out.println("\n Fine filtro Utente \n");
 			httpResponse.sendRedirect("HTML/Homepage.jsp");
 		}
 		else
 		// pass the request along the filter chain
-		System.out.println("\n Fine filtro Admin \n");
+		System.out.println("\n Fine filtro Utente \n");
 		chain.doFilter(request, response);
 	}
 
