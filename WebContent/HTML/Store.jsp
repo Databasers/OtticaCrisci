@@ -60,7 +60,7 @@
 				<hr/>
 				 -->
 				<tr>
-					<td>  id = <%=x.getId()%>, modello=<%=x.getModello() %>, colore= <%= x.getColore() %>, materiale=<%=x.getMateriale() %>
+					<td><img src="<%=x.getUrlImmagine()%>"><br>  <%=x.getModello() %> <%= x.getColore() %>, in <%=x.getMateriale() %>
 					<td><a href="/OtticaCrisci/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</a>
 <%			} %>
 		</table>

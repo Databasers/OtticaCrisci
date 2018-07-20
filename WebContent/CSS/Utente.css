@@ -12,11 +12,12 @@ body {
 
 input {
 	background-color: #e6e6ff;
+	margin-right: 2px;
 }
 
-#but-ana {
+#bottoneanagrafica {
 	margin-top: 10px;
-	margin-left: 79%
+	margin-right: 2px;
 }
 
 .frame{

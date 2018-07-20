@@ -1,12 +1,12 @@
 
 
 function check(){
+	var v = document.password.Ve.value;
 	var u = document.password.Nu.value;
 	var d = document.password.Ri.value;
 	if(u == d){
 		var re = new XMLHttpRequest();
-		re.open("GET","/GestioneUtente?action=modificaPassword&pwd="+u,true);
-		re.setRequestHeader("connection", "close");
+		re.open("POST","https:localhost:8080/OtticaCrisci/GestioneUtente?action=modificaPassword&passwordNuova="+u+"&passwordVecchia=",true);
 		re.send(null);
 	}
 	else{

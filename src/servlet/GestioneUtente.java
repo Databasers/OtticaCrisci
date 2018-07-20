@@ -229,7 +229,7 @@ public class GestioneUtente extends HttpServlet {
 
 	/**
 	 * Cambia password
-	 * Richiede attributo "passwordVecchia" e "passowrdNuova"
+	 * Richiede attributo "passwordVecchia" e "passwordNuova"
 	 * @param request
 	 * @param response
 	 * @throws SQLException

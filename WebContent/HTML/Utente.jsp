@@ -8,7 +8,7 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <LINK rel="stylesheet" href="../CSS/Utente.css" type="text/css">
-<script type="text/javascript" src="../JS/Utente.js"></script>
+<script type="text/javascript" src="../JS/Mannaggiacristo.js"></script>
 <script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="../JS/ajax.js"></script>
 </head>
@@ -90,10 +90,11 @@
 			<p><!-- Nome utente, codice fiscale --></p>
 			<form name = "password">
 				<h2>Cambio password</h2><br>
-				<span>Nuova password 	<input type ="text" name="Nu" value = "test"></span><br>
-				<span>Ripeti			<input type ="text" name="Ri" value = "due"></span><br>
+				<span>Vecchia password	<input type ="password" name="Ve"></span><br>
+				<span>Nuova password 	<input type ="text" name="Nu"></span><br>
+				<span>Ripeti			<input type ="text" name="Ri"></span><br>
 				
-				<button id="but-ana" type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
+				<button id="bottoneanagrafica" type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
 			</form> 
 		</div>
 	</div>
