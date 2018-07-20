@@ -5,8 +5,9 @@ function check(){
 	var d = document.password.Ri.value;
 	if(u == d){
 		var re = new XMLHttpRequest();
-		re.open("get","/GestioneUtente?action=modificaPassword&pwd="+u,true);
-		
+		re.open("GET","/GestioneUtente?action=modificaPassword&pwd="+u,true);
+		re.setRequestHeader("connection", "close");
+		re.send(null);
 	}
 	else{
 		alert("La password non corrisponde");
@@ -16,7 +17,6 @@ function check(){
 }
 
 function cambia(a, b){
-	$("#"+a).fadeOut();
+	$("#"+a).hide();
 	$("#"+b).fadeIn();
-	
-	}
+}

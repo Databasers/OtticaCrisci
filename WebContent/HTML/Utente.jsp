@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@page import="com.sun.xml.internal.txw2.Document"%>
 <%@page import="org.apache.catalina.ant.SessionsTask"%>
 <%@page import="bean.*"%>
 <%@page import="java.util.*"%>
@@ -8,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-
+<LINK rel="stylesheet" href="../CSS/Utente.css" type="text/css">
 <script type="text/javascript" src="../JS/Utente.js"></script>
 <script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="../JS/ajax.js"></script>
@@ -37,28 +36,32 @@
 		}
 	%>
 	
-
-	<div id = "Contenitore-menu">
-		<div id = "Selettore">
+	
+	<div id = "Selettore">
 			<ul>
 				<li><span><button onclick="cambia('Ordini', 'Anagrafica')">Anagrafica</button></span></li>
 				<li><span><button onclick="cambia('Anagrafica', 'Ordini')">Ordini</button></span></li>
 			</ul>
 		</div>
+	
+
+	<div id = "Contenitore-menu">
 		
 		
 		
-		<div id = "Ordini">
+		
+		<div id = "Ordini" style="display: none;">
+		<p id="modAjax" style="float: right;"><p>
 		<%if(!elencoN.isEmpty()) {%>
-		Occhiali nuovi
+		<h3>Occhiali nuovi</h3>
 		<table>
 			<%for(OcchialeNuovo e: elencoN){ %>
-			<tr>
+			<tr class="frame">
 				<td>
 				
 				<p ><%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
 				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeNuovo');">
-				Mostra di più</input>
+				Mostra di più
 				
 				</td>
 			</tr>
@@ -66,34 +69,31 @@
 		</table>
 		<%}
 		    if(!elencoR.isEmpty()){ %>
-		    Occhiali rotti
+		    <h3>Occhiali rotti</h3>
 		   <table>
 		   		<%for(OcchialeRotto e: elencoR){ %>
-		   		<tr>
+		   		<tr class="frame">
 		   			<td>
-				
 						<p><%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
 						<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeRotto');">
-						Mostra di più</input>
+						Mostra di più
 					</td>
 		   		</tr>
 		   	<%} %>
 		   </table>
 		   <%}%>
 		</div>
-		<p id="modAjax"><p>
 		
 		
 		
 		<div id = "Anagrafica">
 			<p><!-- Nome utente, codice fiscale --></p>
 			<form name = "password">
-				
-				<span>Cambio password</span><br>
+				<h2>Cambio password</h2><br>
 				<span>Nuova password 	<input type ="text" name="Nu" value = "test"></span><br>
 				<span>Ripeti			<input type ="text" name="Ri" value = "due"></span><br>
 				
-				<button type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
+				<button id="but-ana" type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
 			</form> 
 		</div>
 	</div>
@@ -119,7 +119,7 @@ function displayResults(listXML, id) {
 		
 		if(obj != null) {
 			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
-			obj.innerHTML ="<img src =" +rdfs +">";
+			obj.innerHTML ="<img src ='../Immagini_Frame/Occhiali_steampunk.jpg' ><br/>";
 			for( var i = 1; i < tag.length; i++){
 				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
 				obj.innerHTML += " " + rdfs;
