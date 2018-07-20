@@ -1,4 +1,5 @@
 package managerBean;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ import java.util.LinkedList;
 import bean.Certificato;
 import it.unisa.model.*;
 
-public class CertificatoManager implements ProductModel<Certificato,String> {
+public class CertificatoManager implements ProductModel<Certificato,String>, Serializable {
 
 	private static final String TableName="certificato";
 	

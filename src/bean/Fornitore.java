@@ -1,6 +1,8 @@
 package bean;
 
-public class Fornitore {
+import java.io.Serializable;
+
+public class Fornitore implements Serializable{
 
 	int partitaIva;
 	String nome;

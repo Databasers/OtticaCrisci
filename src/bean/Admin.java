@@ -1,14 +1,15 @@
 package bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Admin {
+public class Admin implements Serializable{
 
 	private String nome,cognome,cF,password;
 	private Date dataAssunzione,dataNascita;
-	private int telefono;
+	private String telefono;
 	
-	public Admin(String cf2, String nome2, String cognome2, String password2, Date assunzione, Date nascita,Integer telefono) {
+	public Admin(String cf2, String nome2, String cognome2, String password2, Date assunzione, Date nascita,String telefono) {
 		cF=cf2;
 		nome=nome2;
 		cognome=cognome2;
@@ -92,12 +93,12 @@ public class Admin {
 	}
 
 
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 	

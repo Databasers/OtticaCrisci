@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import it.unisa.model.ProductModel;
  * `IDLente`, `Diottria`, `Materiale`, `Peso`, `Prezzo`, `TipoLente`, `PartitaIva`
  */
 
-public class LenteManager implements ProductModel<Lente, Integer> {
+public class LenteManager implements ProductModel<Lente, Integer>, Serializable {
 
 	private static final String TableName="Lente";
 	
@@ -114,7 +115,10 @@ public class LenteManager implements ProductModel<Lente, Integer> {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
 			
-			preparedStatement.setInt(1, product.getId());
+			if(product.getId()==null)
+				preparedStatement.setNull(1, java.sql.Types.INTEGER);
+			else
+				preparedStatement.setInt(1, product.getId());
 			preparedStatement.setInt(2, product.getDiottria());
 			preparedStatement.setString(3, product.getMateriale());
 			preparedStatement.setInt(4, product.getPeso());

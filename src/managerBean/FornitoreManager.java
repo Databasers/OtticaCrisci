@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import bean.Fornitore;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
-public class FornitoreManager implements ProductModel<Fornitore, Integer> {
+public class FornitoreManager implements ProductModel<Fornitore, Integer>, Serializable {
 
 	private static final String TableName="Fornitore";
 	

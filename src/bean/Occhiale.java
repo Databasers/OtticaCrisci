@@ -1,6 +1,8 @@
 package bean;
 
-public abstract class Occhiale {
+import java.io.Serializable;
+
+public abstract class Occhiale implements Serializable{
 	
 	Integer idOcchiale,prezzo;
 	String cF;

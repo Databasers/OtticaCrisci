@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import bean.LavorazioneLaboratorio;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
-public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, Integer> {
+public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, Integer>, Serializable {
 
 	private static final String TableName="Lavorazione_Laboratorio";
 	
@@ -155,7 +156,10 @@ public class LaboratorioManager implements ProductModel<LavorazioneLaboratorio, 
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
-			preparedStatement.setInt(1, product.getCodLavorazione());
+			if(product.getCodLavorazione()==null)
+				preparedStatement.setNull(1, java.sql.Types.INTEGER);
+			else
+				preparedStatement.setInt(1, product.getCodLavorazione());
 			preparedStatement.setInt(2, product.getCodAddetto());
 			preparedStatement.setString(3, product.getTipo());
 			preparedStatement.setDate(4, product.getDataInizio());

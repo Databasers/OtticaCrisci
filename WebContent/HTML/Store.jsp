@@ -20,6 +20,8 @@
 			response.sendRedirect("/OtticaCrisci/GestioneNegozio?action=retrieve");
 			return;
 		}
+		else
+			request.getSession().removeAttribute("Frame");
 	%>
 
 <!--  
@@ -34,7 +36,11 @@
 	</aside>
 	-->
 	
-	<%  Frame[] lista=elenco.toArray(new Frame[0]);
+	<%  if(elenco.isEmpty()){
+		%><p>Non ci sono frame</p> <%
+	}
+	else{
+		Frame[] lista=elenco.toArray(new Frame[0]);
 		String select = "colonna";
 		GestioneCarrello gestione = new GestioneCarrello();
 		
@@ -54,7 +60,7 @@
 				<hr/>
 				 -->
 				<tr>
-					<td>  id = <%=x.getId()%>, modello=<%=x.getModello() %>
+					<td>  id = <%=x.getId()%>, modello=<%=x.getModello() %>, colore= <%= x.getColore() %>, materiale=<%=x.getMateriale() %>
 					<td><a href="/OtticaCrisci/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</a>
 <%			} %>
 		</table>
@@ -91,7 +97,7 @@
 			</tr>
 		</table>	
 		<% }
-		%>
+		}%>
 	
 	
 	

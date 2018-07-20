@@ -1,6 +1,8 @@
 package bean;
 
-public class Frame {
+import java.io.Serializable;
+
+public class Frame implements Serializable{
 
 	int id,prezzo,peso;
 	String modello,colore,marchio,materiale,urlImmagine;
@@ -77,6 +79,14 @@ public class Frame {
 	}
 	public void setUrlImmagine(String urlImmagine) {
 		this.urlImmagine = urlImmagine;
+	}
+	
+	public boolean equals(Object o) {
+		Frame f=(Frame) o;
+		if(f.getId()==id)
+			return true;
+		else
+			return false;
 	}
 
 	
