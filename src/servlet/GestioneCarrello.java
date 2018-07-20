@@ -55,7 +55,6 @@ public class GestioneCarrello extends HttpServlet {
 	
     public GestioneCarrello() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	
@@ -137,59 +136,59 @@ public class GestioneCarrello extends HttpServlet {
 		else {
 			Certificato c=certificato.doRetrieveByKey(su.getcF());
 			if(c!=null && c.isValido()) { //se il certificato è valido
-			List<Frame> lista = carrello.getList();
-			//Per ogni frame nel carrello, creo un occhiale 
-			for(Frame f: lista) {
-				//controllo se esiste un frame non usato uguale in deposito, altrimenti lo creo
-				ArrayList<String> select= new ArrayList<>();
-				select.add("IDFrame");
-				ArrayList<Where> where= new ArrayList<>();
-				//Colore, prezzo, materiale, modello, marchio, peso
-				where.add(new Where("Colore",f.getColore()));
-				where.add(new Where("Prezzo",""+f.getPrezzo()));
-				where.add(new Where("Materiale",f.getMateriale()));
-				where.add(new Where("Modello",f.getModello()));
-				where.add(new Where("Marchio",f.getMarchio()));
-				where.add(new Where("Peso",""+f.getPeso()));
-				where.add(new Where("Colore",f.getColore()));
-				
-				//Creo il secondo campo opzioni
-				ArrayList<String> select2= new ArrayList<>();
-				select2.add("IDFrame");
-				
-				//Creo il campo opzioni per la subQuery
-				Opzioni op2= new Opzioni(false, select2, null, false, null, false, false, null);
-				
-				//Creo il campo opzioni per la query
-				Opzioni opzioni= new Opzioni(false, select, where, false, null, true, true, op2);
-				
-				//Inserisco tutto nel metodo;
-				Collection<Frame> elenco=model.doRetrieveByCond(opzioni);				
-				if(elenco.isEmpty()) {
-					System.out.println("\nDevo Creare il frame");
-					f= createAndRetrieveFrame(f);
-				}else
-					System.out.println("\nuso il frame in deposito");
-	
-				
-				int gradazione=cliente.doRetrieveByKey(su.getcF()).getGradazione();
-				//creo la lente
-				Lente l=createAndRetrieveLente(f,gradazione);
-				//Creo l'occhiale
-				@SuppressWarnings("deprecation")
-				Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
-				OcchialeNuovo occhiale=createAndRetrieveOcchiale(l,f,su,data);
-				//creo la lavorazione in laboratorio
-				LavorazioneLaboratorio tmp= new LavorazioneLaboratorio(null,(new Random()).nextInt(50),"montaggio",data,null,occhiale.getId(),null);
-				lavorazioneManager.doSave(tmp);
-				
-				System.out.println("Lavoro sul carrello dopo il checkout");
-				request.getSession().removeAttribute("carrello");
-				CookieManager.removeCookie(response, "CarrelloCookie"+su.getcF());
-				HashMap<String,Carrello> mappa=(HashMap<String,Carrello>)request.getServletContext().getAttribute("carrello");
-				mappa.remove(uuid);
-				request.getServletContext().setAttribute("carrello",mappa);
-				}
+				List<Frame> lista = carrello.getList();
+				//Per ogni frame nel carrello, creo un occhiale 
+				for(Frame f: lista) {
+					//controllo se esiste un frame non usato uguale in deposito, altrimenti lo creo
+					ArrayList<String> select= new ArrayList<>();
+					select.add("IDFrame");
+					ArrayList<Where> where= new ArrayList<>();
+					//Colore, prezzo, materiale, modello, marchio, peso
+					where.add(new Where("Colore",f.getColore()));
+					where.add(new Where("Prezzo",""+f.getPrezzo()));
+					where.add(new Where("Materiale",f.getMateriale()));
+					where.add(new Where("Modello",f.getModello()));
+					where.add(new Where("Marchio",f.getMarchio()));
+					where.add(new Where("Peso",""+f.getPeso()));
+					where.add(new Where("Colore",f.getColore()));
+					
+					//Creo il secondo campo opzioni
+					ArrayList<String> select2= new ArrayList<>();
+					select2.add("IDFrame");
+					
+					//Creo il campo opzioni per la subQuery
+					Opzioni op2= new Opzioni(false, select2, null, false, null, false, false, null);
+					
+					//Creo il campo opzioni per la query
+					Opzioni opzioni= new Opzioni(false, select, where, false, null, true, true, op2);
+					
+					//Inserisco tutto nel metodo;
+					Collection<Frame> elenco=model.doRetrieveByCond(opzioni);				
+					if(elenco.isEmpty()) {
+						System.out.println("Devo Creare il frame");
+						f= createAndRetrieveFrame(f);
+					}else
+						System.out.println("uso il frame in deposito");
+		
+					
+					int gradazione=cliente.doRetrieveByKey(su.getcF()).getGradazione();
+					//creo la lente
+					Lente l=createAndRetrieveLente(f,gradazione);
+					//Creo l'occhiale
+					@SuppressWarnings("deprecation")
+					Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
+					OcchialeNuovo occhiale=createAndRetrieveOcchiale(l,f,su,data);
+					//creo la lavorazione in laboratorio
+					LavorazioneLaboratorio tmp= new LavorazioneLaboratorio(null,(new Random()).nextInt(50),"montaggio",data,null,occhiale.getId(),null);
+					lavorazioneManager.doSave(tmp);
+					
+					System.out.println("Lavoro sul carrello dopo il checkout");
+					request.getSession().removeAttribute("carrello");
+					CookieManager.removeCookie(response, "CarrelloCookie"+su.getcF());
+					HashMap<String,Carrello> mappa=(HashMap<String,Carrello>)request.getServletContext().getAttribute("carrello");
+					mappa.remove(uuid);
+					request.getServletContext().setAttribute("carrello",mappa);
+					}
 			}
 			else {
 				//Da inserire nella JSP della pagina Cliente

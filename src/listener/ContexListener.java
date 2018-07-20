@@ -37,7 +37,7 @@ public class ContexListener implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
-    	System.out.println("Accedo al filtro di contesto");
+    	System.out.println("\nAccedo al filtro di contesto\n");
     	HashMapStore<String, SessioneUtente> map;
 		try {
 			map = new HashMapStore<>("C:\\Users\\Antonio\\Documents\\Università\\Java\\su.no");

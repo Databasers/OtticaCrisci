@@ -15,24 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import bean.Frame;
 import bean.Opzioni;
 
-/**
- * Servlet implementation class GestioneNegozio
- */
 @WebServlet("/GestioneNegozio")
 public class GestioneNegozio extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public GestioneNegozio() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("\nAccedo a Gestione Negozio\n");
 		String action=request.getParameter("action");
@@ -40,13 +30,20 @@ public class GestioneNegozio extends HttpServlet {
 			if(action.equalsIgnoreCase("retrieve"))
 			doRetrieve(request,response);
 			
+			System.out.println("\n Fine Gestione Negozio\n");
 			response.sendRedirect(request.getContextPath() + "\\HTML\\Store.jsp"); 
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 
+	/**
+	 * Recupera una lista di tutti i frame trattati dall'ottica
+	 * @param request
+	 * @param response
+	 * @throws SQLException
+	 */
 	private void doRetrieve(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		if(request.getSession().getAttribute("Frame")!=null)
 			request.getSession().removeAttribute("Frame");
@@ -67,11 +64,8 @@ public class GestioneNegozio extends HttpServlet {
 		request.getSession().setAttribute("Frame", elenco);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
