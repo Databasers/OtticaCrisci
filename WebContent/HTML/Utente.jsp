@@ -86,8 +86,15 @@
 		
 		<div id = "Anagrafica">
 			<p><!-- Nome utente, codice fiscale --></p>
-			<form name = "password">
-				
+			<form name = "password" method="post">
+				<% Boolean pass=(Boolean) request.getAttribute("passwordCambiata");
+				if(pass!=null){
+				if(pass){%>
+				<h3>PasswordCambiata</h3>
+				<%}
+				else {%>
+				<h3>Password non cambiata</h3>
+				<%} }%>
 				<span>Cambio password</span><br>
 				<span>Nuova password 	<input type ="text" name="Nu" value = "test"></span><br>
 				<span>Ripeti			<input type ="text" name="Ri" value = "due"></span><br>
@@ -107,7 +114,6 @@
 		//Qui andrebbe nascosto il form di input
 	}
 </script>
-
 
 <!-- Roba di AJAX -->
 <script>
@@ -132,21 +138,35 @@ function displayResults(listXML, id) {
 </script>
 
 
-</head>
-<body>
 
 	 
 	 <%
-	 	Boolean aggiunto = (Boolean) request.getAttribute("certificatoInserito");
-	 	if(aggiunto!=null)
-	 		if(aggiunto){
+	 	Certificato cert=(Certificato) request.getSession().getAttribute("certificato");
+	 System.out.println("Zona certificato");
+	 	if(cert!=null){
+	 		if(cert.isValidato() && cert.isValido()){
 	 			%>
 	 			<h3>Certificato aggiunto</h3>
+	 		<%}
+	 		if(!cert.isValido() && !cert.isValidato()){
+	 			%>
+	 			<h3>Certificato in attesa di validazione</h3>
 	 		<% }
+	 		if(!cert.isValido() && cert.isValidato()){
+	 		%>
+	 		<div><h3>Inserisci certificato</h3>
+					<form id="certificato" action="/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
+						<input type="file" accept=".jpg,.pdf" name="certificato">
+						<input type="submit">
+						<label><font color="red"> Il certificato non è stato accettato</font></label>
+					</form>
+				</div>
+	 		<% }
+	 	}
 	 		else{
 	 			%>
 	 			<div><h3>Inserisci certificato</h3>
-					<form id="certificato" action="http://localhost:8080/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
+					<form id="certificato" action="/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
 						<input type="file" accept=".jpg,.pdf" name="certificato">
 						<input type="submit">
 					</form>

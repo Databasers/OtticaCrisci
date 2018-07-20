@@ -7,10 +7,11 @@ public class Certificato implements Serializable{
 	boolean valido,validato;
 	String url,cF;
 	
-	public Certificato(String getcF, String saveDir, boolean b) {
+	public Certificato(String getcF, String saveDir, boolean b, boolean validato2) {
 		cF=getcF;
 		url=saveDir;
 		valido=b;
+		validato=validato2;
 	}
 	public Certificato () {
 		

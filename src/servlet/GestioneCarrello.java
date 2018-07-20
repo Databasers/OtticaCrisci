@@ -59,6 +59,7 @@ public class GestioneCarrello extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("\n Gestione Carrello \n");
 		//Recupero il carrello se esiste, altrimenti lo creo
 		request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
 		carrello= (Carrello<Frame>) request.getSession().getAttribute("carrello");
@@ -109,9 +110,10 @@ public class GestioneCarrello extends HttpServlet {
 			if(action.equalsIgnoreCase("delCart")) {
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Carrello.jsp"); 
 			}
-			if(action.equalsIgnoreCase("checkout"))
+			if(action.equalsIgnoreCase("checkout") && ((SessioneUtente) request.getSession().getAttribute("Utente"))!=null)
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp");
 			
+			System.out.println("\n Fine gestione Carrello \n");
 			
 		} catch(SQLException e) {
 			System.out.println("Error: "+ e.getMessage());
@@ -128,9 +130,11 @@ public class GestioneCarrello extends HttpServlet {
 
 	//Bisogna sistemare l'attributo TipoLente
 	private void doCheckout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		System.out.println("Checkout");
 		String dispatcher="/HTML/Utente.jsp";
 		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("Utente");
 		if(su==null || !su.getRuolo().equalsIgnoreCase("utente")) { //se non è loggato
+			System.out.println("Non è loggato");
 			response.sendRedirect("/OtticaCrisci/HTML/Login.jsp");
 		}
 		else {
@@ -196,6 +200,7 @@ public class GestioneCarrello extends HttpServlet {
 				request.setAttribute("DaValidare", true);
 			}
 		}
+		System.out.println("Fine checkout");
 	}
 		
 	private synchronized Frame createAndRetrieveFrame(Frame f) throws SQLException {

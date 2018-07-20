@@ -4,9 +4,10 @@ function check(){
 	var u = document.password.Nu.value;
 	var d = document.password.Ri.value;
 	if(u == d){
-		var re = new XMLHttpRequest();
-		re.open("get","/GestioneUtente?action=modificaPassword&pwd="+u,true);
-		
+		console.log("Le password corrispondono");
+		document.password.action="/OtticaCrisci/GestioneUtente?action=modificaPassword&passwordNuova="+u;
+		console.log(u);
+		document.password.submit();
 	}
 	else{
 		alert("La password non corrisponde");
