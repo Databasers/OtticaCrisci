@@ -1,6 +1,8 @@
 package bean;
 
-public class Lente {
+import java.io.Serializable;
+
+public class Lente implements Serializable{
 
 	Integer id;
 	int diottria,peso,prezzo,partitaIva;
@@ -22,7 +24,7 @@ public class Lente {
 		
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {

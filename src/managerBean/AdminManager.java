@@ -1,5 +1,6 @@
 package managerBean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import bean.Admin;
 import it.unisa.model.DriverManagerConnectionPool;
 import it.unisa.model.ProductModel;
 
-public class AdminManager implements ProductModel<Admin,String> {
+public class AdminManager implements ProductModel<Admin,String>, Serializable {
 
 	private static final String TableName="Admin";
 	
@@ -39,7 +40,7 @@ public class AdminManager implements ProductModel<Admin,String> {
 			temp.setPassword(rs.getString("Password"));
 			temp.setDataAssunzione(rs.getDate("DataAssunzione"));
 			temp.setDataNascita(rs.getDate("DataNascita"));
-			temp.setTelefono(rs.getInt("Telefono"));
+			temp.setTelefono(rs.getString("Telefono"));
 			
 				
 		}finally {
@@ -78,7 +79,7 @@ public class AdminManager implements ProductModel<Admin,String> {
 			temp.setPassword(rs.getString("Password"));
 			temp.setDataAssunzione(rs.getDate("DataAssunzione"));
 			temp.setDataNascita(rs.getDate("DataNascita"));
-			temp.setTelefono(rs.getInt("Telefono"));
+			temp.setTelefono(rs.getString("Telefono"));
 			
 				
 		}finally {
@@ -120,7 +121,7 @@ public class AdminManager implements ProductModel<Admin,String> {
 				temp.setPassword(rs.getString("Password"));
 				temp.setDataAssunzione(rs.getDate("DataAssunzione"));
 				temp.setDataNascita(rs.getDate("DataNascita"));
-				temp.setTelefono(rs.getInt("Telefono"));
+				temp.setTelefono(rs.getString("Telefono"));
 				
 				c.add(temp);
 			}
@@ -152,7 +153,7 @@ public class AdminManager implements ProductModel<Admin,String> {
 			preparedStatement.setString(4, product.getPassword());
 			preparedStatement.setDate(5,product.getDataAssunzione());
 			preparedStatement.setDate(6, product.getDataNascita());
-			preparedStatement.setInt(7, product.getTelefono());
+			preparedStatement.setString(7, product.getTelefono());
 			System.out.println("doSave: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 
@@ -186,7 +187,7 @@ public class AdminManager implements ProductModel<Admin,String> {
 			preparedStatement.setString(4, product.getCognome());
 			preparedStatement.setDate(5,product.getDataAssunzione());
 			preparedStatement.setDate(6, product.getDataNascita());
-			preparedStatement.setInt(7, product.getTelefono());
+			preparedStatement.setString(7, product.getTelefono());
 			preparedStatement.setString(8, product.getcF());
 			
 			System.out.println("doUpdate: "+ preparedStatement.toString());

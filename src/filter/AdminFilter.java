@@ -16,7 +16,7 @@ import bean.SessioneUtente;
 /**
  * Servlet Filter implementation class AdminFilter
  */
-@WebFilter(filterName="AdminFilter", urlPatterns= {"/GestioneAdmin"})
+@WebFilter(filterName="AdminFilter", urlPatterns= {"/GestioneAdmin","/HTML/Admin.jsp"})
 public class AdminFilter implements Filter {
 
     /**
@@ -37,17 +37,28 @@ public class AdminFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Accedo al filtro");
+		System.out.println("\nAccedo al filtro Admin \n");
 		HttpServletRequest httpRequest=(HttpServletRequest) request;
 		HttpServletResponse httpResponse=(HttpServletResponse) response;
 		
 		SessioneUtente su=(SessioneUtente)httpRequest.getSession().getAttribute("Utente");
-		if(su==null || su.getRuolo().equalsIgnoreCase("Utente")) {
-			httpResponse.sendRedirect("HTML/Login.jsp");
+		if(su==null) {
+			System.out.println("Non è loggato");
+			System.out.println("\n Fine filtro Admin \n");
+			httpResponse.sendRedirect("/OtticaCrisci/HTML/Login.jsp");
 		}
-		else
+		else{
+			if(su.getRuolo().equalsIgnoreCase("Utente")) {
+			System.out.println("E' un utente che vuole impossessarsi del nostro negozio. FERMALO, FILTRO");
+			System.out.println("\n Fine filtro Admin \n");
+			httpResponse.sendRedirect("/OtticaCrisci/HTML/Homepage.jsp");
+		}
+		else {
 		// pass the request along the filter chain
+		System.out.println("\n Fine filtro Admin \n");
 		chain.doFilter(request, response);
+		}
+		}
 	}
 
 	/**

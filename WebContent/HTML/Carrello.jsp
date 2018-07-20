@@ -19,6 +19,9 @@
 		Ogni riga ha al termine un pulsante "remove"
 	-->
 	<%
+	
+	
+	
 	int h = 0;
 	Carrello<Frame> carrello;
 	GestioneCarrello gestione = new GestioneCarrello();
@@ -41,7 +44,7 @@
 				<td>
 				<img src = <%= oggetto.getMarchio()%> > <%=""+ oggetto.getMarchio()  + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%>
 				 <%= oggetto.getPrezzo()%>
-				 <button type="submit" formaction="/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
+				 <a href="/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</a>
 				 </td>
 			</tr>
 			
@@ -59,7 +62,7 @@
 	<p id = "Totale">
 		<%= h %>
 	<!-- Creare funzione per chiamare il checkout dal pulsante -->
-		<button type="submit" formaction="/gestione?action=checkout">Conferma</button>
+		<a href="/OtticaCrisci/gestione?action=checkout">Conferma</a>
 	<p/>
 	
 	

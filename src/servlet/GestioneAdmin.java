@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Admin;
 import bean.Certificato;
+import bean.Cliente;
 import bean.Frame;
 import bean.LavorazioneDeposito;
 import bean.LavorazioneLaboratorio;
@@ -26,9 +27,11 @@ import bean.OcchialeRotto;
 import bean.SessioneUtente;
 import managerBean.AdminManager;
 import managerBean.CertificatoManager;
+import managerBean.ClienteManager;
 import managerBean.DepositoManager;
 import managerBean.FrameManager;
 import managerBean.LaboratorioManager;
+import managerBean.LenteManager;
 import managerBean.OcchialeNuovoManager;
 import managerBean.OcchialeRottoManager;
 
@@ -60,6 +63,14 @@ public class GestioneAdmin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action=(String)request.getParameter("action");
 		su=(SessioneUtente)request.getSession().getAttribute("Utente");
+		if(action.equalsIgnoreCase("ajax"))
+			try {
+				doAjax(request,response);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		else {
 		try {
 		if(action.equalsIgnoreCase("certificato"))
 			doRetrieveCertificati(request,response);
@@ -78,6 +89,7 @@ public class GestioneAdmin extends HttpServlet {
 		x.forward(request, response);
 		}catch (Exception e) {
 			// TODO: handle exception
+		}
 		}
 	}
 	
@@ -240,11 +252,6 @@ public class GestioneAdmin extends HttpServlet {
 	}
 	
 
-	private void doRetrieveCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		//da fare in ajax se abbiamo tempo
-		
-	}
-
 	private void doModificaCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String v=request.getParameter("valido");
 		Boolean valido=Boolean.parseBoolean(v);
@@ -295,10 +302,42 @@ public class GestioneAdmin extends HttpServlet {
 	
 	private void modifyLabel(String l,HttpServletRequest request, HttpServletResponse response) {
 		label=l;
-		if(request.getAttribute("label")!=null)
-			request.removeAttribute("label");
-		request.setAttribute("label", label);
+		if(request.getSession().getAttribute("label")!=null)
+			request.getSession().removeAttribute("label");
+		request.getSession().setAttribute("label", label);
 	}
+	
+	
+	private void doAjax(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		response.setContentType("text/xml");
+		StringBuffer risposta= new StringBuffer();
+		
+		risposta.append("<info>");
+		String param= (String)request.getParameter("param");
+		System.out.println("param=" + param);
+			ClienteManager manager=new ClienteManager();
+			Cliente cliente=manager.doRetrieveByKey(param);
+			Certificato c= certificato.doRetrieveByKey(param);
+			if(c==null) {
+				risposta.append("<Esito>"+false+"</Esito>");
+			}
+			else {
+				risposta.append("<Esito>"+true+"</Esito>");
+				risposta.append("<CodiceFiscale>"+c.getcF()+"</CodiceFiscale>");
+				risposta.append("<Nome>"+cliente.getNome()+"</Nome>");
+				risposta.append("<Cognome>"+cliente.getCognome()+"</Cognome>");
+				risposta.append("<Valido>"+c.isValido()+"</Valido>");
+				risposta.append("<Validato>"+c.isValidato()+"</Validato>");
+			}
+			
+			
+		risposta.append("</info>");
+		response.getWriter().write(risposta.toString());
+		System.out.println("Accesso terminato");
+	}
+
+	
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

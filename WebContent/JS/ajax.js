@@ -34,7 +34,6 @@ function getReadyStateHandler(req, responseXmlHandler, id) {
 			console.log("Send request");
 		} else if ( req.readyState == 3 ) {
 				console.log("Receive response");
-				wait(false);
 		} else if (req.readyState == 4) {
 			console.log("Request finished and response is ready");
 			if (req.status == 200 || req.status == 304) {
