@@ -87,14 +87,15 @@
 		<div id = "Anagrafica">
 			<p><!-- Nome utente, codice fiscale --></p>
 			<form name = "password" method="post">
-				<% Boolean pass=(Boolean) request.getAttribute("passwordCambiata");
+				<% Boolean pass=(Boolean) request.getSession().getAttribute("passwordCambiata");
 				if(pass!=null){
 				if(pass){%>
 				<h3>PasswordCambiata</h3>
 				<%}
 				else {%>
 				<h3>Password non cambiata</h3>
-				<%} }%>
+				<%} 
+				request.getSession().removeAttribute("passowrdCambiata");}%>
 				<span>Cambio password</span><br>
 				<span>Nuova password 	<input type ="text" name="Nu" value = "test"></span><br>
 				<span>Ripeti			<input type ="text" name="Ri" value = "due"></span><br>

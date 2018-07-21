@@ -19,7 +19,7 @@
 	%>
 	
 	
-	<%@ include file="AdminCertificato.jsp" %>
+	<%@ include file="AdminOcchiali.jsp" %>
 
 <!--  
 	 <script>
