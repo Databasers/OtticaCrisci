@@ -28,10 +28,19 @@ public class GestioneNegozio extends HttpServlet {
 		String action=request.getParameter("action");
 		try{
 			if(action.equalsIgnoreCase("retrieve"))
-			doRetrieve(request,response);
+			{
+				doRetrieve(request,response);
 			
-			System.out.println("\n Fine Gestione Negozio\n");
-			response.sendRedirect(request.getContextPath() + "\\HTML\\Store.jsp"); 
+				System.out.println("\n Fine Gestione Negozio\n");
+				response.sendRedirect(request.getContextPath() + "\\HTML\\Store.jsp"); 
+			}
+			if(action.equalsIgnoreCase("retrieveFronHome"))
+			{
+				doRetrieve(request,response);
+				
+				System.out.println("\n Fine Gestione Negozio\n");
+				response.sendRedirect(request.getContextPath() + "\\HTML\\Homepage.jsp");
+			}
 		}
 		catch (Exception e) {
 			
@@ -56,9 +65,10 @@ public class GestioneNegozio extends HttpServlet {
 		s.add("Marchio");
 		s.add("Peso");
 		s.add("UrlImmagine");
-		s.add("IDFrame");
+		s.add("MAX(IDFrame)");
+		String groupBy="Colore,Prezzo,Materiale,Modello,Marchio,Peso";
 		System.out.println("Prima del costruttore");
-		Opzioni opzioni=new Opzioni(true, s, null, false, null, false,false, null);
+		Opzioni opzioni=new Opzioni(true, s, null, true, groupBy, false,false, null);
 		System.out.println("Dopo del costruttore");
 		Collection<Frame> elenco=m.doRetrieveByCond(opzioni);
 		request.getSession().setAttribute("Frame", elenco);

@@ -81,7 +81,11 @@ public Collection<Frame> doRetrieveByCond(Opzioni opzioni) throws SQLException {
 		sql+=" )";
 		}
 		
+		if(opzioni.isSort()) {
+			sql+=" Group By "+ opzioni.getSortBy();
+		}
 		ArrayList<String> elenco= opzioni.getTab();
+		
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
@@ -92,7 +96,10 @@ public Collection<Frame> doRetrieveByCond(Opzioni opzioni) throws SQLException {
 			System.out.println("Quesry effettuata");
 			while(rs.next()) {
 				Frame temp= new Frame();
-				temp.setId(rs.getInt("IDFrame"));
+				if(elenco.contains("IDFrame"))
+					temp.setId(rs.getInt("IDFrame"));
+				if(elenco.contains("MAX(IDFrame)"))
+					temp.setId(rs.getInt("MAX(IDFrame)"));
 				if(elenco.contains("Colore")) {
 				temp.setColore(rs.getString("Colore"));
 				}
