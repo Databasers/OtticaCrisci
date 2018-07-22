@@ -34,7 +34,7 @@ public class GestioneNegozio extends HttpServlet {
 				System.out.println("\n Fine Gestione Negozio\n");
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Store.jsp"); 
 			}
-			if(action.equalsIgnoreCase("retrieveFronHome"))
+			if(action.equalsIgnoreCase("retrieveForHome"))
 			{
 				doRetrieve(request,response);
 				
