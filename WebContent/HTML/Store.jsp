@@ -8,7 +8,7 @@
 </style>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Occhiali da vista e da sole</title>
 <LINK rel="stylesheet" href="../CSS/Temp_FS.css" type="text/css">
 <LINK rel="stylesheet" href="../CSS/TabellaFiltri.css" type="text/css">
 <LINK rel="stylesheet" href="../CSS/Store.css" type="text/css">
@@ -28,34 +28,41 @@
 		else
 			request.getSession().removeAttribute("Frame");
 	%>
-
 	
 	<%  if(elenco.isEmpty()){
 		%><p>Non ci sono frame</p> <%
 	}
 	else{
+		
 		Frame[] lista=elenco.toArray(new Frame[0]);
 		GestioneCarrello gestione = new GestioneCarrello();
 		
-		%>
-			<%for(Frame x: lista) {
+		
+			
+			for(Frame x: lista) {
 				
 				%>
+			
+				
 				 <div class= "product"> 
-					<img class= "productImg" src=  "../marche.jpg"<%-- x.getUrlImmagine() --%> alt="Img" style= "width:33%">
+					<img class= "productImg" src=  <%= x.getUrlImmagine() %> alt="Img" style= "width:33%">
 					<div class= "description">
-						<h3><%= x.getModello() %></h3>
-						<h3><%= x.getMarchio() %></h3>
-						<h3><%= x.getColore() %></h3>
-						<h3><%= x.getPrezzo() %> Euro</h3>
-						
-						<button type="submit" formaction="/gestione?action=addCart&id=
-						<%= x.getId()%>">Aggiungi al carrello</button>
+						<div class = "desc">
+							<h3> <%= x.getModello() %> <%= x.getColore()%></h3>
+							<h3> <%= x.getMarchio() %></h3>
+							<h3><%= x.getPrezzo() %> Euro</h3>
+						</div>
+						<div class = "btn">
+							<form method= "post">
+							<button type="submit" formaction="/OtticaCrisci/gestione?action=addCart&id=
+							<%=x.getId()%>">Aggiungi al carrello</button>
+							</form>
+						</div>
 					</div>
 				</div>
 				
-			<% }
-			}%>
+<%			} }%>
+		
 	
 
 </body>
