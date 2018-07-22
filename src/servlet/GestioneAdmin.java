@@ -35,9 +35,7 @@ import managerBean.LenteManager;
 import managerBean.OcchialeNuovoManager;
 import managerBean.OcchialeRottoManager;
 
-/**
- * Servlet implementation class GestioneAdmin
- */
+
 @WebServlet("/GestioneAdmin")
 public class GestioneAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -88,7 +86,7 @@ public class GestioneAdmin extends HttpServlet {
 		RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Admin.jsp");
 		x.forward(request, response);
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		}
 	}
@@ -251,7 +249,6 @@ public class GestioneAdmin extends HttpServlet {
 		
 	}
 	
-
 	private void doModificaCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String v=request.getParameter("valido");
 		Boolean valido=Boolean.parseBoolean(v);

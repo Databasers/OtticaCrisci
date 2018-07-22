@@ -78,19 +78,6 @@ public class GestioneUtente extends HttpServlet {
 		cliente=null;
 	}
 
-	
-
-	private void doDelCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		Certificato c=certificatoManager.doRetrieveByKey(cliente.getcF());
-		if(!c.isValido() && c.isValidato() ) { //se non è valido ma è stato controllato
-			File x= new File("C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati"+File.separator+c.getcF());
-			certificatoManager.doDelete(c.getcF());
-			x.delete();
-			if(request.getAttribute("certificato")!=null)
-				request.removeAttribute("certificato");
-		}
-		
-	}
 
 	/**
 	 * Gestione ajax per dettagli su di un ordine
@@ -203,10 +190,13 @@ public class GestioneUtente extends HttpServlet {
 		Certificato c;
 		if(request.getAttribute("certificato")!=null) //elimino possibili rimasuglie
 			request.removeAttribute("certificato");
+		c=certificatoManager.doRetrieveByKey(cliente.getcF());
 		//controllo se esiste già un certificato
-		if((c=certificatoManager.doRetrieveByKey(cliente.getcF()))==null) //Ho bisogno di mandare un messaggio all'utente, dato che nascondo l'accesso al form?
+		if(c==null || (c.isValidato() && !c.isValido()))
 		{	
-		String saveDir="C:\\Users\\giggi\\eclipse-workspace\\OtticaCrisci\\Data\\Certificati";
+		if(c.isValidato() && !c.isValido())
+			doDelCertificato(request, response);
+		String saveDir="C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati";
 		for(Part certificato: request.getParts()) //tanto lo fa una sola volta
 		{
 			String filename= certificato.getSubmittedFileName();
@@ -216,15 +206,27 @@ public class GestioneUtente extends HttpServlet {
 			if(filename!=null && !filename.equals("")) {
 				certificato.write(saveDir); 
 				System.out.println("Directory di salvataggio: " + saveDir);
-				certificatoManager.doSave(c=new Certificato( cliente.getcF(),saveDir,false));
-				request.setAttribute("certificato", c);
+				certificatoManager.doSave(c=new Certificato( cliente.getcF(),saveDir,false,false));
+				request.getSession().setAttribute("certificato", c);
 			}
 			else
-				request.setAttribute("certificato", null);
+				request.getSession().setAttribute("certificato", null);
 		}
 		}
 		else
-			request.setAttribute("certificato", c);
+			request.getSession().setAttribute("certificato", c);
+	}
+	
+	private void doDelCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		Certificato c=certificatoManager.doRetrieveByKey(cliente.getcF());
+		if(!c.isValido() && c.isValidato() ) { //se non è valido ma è stato controllato
+			File x= new File("C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati"+File.separator+c.getcF());
+			certificatoManager.doDelete(c.getcF());
+			x.delete();
+			if(request.getSession().getAttribute("certificato")!=null)
+				request.getSession().removeAttribute("certificato");
+		}
+		
 	}
 
 	/**
@@ -236,14 +238,10 @@ public class GestioneUtente extends HttpServlet {
 	 */
 	private void doModificaPassword(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String password=request.getParameter("passwordVecchia");
-		if(cliente.getPassword().equals(password)) {
-			cliente.setPassword(request.getParameter("passwordNuova"));
-			clienteManager.doSave(cliente);
-			request.setAttribute("passwordCambiata", true);
-		}
-		else {
-			request.setAttribute("passwordCambiata", false);
-		}
+		cliente.setPassword(request.getParameter("passwordNuova"));
+		clienteManager.doUpdate(cliente);
+		request.setAttribute("passwordCambiata", true);
+		
 		
 	}
 
