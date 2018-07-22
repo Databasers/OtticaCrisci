@@ -194,6 +194,7 @@ public class GestioneUtente extends HttpServlet {
 		//controllo se esiste già un certificato
 		if(c==null || (c.isValidato() && !c.isValido()))
 		{	
+		if(c!=null)
 		if(c.isValidato() && !c.isValido())
 			doDelCertificato(request, response);
 		String saveDir="C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati";

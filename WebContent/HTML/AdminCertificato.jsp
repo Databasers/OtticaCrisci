@@ -28,7 +28,7 @@
 		%>
 		<tr>
 			<td><%=c.getcF() %>
-			<td><%=c.getUrl() %>
+			<td><a href="<%=c.getUrl() %>"><%=c.getUrl() %></a>
 			<td><%=c.isValido() %>
 			<td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=true&code=<%=c.getcF() %>">Valido</a>
 			<td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=false&code=<%=c.getcF() %>">Non Valido</a>
