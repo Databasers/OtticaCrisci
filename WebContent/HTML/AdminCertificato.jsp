@@ -8,6 +8,27 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+
+<script type="text/javascript">
+	function check(bottone){
+		var valido;
+		var gradazione;
+		var cf;
+		var form=bottone.parentNode;
+		valido=form.selezione;
+		valido=valido.options[valido.selectedIndex].value;
+		var td=form.parentNode;
+		var tr=td.parentNode;
+		var celle=tr.cells;
+		cf=celle[0].firstChild.nodeValue
+		gradazione=form.num.value;
+		form.action="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf;
+		console.log("/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf);
+		form.submit();
+	}
+
+</script>
+
 </head>
 <body>
 
@@ -29,9 +50,17 @@
 		<tr>
 			<td><%=c.getcF() %>
 			<td><a href="<%=c.getUrl() %>"><%=c.getUrl() %></a>
-			<td><%=c.isValido() %>
-			<td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=true&code=<%=c.getcF() %>">Valido</a>
-			<td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=false&code=<%=c.getcF() %>">Non Valido</a>
+			<!--  <td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=true&code=<%--=c.getcF() %>">Valido</a>
+			<td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=false&code=<%=c.getcF() --%>">Non Valido</a> -->
+			<td>
+			<form method="post">
+				<select id="selezione">
+				<option value="true">true
+				<option value="false">false 
+				</select>
+				<input type="number" min="0" max="10" id="num" placeholder="0"> 
+				<input type="button" onclick="check(this)">
+			</form>
 		</tr>
 		<% } %>
 	</table>
@@ -60,6 +89,7 @@ function displayResults(listXML, id) {
 				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
 				obj.innerHTML += " " + rdfs;
 				//Inserisci qui i tag <a href> per la modificca dei certificati uguali a quelli sopra
+				
 			}
 			
 		}

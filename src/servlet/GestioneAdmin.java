@@ -251,6 +251,7 @@ public class GestioneAdmin extends HttpServlet {
 	
 	private void doModificaCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String v=request.getParameter("valido");
+		Integer gradazione=Integer.parseInt(request.getParameter("gradazione"));
 		Boolean valido=Boolean.parseBoolean(v);
 		System.out.println("Il valore di valido è: " + valido);
 		String code=request.getParameter("code");
@@ -258,6 +259,12 @@ public class GestioneAdmin extends HttpServlet {
 		c.setValidato(true);
 		c.setValido(valido);
 		certificato.doUpdate(c);
+
+		ClienteManager mCliente= new ClienteManager();
+		Cliente cliente=mCliente.doRetrieveByKey(code);
+		cliente.setGradazione(gradazione);
+		mCliente.doUpdate(cliente);
+		
 		modifyLabel("Certificato", request, response);
 		if(request.getAttribute("certificati")!=null)
 			request.removeAttribute("certificati");
