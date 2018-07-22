@@ -1,0 +1,24 @@
+
+div.product{
+	margin: 20px;
+	border: 2px solid;
+	border-color: #008ae6;
+	width: 98%;
+	height: 250px;
+}
+
+div.product .description{
+	margin: 0;
+    position: relative;
+    float: right;
+   	width: 66%
+}
+
+
+
+div.product  h3{
+	font-size: 25px;
+	text-align: left;
+}
+
+
