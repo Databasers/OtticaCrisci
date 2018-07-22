@@ -10,11 +10,11 @@
 <body>
 	<div class="header_top">
 	
-		<div class = "ricerca">
+		<!--  <div class = "ricerca">
 		
 		<input type="search" id="search" name="search" class="txt" size="20">
 		<input type="submit" class="btn" value="Search" onClick="searchFunction()">
-		</div>
+		</div>-->
 		
 		<div class="logo">
 			<a href="Homepage.jsp" class="header"><img class ="logo" src="../OC.png"
@@ -22,12 +22,13 @@
 		</div>
 
 		<%
-    	SessioneUtente su = (SessioneUtente) session.getAttribute("utente");
+    	SessioneUtente su = (SessioneUtente) request.getSession().getAttribute("Utente");
    	 if ( su != null) {
     %>
     	<div class="logout">
-		<a href="Utente.jsp" class="welcome header">Welcome : <%su.getNome();%>
-		</a><a href="#" class="header"><input type="submit" class="logout" value="Logout" onclick="logoutFunction()"></a>
+		<a href="Utente.jsp" class="welcome header">Welcome : <%=su.getNome()%> </a>
+		<br>
+		<a href="/OtticaCrisci/GestioneLogin?action=logout" class="header">Logout</a>
 		</div>
 		<%}else { %>
 
@@ -39,22 +40,13 @@
 	</div>
 	<div class="header_list">
 		<ul>
-			<li class="selected"><a href="Homepage.jsp" class="header">Home</a></li>
+			<li><a href="Homepage.jsp" class="header">Home</a></li>
 			<li><a href="Store.jsp" class="header">Store</a></li>
 			<li><a href="Marchi.html" class="header">Marchi</a></li>
 			<li><a href="Carrello.jsp" class="header">Carrello</a></li>
 		</ul>
 	</div>
 
-<script>
-function logoutFunction(){
-	response.sendRedirect("/OtticaCrisci/GestioneLoginRegistrazione?action=logout");
-}
-
-function  searchFunction(){
-	//qualcosa adda fa;
-}
-</script>
 
 </body>
 </html>

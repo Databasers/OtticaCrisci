@@ -22,7 +22,7 @@ img.myslidesimg{
 h1.myslidestext{
 	position: absolute;
 	top: 50%;
-	left: 33%;
+	left: 35%;
 	text-align: center;
 	font-size: 80 px; 
 	color: #000000;
@@ -91,19 +91,37 @@ a{
 	text-decoration: none;
 }
 
+div.cont-table{
+	
+	width:auto;
+	display:table;
+}
+
+div.container-adivces{
+	
+	width:100%;
+	display:table-row;
+}
 
 div.product{
+	
 	margin: 20px;
 	border: 2px solid;
 	border-color: #008ae6;
-	width: 33%;
+	width: 500px;
 	height: 500px;
+	display: table-cell;
 }
 
 
 
-div.product  h3{
+div.product h3{
 	font-size: 25px;
 	text-align: center;
+}
+
+button.addCart{
+	position: relative;
+	margin-left: 35%;
 }
 
