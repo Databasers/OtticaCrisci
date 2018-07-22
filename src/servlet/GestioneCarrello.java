@@ -59,6 +59,7 @@ public class GestioneCarrello extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("\n Gestione Carrello \n");
 		//Recupero il carrello se esiste, altrimenti lo creo
 		request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
 		carrello= (Carrello<Frame>) request.getSession().getAttribute("carrello");
@@ -87,6 +88,7 @@ public class GestioneCarrello extends HttpServlet {
 				}
 			}
 				
+			if(!action.equalsIgnoreCase("checkout")) { //Non deve toccare nuovamente i cookie ed il carrello
 			request.getSession().setAttribute("carrello", carrello);
 			//Creo il cookie carrello e lo salvo nella hash map, se è loggato
 			SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("Utente");
@@ -101,7 +103,7 @@ public class GestioneCarrello extends HttpServlet {
 				CookieManager.addCookie(response, "CarrelloCookie"+su.getcF(), uuid, 60*60);
 				request.getServletContext().setAttribute("carrello", mappa);
 			}	
-			
+			}
 			
 			if(action.equalsIgnoreCase("addCart")) {
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Store.jsp"); 
@@ -109,9 +111,10 @@ public class GestioneCarrello extends HttpServlet {
 			if(action.equalsIgnoreCase("delCart")) {
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Carrello.jsp"); 
 			}
-			if(action.equalsIgnoreCase("checkout"))
+			if(action.equalsIgnoreCase("checkout") && ((SessioneUtente) request.getSession().getAttribute("Utente"))!=null)
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp");
 			
+			System.out.println("\n Fine gestione Carrello \n");
 			
 		} catch(SQLException e) {
 			System.out.println("Error: "+ e.getMessage());
@@ -128,9 +131,11 @@ public class GestioneCarrello extends HttpServlet {
 
 	//Bisogna sistemare l'attributo TipoLente
 	private void doCheckout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		System.out.println("Checkout");
 		String dispatcher="/HTML/Utente.jsp";
 		SessioneUtente su=(SessioneUtente) request.getSession().getAttribute("Utente");
 		if(su==null || !su.getRuolo().equalsIgnoreCase("utente")) { //se non è loggato
+			System.out.println("Non è loggato");
 			response.sendRedirect("/OtticaCrisci/HTML/Login.jsp");
 		}
 		else {
@@ -142,6 +147,14 @@ public class GestioneCarrello extends HttpServlet {
 					//controllo se esiste un frame non usato uguale in deposito, altrimenti lo creo
 					ArrayList<String> select= new ArrayList<>();
 					select.add("IDFrame");
+					select.add("Prezzo");
+					select.add("Peso");
+					select.add("Modello");
+					select.add("Colore");
+					select.add("Marchio");
+					select.add("Materiale");
+					select.add("UrlImmagine");
+					select.add("PartitaIva");
 					ArrayList<Where> where= new ArrayList<>();
 					//Colore, prezzo, materiale, modello, marchio, peso
 					where.add(new Where("Colore",f.getColore()));
@@ -156,6 +169,7 @@ public class GestioneCarrello extends HttpServlet {
 					ArrayList<String> select2= new ArrayList<>();
 					select2.add("IDFrame");
 					
+					
 					//Creo il campo opzioni per la subQuery
 					Opzioni op2= new Opzioni(false, select2, null, false, null, false, false, null);
 					
@@ -166,29 +180,33 @@ public class GestioneCarrello extends HttpServlet {
 					Collection<Frame> elenco=model.doRetrieveByCond(opzioni);				
 					if(elenco.isEmpty()) {
 						System.out.println("Devo Creare il frame");
-						f= createAndRetrieveFrame(f);
-					}else
+						f= createAndRetrieveFrame(f); //Creo un nuovo frame
+					}else {
 						System.out.println("uso il frame in deposito");
-		
+						f=elenco.iterator().next(); //Uso uno di quelli recuperati
+					}
 					
 					int gradazione=cliente.doRetrieveByKey(su.getcF()).getGradazione();
 					//creo la lente
 					Lente l=createAndRetrieveLente(f,gradazione);
 					//Creo l'occhiale
 					@SuppressWarnings("deprecation")
-					Date data=new Date(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
+					Date data=new Date(LocalDateTime.now().getYear()-1900, LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth());
 					OcchialeNuovo occhiale=createAndRetrieveOcchiale(l,f,su,data);
 					//creo la lavorazione in laboratorio
 					LavorazioneLaboratorio tmp= new LavorazioneLaboratorio(null,(new Random()).nextInt(50),"montaggio",data,null,occhiale.getId(),null);
 					lavorazioneManager.doSave(tmp);
 					
-					System.out.println("Lavoro sul carrello dopo il checkout");
-					request.getSession().removeAttribute("carrello");
-					CookieManager.removeCookie(response, "CarrelloCookie"+su.getcF());
-					HashMap<String,Carrello> mappa=(HashMap<String,Carrello>)request.getServletContext().getAttribute("carrello");
-					mappa.remove(uuid);
-					request.getServletContext().setAttribute("carrello",mappa);
+					
 					}
+				
+				System.out.println("Lavoro sul carrello dopo il checkout");
+				request.getSession().removeAttribute("carrello");
+				Carrello test=(Carrello)request.getSession().getAttribute("carrello");
+				CookieManager.removeCookie(response, "CarrelloCookie"+su.getcF());
+				HashMap<String,Carrello> mappa=(HashMap<String,Carrello>)request.getServletContext().getAttribute("carrello");
+				mappa.remove(uuid);
+				request.getServletContext().setAttribute("carrello",mappa);
 			}
 			else {
 				//Da inserire nella JSP della pagina Cliente
@@ -196,6 +214,7 @@ public class GestioneCarrello extends HttpServlet {
 				request.setAttribute("DaValidare", true);
 			}
 		}
+		System.out.println("Fine checkout");
 	}
 		
 	private synchronized Frame createAndRetrieveFrame(Frame f) throws SQLException {

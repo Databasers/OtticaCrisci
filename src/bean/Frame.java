@@ -4,15 +4,18 @@ import java.io.Serializable;
 
 public class Frame implements Serializable{
 
-	int id,prezzo,peso;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Integer id,prezzo,peso;
 	String modello,colore,marchio,materiale,urlImmagine;
-	int PartitaIva;
+	Integer PartitaIva;
 	
-	public Frame(Integer object, String modello2, String colore2, Integer peso2, String materiale2, Integer prezzo2,
-			Integer partitaIva2, String marchio2, String urlImmagine2) {
+	public Frame(Integer object, String modello2, String colore2, Integer peso2, String materiale2, Integer prezzo2, Integer partitaIva2, String marchio2, String urlImmagine2) {
 		
 		this.id=object;
-		this.modello=modello;
+		this.modello=modello2;
 		colore=colore2;
 		peso=peso2;
 		materiale=materiale2;
@@ -26,22 +29,22 @@ public class Frame implements Serializable{
 		
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getPrezzo() {
+	public Integer getPrezzo() {
 		return prezzo;
 	}
-	public void setPrezzo(int prezzo) {
+	public void setPrezzo(Integer prezzo) {
 		this.prezzo = prezzo;
 	}
-	public int getPeso() {
+	public Integer getPeso() {
 		return peso;
 	}
-	public void setPeso(int peso) {
+	public void setPeso(Integer peso) {
 		this.peso = peso;
 	}
 	public String getModello() {
@@ -62,10 +65,10 @@ public class Frame implements Serializable{
 	public void setMarchio(String marchio) {
 		this.marchio = marchio;
 	}
-	public int getPartitaIva() {
+	public Integer getPartitaIva() {
 		return PartitaIva;
 	}
-	public void setPartitaIva(int partitaIva) {
+	public void setPartitaIva(Integer partitaIva) {
 		PartitaIva = partitaIva;
 	}
 	public String getMateriale() {

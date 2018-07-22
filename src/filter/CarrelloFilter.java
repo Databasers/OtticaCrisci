@@ -45,10 +45,12 @@ public class CarrelloFilter implements Filter {
 		System.out.println("\nAccedo al filtro Carrello\n");
 		HttpServletRequest httpRequest=(HttpServletRequest) request;
 		HttpServletResponse httpResponse=(HttpServletResponse) response;
-		Carrello carrello;
+		Carrello<Frame> carrello;
 		HashMapStore<String, Carrello<Frame>> map=(HashMapStore<String, Carrello<Frame>>) request.getServletContext().getAttribute("carrello");
 		carrello=(Carrello<Frame>)httpRequest.getSession().getAttribute("carrello"); 
 		SessioneUtente su=(SessioneUtente)httpRequest.getSession().getAttribute("Utente");
+		if(carrello!=null)
+			System.out.println("Il carrello è in sessione");
 		
 		if(su!=null) { //Se è loggato
 			String uuid=CookieManager.getCookieValue(httpRequest, "CarrelloCookie"+su.getcF()); //recupero il codice dal cookie
@@ -72,6 +74,9 @@ public class CarrelloFilter implements Filter {
 		}
 		else
 			System.out.println("Non è loggato");
+		
+		
+		
 		System.out.println("\nFine Filtro Carrello\n");
 		chain.doFilter(request, response);
 	}

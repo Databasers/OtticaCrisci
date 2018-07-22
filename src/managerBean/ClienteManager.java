@@ -177,7 +177,7 @@ public class ClienteManager implements ProductModel<Cliente,String>, Serializabl
 			preparedStatement.setString(1, product.getcF());
 			preparedStatement.setString(2, product.getNome());
 			preparedStatement.setString(3, product.getCognome());
-			preparedStatement.setString(4, product.getCognome());
+			preparedStatement.setString(4, product.getPassword());
 			preparedStatement.setInt(5, product.getGradazione());
 			preparedStatement.setString(6, product.getcF());
 			

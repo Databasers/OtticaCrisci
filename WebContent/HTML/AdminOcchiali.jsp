@@ -10,6 +10,7 @@
 <body>
 
 <%
+System.out.println("Entro in AdminOcchiali");
 		Collection<OcchialeNuovo> elencoN=(Collection<OcchialeNuovo>)request.getAttribute("occhialiNuovi");
 		Collection<OcchialeRotto> elencoR=(Collection<OcchialeRotto>)request.getAttribute("occhialiRotti");
 		if(elencoN==null && elencoR==null){
