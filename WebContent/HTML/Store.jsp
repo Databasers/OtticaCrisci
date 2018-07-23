@@ -8,12 +8,17 @@
 </style>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Occhiali da vista e da sole</title>
 <LINK rel="stylesheet" href="../CSS/Temp_FS.css" type="text/css">
 <LINK rel="stylesheet" href="../CSS/TabellaFiltri.css" type="text/css">
+<LINK rel="stylesheet" href="../CSS/Store.css" type="text/css">
+
 </head>
 <body>
 
+	<div class= "header">
+<%@ include file="Header.jsp"%>
+</div>
 	<%
 		Collection<Frame> elenco=(Collection<Frame>)request.getSession().getAttribute("Frame");
 		if(elenco==null){
@@ -23,86 +28,41 @@
 		else
 			request.getSession().removeAttribute("Frame");
 	%>
-
-<!--  
-	<aside class="filtri">
-		Questo è un aside per i filtri
-		<ol>
-			<li><input type="checkbox" name="Filtro1" value="Marca1">Marca 1</li>
-			<li><input type="checkbox" name="Filtro1" value="Marca2">Marca 2</li>
-		</ol>
-		<button class="ok">Conferma</button>
-		
-	</aside>
-	-->
 	
 	<%  if(elenco.isEmpty()){
 		%><p>Non ci sono frame</p> <%
 	}
 	else{
+		
 		Frame[] lista=elenco.toArray(new Frame[0]);
-		String select = "colonna";
 		GestioneCarrello gestione = new GestioneCarrello();
 		
-		if(select.equals("colonna")){%>
-			<table border="1px solid black">
-			<%for(Frame x: lista) {
+		
+			
+			for(Frame x: lista) {
 				
 				%>
-				<!-- 
-				<div id="sinistra" style="float: left">
-				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> x.getModello() x.getMateriale() x.getColore()"%></p>
+			
+				
+				 <div class= "product"> 
+					<img class= "productImg" src=  <%= x.getUrlImmagine() %> alt="Img" style= "width:33%">
+					<div class= "description">
+						<div class = "desc">
+							<h3> <%= x.getModello() %> <%= x.getColore()%></h3>
+							<h3> <%= x.getMarchio() %></h3>
+							<h3><%= x.getPrezzo() %> Euro</h3>
+						</div>
+						<div class = "btn">
+							<form method= "post">
+							<button type="submit" formaction="/OtticaCrisci/gestione?action=addCart&id=
+							<%=x.getId()%>">Aggiungi al carrello</button>
+							</form>
+						</div>
+					</div>
 				</div>
-				<div id = "destra" style="float: right;">
-				<p><%=x.getPrezzo()%></p>
-				<button type="submit" formaction="/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</button>
-				</div>
-				<hr/>
-				 -->
-				<tr>
-					<td><img src="<%=x.getUrlImmagine()%>"><br>  <%=x.getModello() %> <%= x.getColore() %>, in <%=x.getMateriale() %>
-					<td><a href="/OtticaCrisci/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</a>
-<%			} %>
-		</table>
+				
+<%			} }%>
 		
-		<% } 
-		else if(select == "tabella"){%>
-		<table width = 100%>
-			<tr>
-				<td width=50%>
-			<% int h = lista.length/2;
-			for(int i = 0; i< h; i++){
-				Frame x = lista[i];%>
-				<div id="sinistra" style="float: left">
-				<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> <%=x.getModello()%> <%=x.getMateriale()%> <%=x.getColore()%></p>
-				</div>
-				<div id = "destra" style="float: right;">
-				<p><%=x.getPrezzo()%></p>
-				<button type="submit" formaction="/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</button>
-				</div>
-			<% } %>
-				<td>
-				<%for(int i=h; i<lista.length; i++) {
-					Frame x = lista[i];
-					%>
-					<div id="sinistra" style="float: left">
-					<img src = "<%=x.getId()%>"/> <p id = ><%=x.getMarchio()%> <%=x.getModello()%> <%=x.getMateriale()%> <%=x.getColore()%></p>
-					</div>
-					<div id = "destra" style="float: right;">
-					<p><%=x.getPrezzo()%></p>
-					<button type="submit" formaction="/gestione?action=addCart&id=<%=x.getId()%>">Aggiungi al carrello</button>
-					</div>
-					<hr/>
-				<%}%> 
-			</tr>
-		</table>	
-		<% }
-		}%>
-	
-	
-	
-	
-	
 	
 
 </body>

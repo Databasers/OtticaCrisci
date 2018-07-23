@@ -7,8 +7,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<LINK rel="stylesheet" href="../CSS/Utente.css" type="text/css">
-<script type="text/javascript" src="../JS/Mannaggiacristo.js"></script>
+
+<script type="text/javascript" src="../JS/Utente.js"></script>
 <script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="../JS/ajax.js"></script>
 </head>
@@ -36,32 +36,28 @@
 		}
 	%>
 	
-	
-	<div id = "Selettore">
+
+	<div id = "Contenitore-menu">
+		<div id = "Selettore">
 			<ul>
 				<li><span><button onclick="cambia('Ordini', 'Anagrafica')">Anagrafica</button></span></li>
 				<li><span><button onclick="cambia('Anagrafica', 'Ordini')">Ordini</button></span></li>
 			</ul>
 		</div>
-	
-
-	<div id = "Contenitore-menu">
 		
 		
 		
-		
-		<div id = "Ordini" style="display: none;">
-		<p id="modAjax" style="float: right;"><p>
+		<div id = "Ordini">
 		<%if(!elencoN.isEmpty()) {%>
-		<h3>Occhiali nuovi</h3>
+		Occhiali nuovi
 		<table>
 			<%for(OcchialeNuovo e: elencoN){ %>
-			<tr class="frame">
+			<tr>
 				<td>
 				
 				<p ><%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
 				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeNuovo');">
-				Mostra di più
+				Mostra di più</input>
 				
 				</td>
 			</tr>
@@ -69,32 +65,42 @@
 		</table>
 		<%}
 		    if(!elencoR.isEmpty()){ %>
-		    <h3>Occhiali rotti</h3>
+		    Occhiali rotti
 		   <table>
 		   		<%for(OcchialeRotto e: elencoR){ %>
-		   		<tr class="frame">
+		   		<tr>
 		   			<td>
+				
 						<p><%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
 						<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeRotto');">
-						Mostra di più
+						Mostra di più</input>
 					</td>
 		   		</tr>
 		   	<%} %>
 		   </table>
 		   <%}%>
 		</div>
+		<p id="modAjax"><p>
 		
 		
 		
 		<div id = "Anagrafica">
 			<p><!-- Nome utente, codice fiscale --></p>
-			<form name = "password">
-				<h2>Cambio password</h2><br>
-				<span>Vecchia password	<input type ="password" name="Ve"></span><br>
-				<span>Nuova password 	<input type ="text" name="Nu"></span><br>
-				<span>Ripeti			<input type ="text" name="Ri"></span><br>
+			<form name = "password" method="post">
+				<% Boolean pass=(Boolean) request.getSession().getAttribute("passwordCambiata");
+				if(pass!=null){
+				if(pass){%>
+				<h3>PasswordCambiata</h3>
+				<%}
+				else {%>
+				<h3>Password non cambiata</h3>
+				<%} 
+				request.getSession().removeAttribute("passowrdCambiata");}%>
+				<span>Cambio password</span><br>
+				<span>Nuova password 	<input type ="text" name="Nu" value = "test"></span><br>
+				<span>Ripeti			<input type ="text" name="Ri" value = "due"></span><br>
 				
-				<button id="bottoneanagrafica" type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
+				<button type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
 			</form> 
 		</div>
 	</div>
@@ -110,7 +116,6 @@
 	}
 </script>
 
-
 <!-- Roba di AJAX -->
 <script>
 function displayResults(listXML, id) {
@@ -120,7 +125,7 @@ function displayResults(listXML, id) {
 		
 		if(obj != null) {
 			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
-			obj.innerHTML ="<img src ='../Immagini_Frame/Occhiali_steampunk.jpg' ><br/>";
+			obj.innerHTML ="<img src =" +rdfs +">";
 			for( var i = 1; i < tag.length; i++){
 				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
 				obj.innerHTML += " " + rdfs;
@@ -134,21 +139,35 @@ function displayResults(listXML, id) {
 </script>
 
 
-</head>
-<body>
 
 	 
 	 <%
-	 	Boolean aggiunto = (Boolean) request.getAttribute("certificatoInserito");
-	 	if(aggiunto!=null)
-	 		if(aggiunto){
+	 	Certificato cert=(Certificato) request.getSession().getAttribute("certificato");
+	 System.out.println("Zona certificato");
+	 	if(cert!=null){
+	 		if(cert.isValidato() && cert.isValido()){
 	 			%>
 	 			<h3>Certificato aggiunto</h3>
+	 		<%}
+	 		if(!cert.isValido() && !cert.isValidato()){
+	 			%>
+	 			<h3>Certificato in attesa di validazione</h3>
 	 		<% }
+	 		if(!cert.isValido() && cert.isValidato()){
+	 		%>
+	 		<div><h3>Inserisci certificato</h3>
+					<form id="certificato" action="/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
+						<input type="file" accept=".jpg,.pdf" name="certificato">
+						<input type="submit">
+						<label><font color="red"> Il certificato non è stato accettato</font></label>
+					</form>
+				</div>
+	 		<% }
+	 	}
 	 		else{
 	 			%>
 	 			<div><h3>Inserisci certificato</h3>
-					<form id="certificato" action="http://localhost:8080/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
+					<form id="certificato" action="/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
 						<input type="file" accept=".jpg,.pdf" name="certificato">
 						<input type="submit">
 					</form>

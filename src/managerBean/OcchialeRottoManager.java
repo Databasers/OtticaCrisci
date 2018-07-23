@@ -38,7 +38,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setPrezzo(rs.getInt("Prezzo"));
 				temp.setDataRitiro(rs.getDate("DataRitiro"));
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
-				temp.setTipoDanno(rs.getString("EntitàDanno"));
+				temp.setTipoDanno(rs.getString("EntitaDanno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
@@ -75,7 +75,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setPrezzo(rs.getInt("Prezzo"));
 				temp.setDataRitiro(rs.getDate("DataRitiro"));
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
-				temp.setTipoDanno(rs.getString("EntitàDanno"));
+				temp.setTipoDanno(rs.getString("EntitaDanno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
@@ -115,7 +115,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 			temp.setPrezzo(rs.getInt("Prezzo"));
 			temp.setDataRitiro(rs.getDate("DataRitiro"));
 			temp.setDataConsegna(rs.getDate("DataConsegna"));
-			temp.setTipoDanno(rs.getString("EntitàDanno"));
+			temp.setTipoDanno(rs.getString("EntitaDanno"));
 			temp.setStato(rs.getString("Stato"));
 			temp.setcF(rs.getString("CodiceFiscale"));
 						
@@ -156,7 +156,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 				temp.setPrezzo(rs.getInt("Prezzo"));
 				temp.setDataRitiro(rs.getDate("DataRitiro"));
 				temp.setDataConsegna(rs.getDate("DataConsegna"));
-				temp.setTipoDanno(rs.getString("EntitàDanno"));
+				temp.setTipoDanno(rs.getString("EntitaDanno"));
 				temp.setcF(rs.getString("CodiceFiscale"));
 				temp.setStato(rs.getString("Stato"));
 				c.add(temp);
@@ -208,7 +208,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 
 	}
 	
-	//`Id`, `Prezzo`, `DataRitiro`, `DataConsegna`, `EntitàDanno`, `CodiceFiscale`
+	//`Id`, `Prezzo`, `DataRitiro`, `DataConsegna`, `EntitaDanno`, `CodiceFiscale`
 
 	@Override
 	public void doUpdate(OcchialeRotto product) throws SQLException {
@@ -216,7 +216,7 @@ public class OcchialeRottoManager implements ProductModel<OcchialeRotto, Integer
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "UPDATE " + TableName
-				+ " SET IDOcchiale = ?, Prezzo = ?, DataRitiro= ?, DataConsegna = ?, EntitàDanno= ?, "
+				+ " SET IDOcchiale = ?, Prezzo = ?, DataRitiro= ?, DataConsegna = ?, EntitaDanno= ?, "
 				+ " CodiceFiscale= ?, Stato=  ? "
 				+ " WHERE IdOcchiale = ?";
 

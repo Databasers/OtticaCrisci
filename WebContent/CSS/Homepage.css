@@ -1,0 +1,127 @@
+div.container{
+	display:block;
+	
+	width: 98%;
+	position: relative;
+	margin-top:10px;
+	margin-left:10px;
+	margin-right:5px;
+}
+
+div.mySlides{
+	vertical-align: middle;
+	height: 550px;
+	width: 100%;
+}
+
+img.myslidesimg{
+	vertical-align: middle;
+	height: 550px;
+	width: 100%;
+}
+h1.myslidestext{
+	position: absolute;
+	top: 50%;
+	left: 35%;
+	text-align: center;
+	font-size: 80 px; 
+	color: #000000;
+}
+.display-slide{
+	position: absolute;
+    top: 70%;
+    left: 46%;
+    height: 75px;
+    width: 150px;
+    font-size: 20px;
+}
+.display-slidedue{
+	position: absolute;
+    top: 70%;
+    left: 44%;
+    height: 75px;
+    width: 220px;
+    font-size: 20px;
+    
+}
+
+.display-left {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+}
+.button {
+    border: none;
+    display: inline-block;
+    padding: 8px 8px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    color: #ffffff;
+    background-color: #008ae6;
+    
+}
+
+.display-right {
+    position: absolute;
+    top: 50%;
+    left: 98.5%;
+}
+
+h1.title{
+	margin-left:35%;
+	color: #000000;
+	
+	
+}
+
+h1.goToStore{
+	
+	color: #000000;
+	text-align: center;
+	text-decoration: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+div.cont-table{
+	
+	width:auto;
+	display:table;
+}
+
+div.container-adivces{
+	
+	width:100%;
+	display:table-row;
+}
+
+div.product{
+	
+	margin: 20px;
+	border: 2px solid;
+	border-color: #008ae6;
+	width: 500px;
+	height: 500px;
+	display: table-cell;
+}
+
+
+
+div.product h3{
+	font-size: 25px;
+	text-align: center;
+}
+
+button.addCart{
+	position: relative;
+	margin-left: 35%;
+}
+

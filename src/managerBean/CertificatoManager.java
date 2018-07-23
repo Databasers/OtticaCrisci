@@ -134,7 +134,7 @@ public class CertificatoManager implements ProductModel<Certificato,String>, Ser
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String sql="INSERT INTO "+TableName+" VALUES(?,?,?)";
+		String sql="INSERT INTO "+TableName+" VALUES(?,?,?,?)";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			preparedStatement= connection.prepareStatement(sql);
@@ -142,7 +142,7 @@ public class CertificatoManager implements ProductModel<Certificato,String>, Ser
 			preparedStatement.setString(1, product.getcF());
 			preparedStatement.setString(2, product.getUrl());
 			preparedStatement.setBoolean(3, product.isValido());
-			
+			preparedStatement.setBoolean(4, product.isValidato());
 			System.out.println("doSave: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 

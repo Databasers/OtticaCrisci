@@ -100,7 +100,7 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 			request.getSession().setAttribute("Utente", su);
 			System.out.println("Login effettuato!");
 			System.out.println("\n FINE GESTIONE LOGIN REGISTRAZIONE \n");
-			response.sendRedirect(request.getContextPath() + "\\HTML\\Admin.html"); 	
+			response.sendRedirect(request.getContextPath() + "\\HTML\\Admin.jsp"); 	
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Utente non registrato");
