@@ -1,12 +1,14 @@
 <%@ page import="java.util.*" %>
 <%@ page import="bean.*,it.unisa.model.*" %>
 <!DOCTYPE html>
+
 <html>
 
 	<!-- Pagina in cui l'utente può rivedere l'ordine che sta per richiedere -->
 
 
 <head>
+<LINK rel="stylesheet" href="../CSS/Carrello.css" type="text/css">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -41,10 +43,10 @@
 			h += oggetto.getPrezzo();
 			%>
 			<tr>
-				<td>
-				<img src = <%= oggetto.getMarchio()%> > <%=""+ oggetto.getMarchio()  + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%>
-				 <%= oggetto.getPrezzo()%>
-				 <a href="/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</a>
+				<td >
+				<img src = "<%=oggetto.getUrlImmagine()%>" > <%=""+ oggetto.getMarchio()  + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%>
+				 <span class="prezzi"><%= oggetto.getPrezzo()%></span>
+				 <button type="submit" formaction="https:localhost:8080/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
 				 </td>
 			</tr>
 			
@@ -60,9 +62,9 @@
 		Aggiungere nel CSS il float a sinistra su id "Totale"
 	-->
 	<p id = "Totale">
-		<%= h %>
+		<span id = "Tot_Num"><%=h%></span>
 	<!-- Creare funzione per chiamare il checkout dal pulsante -->
-		<a href="/OtticaCrisci/gestione?action=checkout">Conferma</a>
+		<button type="submit" formaction="https:localhost:8080/OtticaCrisci/gestione?action=checkout">Conferma</button>
 	<p/>
 	
 	

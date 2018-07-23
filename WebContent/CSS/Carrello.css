@@ -1,0 +1,32 @@
+table, tr, td{
+	width: 60%;
+	border: thin ridge;
+	border-color: black;
+	margin-left: 20%;
+	margin-right: 20%;
+	font-size: larger;
+}
+
+table{
+	height: 80%;
+}
+
+.prezzi{
+	float: right;
+}
+
+button {
+	float: right;
+	clear: right;
+}
+
+p#Totale{
+	float: right;
+	clear: left;
+	margin-right: 5px;
+}
+
+span#Tot_Num{
+	font-size: larger;
+	margin-right: 10px;
+}
