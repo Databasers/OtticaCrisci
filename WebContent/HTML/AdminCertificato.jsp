@@ -50,15 +50,13 @@
 		<tr>
 			<td><%=c.getcF() %>
 			<td><a href="<%=c.getUrl() %>"><%=c.getUrl() %></a>
-			<!--  <td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=true&code=<%--=c.getcF() %>">Valido</a>
-			<td><a href="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido=false&code=<%=c.getcF() --%>">Non Valido</a> -->
 			<td>
 			<form method="post">
 				<select id="selezione">
 				<option value="true">true
 				<option value="false">false 
 				</select>
-				<input type="number" min="0" max="10" id="num" placeholder="0"> 
+				<input type="number" min="0" max="10" id="num" value="0"> 
 				<input type="button" onclick="check(this)">
 			</form>
 		</tr>
@@ -78,21 +76,70 @@ function FindCliente(testo){
 
 function displayResults(listXML, id) {
 	try { 
+		console.log("Entro nella funzione");
 		var obj = document.getElementById(id);		
-		var tag =["Esito","Nome" ,"Cognome", "Valido", "Validato", "CodiceFiscale"];
+		var tag =["Esito","CodiceFiscale","Url","Valido", "Validato"];
 		var esito = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue;
 		if(esito=="false")
 			obj.innerHTML="Questo utente non ha inserito certificati";
 		else
 		if(obj != null) {
-			for( var i = 0; i < tag.length; i++){
-				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
-				obj.innerHTML += " " + rdfs;
-				//Inserisci qui i tag <a href> per la modificca dei certificati uguali a quelli sopra
-				
+			console.log("Dopo il controlloc su obj");
+			var table=document.createElement("table");
+			var tr=document.createElement("tr");
+			for(var i=0;i<3;i++){
+				var td=document.createElement("td");
+				if(i==0){
+					var codiceFiscale = listXML.getElementsByTagName(tag[1])[0].firstChild.nodeValue;
+					td.appendChild(document.createTextNode(codiceFiscale));
+				}
+				if(i==1){
+					var url=listXML.getElementsByTagName(tag[2])[0].firstChild.nodeValue;
+					td.appendChild(document.createTextNode(url));
+				}
+				if(i==2){
+					var form=document.createElement("form");
+					form.setAttribute("method","post");
+					//Gradazione
+					var gradazione=document.createElement("input");
+					gradazione.type="number";
+					gradazione.setAttribute("id","num");
+					gradazione.setAttribute("min","0");
+					gradazione.setAttribute("max","10");
+					gradazione.setAttribute("value","0");
+					
+					//Valido
+					var valido=listXML.getElementsByTagName(tag[3])[0].firstChild.nodeValue;
+					var selectValido=document.createElement("select");
+					selectValido.setAttribute("id","selezione");
+						 var optionValidoFalse=document.createElement("option");
+						 	optionValidoFalse.setAttribute("value","false");
+						 	optionValidoFalse.innerHTML="false";
+						 var optionValidoTrue=document.createElement("option");
+						 	optionValidoTrue.setAttribute("value","true");
+						 	optionValidoTrue.innerHTML="true";
+						if(valido=="true")
+							optionValidoTrue.setAttribute("selected","selected");
+						else
+							optionValidoFalse.setAttribute("selected","selected");
+					selectValido.appendChild(optionValidoTrue);
+					selectValido.appendChild(optionValidoFalse);
+					
+					//Bottone
+					var bottone=document.createElement("input");
+					bottone.setAttribute("type","button");
+					bottone.setAttribute("onClick","check(this)");
+					
+					form.appendChild(selectValido);
+					form.appendChild(gradazione);
+					form.appendChild(bottone);
+					td.appendChild(form);
+				}	
+				tr.appendChild(td);
 			}
-			
-		}
+			table.appendChild(tr);
+			obj.appendChild(table);
+		}	
 		console.log("Handle results");
 	} catch(e1) {
 	}
@@ -102,9 +149,9 @@ function displayResults(listXML, id) {
 
 <div id="cliente">
 	<p >Cerca un cliente <input id="pcliente" type="text" name="cf" max="16"> <input type="button" onclick="FindCliente(this)">
-	<p id="modAjax">
+	<div id="modAjax">
 
 </div>
-
+</div>
 </body>
 </html>
