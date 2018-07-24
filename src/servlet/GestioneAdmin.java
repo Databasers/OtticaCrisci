@@ -251,6 +251,7 @@ public class GestioneAdmin extends HttpServlet {
 	
 	private void doModificaCertificato(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		String v=request.getParameter("valido");
+		Integer gradazione=Integer.parseInt(request.getParameter("gradazione"));
 		Boolean valido=Boolean.parseBoolean(v);
 		System.out.println("Il valore di valido è: " + valido);
 		String code=request.getParameter("code");
@@ -258,6 +259,13 @@ public class GestioneAdmin extends HttpServlet {
 		c.setValidato(true);
 		c.setValido(valido);
 		certificato.doUpdate(c);
+
+		if(valido) {
+			ClienteManager mCliente= new ClienteManager();
+			Cliente cliente=mCliente.doRetrieveByKey(code);
+			cliente.setGradazione(gradazione);
+			mCliente.doUpdate(cliente);
+		}
 		modifyLabel("Certificato", request, response);
 		if(request.getAttribute("certificati")!=null)
 			request.removeAttribute("certificati");
@@ -321,10 +329,10 @@ public class GestioneAdmin extends HttpServlet {
 			else {
 				risposta.append("<Esito>"+true+"</Esito>");
 				risposta.append("<CodiceFiscale>"+c.getcF()+"</CodiceFiscale>");
-				risposta.append("<Nome>"+cliente.getNome()+"</Nome>");
-				risposta.append("<Cognome>"+cliente.getCognome()+"</Cognome>");
+				risposta.append("<Url>"+c.getUrl()+"</Url>");
 				risposta.append("<Valido>"+c.isValido()+"</Valido>");
 				risposta.append("<Validato>"+c.isValidato()+"</Validato>");
+				
 			}
 			
 			

@@ -19,13 +19,13 @@
 	%>
 	
 	
-	<%@ include file="AdminOcchiali.jsp" %>
+	<%@ include file="AdminCertificato.jsp" %>
 
 <!--  
 	 <script>
 	 	function nascondi(a){
 	 		var ogg = ['Frame', 'Ordini', 'Certificati', 'Utenti'];
-	 		for(i=0; i < ogg.length; i++){
+	 		for(i=0; i < ogg.length; i++)}
 	 			$("#"+ogg[i]).hide();
 	 		}
 	 		$("#"+a).fadeIn();
