@@ -7,12 +7,17 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-
-<script type="text/javascript" src="../JS/Utente.js"></script>
-<script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../JS/ajax.js"></script>
+<LINK rel="stylesheet" href="<%=request.getContextPath()%>/CSS/Utento.css" type="text/css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/JS/Utente.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/JS/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/JS/ajax.js"></script>
 </head>
 <body>
+<div class= "header">
+<%@ include file="Header.jsp"%>
+</div>
+
+
 	<%!SessioneUtente su = null;%>
 	
 	<% 
@@ -38,109 +43,14 @@
 	
 
 	<div id = "Contenitore-menu">
-		<div id = "Selettore">
-			<ul>
-				<li><span><button onclick="cambia('Ordini', 'Anagrafica')">Anagrafica</button></span></li>
-				<li><span><button onclick="cambia('Anagrafica', 'Ordini')">Ordini</button></span></li>
-			</ul>
-		</div>
-		
-		
-		
-		<div id = "Ordini">
-		<%if(!elencoN.isEmpty()) {%>
-		Occhiali nuovi
-		<table>
-			<%for(OcchialeNuovo e: elencoN){ %>
+		<table id = "Selettore">
 			<tr>
-				<td>
-				
-				<p ><%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
-				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeNuovo');">
-				Mostra di più</input>
-				
-				</td>
+				<td><span><button onclick="cambia('Ordini', 'Anagrafica')">Anagrafica</button></span></td>
+				<td><span><button onclick="cambia('Anagrafica', 'Ordini')">Ordini</button></span></td>
 			</tr>
-			<%} %>
 		</table>
-		<%}
-		    if(!elencoR.isEmpty()){ %>
-		    Occhiali rotti
-		   <table>
-		   		<%for(OcchialeRotto e: elencoR){ %>
-		   		<tr>
-		   			<td>
-				
-						<p><%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
-						<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeRotto');">
-						Mostra di più</input>
-					</td>
-		   		</tr>
-		   	<%} %>
-		   </table>
-		   <%}%>
-		</div>
-		<p id="modAjax"><p>
 		
-		
-		
-		<div id = "Anagrafica">
-			<p><!-- Nome utente, codice fiscale --></p>
-			<form name = "password" method="post">
-				<% Boolean pass=(Boolean) request.getSession().getAttribute("passwordCambiata");
-				if(pass!=null){
-				if(pass){%>
-				<h3>PasswordCambiata</h3>
-				<%}
-				else {%>
-				<h3>Password non cambiata</h3>
-				<%} 
-				request.getSession().removeAttribute("passowrdCambiata");}%>
-				<span>Cambio password</span><br>
-				<span>Nuova password 	<input type ="text" name="Nu" value = "test"></span><br>
-				<span>Ripeti			<input type ="text" name="Ri" value = "due"></span><br>
-				
-				<button type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
-			</form> 
-		</div>
-	</div>
-	<br>
-  
-  <!-- Qui inizia la pagina di Servlet, dentro c'è un esempio di chiamata ajax -->
-  
- <script type="text/javascript">
-
-	function hideCertificato(){
-		var form=document.getElementById("certificato");
-		//Qui andrebbe nascosto il form di input
-	}
-</script>
-
-<!-- Roba di AJAX -->
-<script>
-function displayResults(listXML, id) {
-	try { 
-		var obj = document.getElementById(id);		
-		var tag =["URLImmagine" ,"IDFrame", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"]
-		
-		if(obj != null) {
-			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
-			obj.innerHTML ="<img src =" +rdfs +">";
-			for( var i = 1; i < tag.length; i++){
-				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
-				obj.innerHTML += " " + rdfs;
-			}
-			console.log("Handle results");
-		}
-	} catch(e1) {
-	}
-	 
-}
-</script>
-
-
-
-	 
+		 
 	 <%
 	 	Certificato cert=(Certificato) request.getSession().getAttribute("certificato");
 	 System.out.println("Zona certificato");
@@ -168,12 +78,107 @@ function displayResults(listXML, id) {
 	 			%>
 	 			<div><h3>Inserisci certificato</h3>
 					<form id="certificato" action="/OtticaCrisci/GestioneUtente?action=addCertificato" method="post" enctype="multipart/form-data">
-						<input type="file" accept=".jpg,.pdf" name="certificato">
+						<input id="file" type="file" accept=".jpg,.pdf" name="certificato">
 						<input type="submit">
 					</form>
 				</div>
 	 		<% }
 	 	%>
+		
+		<hr>
+		
+		<div id = "Ordini" style="display: none;">
+		<%if(!elencoN.isEmpty()) {%>
+		<h4>Occhiali nuovi</h4>
+		<table>
+			<%for(OcchialeNuovo e: elencoN){ %>
+			<tr>
+				<td>
+				
+				<p ><%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
+				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeNuovo');">
+				Mostra di più</input>
+				
+			<hr>
+				</td>
+			</tr>
+			<%} %>
+		</table>
+		<%}
+		    if(!elencoR.isEmpty()){ %>
+		    <h4>Occhiali rotti</h4>
+		   <table>
+		   		<%for(OcchialeRotto e: elencoR){ %>
+		   		<tr>
+		   			<td>
+				
+						<p><%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
+						<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeRotto');">
+						Mostra di più</input>
+					</td>
+		   		</tr>
+		   	<%} %>
+		   </table>
+		   <%}%>
+		</div>
+		<p id="modAjax"><p>
+		
+		
+		
+		<div id = "Anagrafica">
+			<h4><%=su.getNome()%> <%=su.getCognome()%></h4>
+			<form name = "password" method="post">
+				<% Boolean pass=(Boolean) request.getSession().getAttribute("passwordCambiata");
+				if(pass!=null){
+				if(pass){%>
+				<h3>PasswordCambiata</h3>
+				<%}
+				else {%>
+				<h3>Password non cambiata</h3>
+				<%} 
+				request.getSession().removeAttribute("passowrdCambiata");}%>
+				<span>Cambio password</span><br>
+				<span>Nuova password<br><input type ="text" name="Nu" placeholder ="test" style="background-color: #d1d5d8"></span><br>
+				<span>Ripeti		<br><input type ="text" name="Ri" placeholder ="test" style="background-color: #d1d5d8"></span><br>
+				
+				<button type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
+			</form> 
+		</div>
+	</div>
+	<br>
+  
+ <script type="text/javascript">
+
+	function hideCertificato(){
+		$("#certificato").hide();
+	}
+</script>
+
+<!-- Roba di AJAX -->
+<script>
+function displayResults(listXML, id) {
+	try { 
+		var obj = document.getElementById(id);		
+		var tag =["URLImmagine" ,"IDFrame", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"];
+		
+		if(obj != null) {
+			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
+			obj.innerHTML ="<img src =" +rdfs +">";
+			for( var i = 1; i < tag.length; i++){
+				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
+				obj.innerHTML += " " + rdfs;
+			}
+			console.log("Handle results");
+		}
+	} catch(e1) {
+	}
+	 
+}
+</script>
+
+
+
+	
 
 	
 

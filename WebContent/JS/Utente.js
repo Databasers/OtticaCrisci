@@ -18,7 +18,8 @@ function check(){
 }
 
 function cambia(a, b){
-	$("#"+a).fadeOut();
+	$("#"+a).hide();
 	$("#"+b).fadeIn();
+	$("#modAjax").html("");
 
 	}
