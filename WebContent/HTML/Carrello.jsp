@@ -14,7 +14,9 @@
 </head>
 <body>
 <%@ page import = "it.unisa.model.Carrello, bean.Frame, java.util.List, servlet.GestioneCarrello" %>
-
+<div class= "header">
+<%@ include file="Header.jsp"%>
+</div>
 
 	<!-- 
 		E' una tabella n * 1 dove son presenti gli articoli con foto, nome, prezzo
@@ -34,6 +36,7 @@
 		<%}
 		else{
 		%>
+	<div id ="quadro">
 	<table>
 		<!-- Inserire variabile globale per il totale -->
 			<%
@@ -43,10 +46,13 @@
 			h += oggetto.getPrezzo();
 			%>
 			<tr>
-				<td >
-				<img src = "<%=oggetto.getUrlImmagine()%>" > <%=""+ oggetto.getMarchio()  + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%>
-				 <span class="prezzi"><%= oggetto.getPrezzo()%></span>
-				 <button type="submit" formaction="https:localhost:8080/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
+				<td>
+				<div class="product">
+				<img class="prductImg" src = "<%=oggetto.getUrlImmagine()%>" > 
+				<div class="desc"><%=oggetto.getMarchio() + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%></div>
+				 <div class="destra"><%=oggetto.getPrezzo()%></div>
+				 <button class="btn" type="submit" formaction="https:localhost/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
+				 </div>
 				 </td>
 			</tr>
 			
@@ -56,18 +62,16 @@
 	%>
 	
 	</table>
-	
+	</div>
 	
 	<!-- 
 		Aggiungere nel CSS il float a sinistra su id "Totale"
 	-->
-	<p id = "Totale">
-		<span id = "Tot_Num"><%=h%></span>
-	<!-- Creare funzione per chiamare il checkout dal pulsante -->
+	<div id = "Totale">
+		<div id = "Tot_Num">Totale carrello: <%=h%></div>
 		<button type="submit" formaction="https:localhost:8080/OtticaCrisci/gestione?action=checkout">Conferma</button>
-	<p/>
+	</div>
 	
-	
-	
+
 </body>
 </html>

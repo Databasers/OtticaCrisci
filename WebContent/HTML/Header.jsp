@@ -42,7 +42,7 @@
 		<ul>
 			<li><a href="Homepage.jsp" class="header">Home</a></li>
 			<li><a href="Store.jsp" class="header">Store</a></li>
-			<li><a href="Marchi.html" class="header">Marchi</a></li>
+			<li><a href="Marchi.jsp" class="header">Marchi</a></li>
 			<li><a href="Carrello.jsp" class="header">Carrello</a></li>
 		</ul>
 	</div>

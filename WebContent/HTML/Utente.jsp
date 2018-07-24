@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-
+<LINK rel="stylesheet" href="../CSS/Utente.css" type="text/css">
 <script type="text/javascript" src="../JS/Utente.js"></script>
 <script type="text/javascript" src="../JS/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="../JS/ajax.js"></script>

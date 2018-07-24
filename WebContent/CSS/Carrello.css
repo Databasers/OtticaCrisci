@@ -1,18 +1,29 @@
-table, tr, td{
-	width: 60%;
-	border: thin ridge;
-	border-color: black;
-	margin-left: 20%;
-	margin-right: 20%;
-	font-size: larger;
+div#quadro{
+	width: 80%;
+	border: 5px solid;
+	border-color: #1b79b7;
+	margin-left: 10%;
 }
 
-table{
-	height: 80%;
+table {
+	width: 90%;
 }
 
-.prezzi{
+div.product{
+	font-size: 20px;
+	margin-top:5%;
+	margin-left: 18%;
+	margin-bottom: 5%;
+	border: thin solid;
+	border-color: #008ae6;
+	width: 75%;
+	height: 95px;
+}
+
+div.destra{
+	font-size: 25px;
 	float: right;
+	clear: right;
 }
 
 button {
@@ -20,13 +31,15 @@ button {
 	clear: right;
 }
 
-p#Totale{
+div#Totale{
 	float: right;
 	clear: left;
-	margin-right: 5px;
+	margin-right: 5%;
+	margin-bottom: 5%;
+	font-size: 30px;
 }
 
-span#Tot_Num{
-	font-size: larger;
-	margin-right: 10px;
+div#Tot_Num {
+	margin-top: 10px;
+	margin-bottom: 30px;
 }
