@@ -109,9 +109,6 @@ public Collection<Frame> doRetrieveByCond(Opzioni opzioni) throws SQLException {
 				if(elenco.contains("Modello")) {
 					temp.setModello(rs.getString("Modello"));
 				}
-				if(elenco.contains("Marchio")) {
-					temp.setModello(rs.getString("Marchio"));
-				}
 				if(elenco.contains("Peso")) {
 					temp.setPeso(rs.getInt("Peso"));
 				}

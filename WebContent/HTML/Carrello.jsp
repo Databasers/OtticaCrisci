@@ -42,21 +42,26 @@
 			<%
 			List<Frame> lista = carrello.getList();
 			Frame[] elenco=lista.toArray(new Frame[0]);
-		for(Frame oggetto: elenco){
+			%>
+			
+			<% for(Frame oggetto: elenco){
 			h += oggetto.getPrezzo();
 			%>
 			<tr>
 				<td>
 				<div class="product">
+				<form method="post">
 				<img class="prductImg" src = "<%=oggetto.getUrlImmagine()%>" > 
 				<div class="desc"><%=oggetto.getMarchio() + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%></div>
 				 <div class="destra"><%=oggetto.getPrezzo()%></div>
-				 <button class="btn" type="submit" formaction="https:localhost/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
+				 <button class="btn" type="submit" formaction="/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
+				 </form>
 				 </div>
 				 </td>
 			</tr>
 			
 		<%
+		
 		}
 		}
 	%>
@@ -69,7 +74,9 @@
 	-->
 	<div id = "Totale">
 		<div id = "Tot_Num">Totale carrello: <%=h%></div>
-		<button type="submit" formaction="https:localhost:8080/OtticaCrisci/gestione?action=checkout">Conferma</button>
+		<form method="post">
+		<button type="submit" formaction="/OtticaCrisci/gestione?action=checkout">Conferma</button>
+		</form>
 	</div>
 	
 
