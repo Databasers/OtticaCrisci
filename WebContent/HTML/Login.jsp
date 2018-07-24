@@ -15,6 +15,9 @@ div#registrazione{
 
 </head>
 <body>
+<div class= "header">
+<%@ include file="Header.jsp"%>
+</div>
 
 <!-- TEST PER CONTROLLARE SE FUNZIONAVA IL LOGIN -->
 
