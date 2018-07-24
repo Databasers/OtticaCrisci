@@ -5,6 +5,7 @@
 <html>
 <head>
 <script type="text/javascript" src="Admin.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
@@ -19,8 +20,9 @@
 		valido=valido.options[valido.selectedIndex].value;
 		var td=form.parentNode;
 		var tr=td.parentNode;
-		var celle=tr.cells;
-		cf=celle[0].firstChild.nodeValue
+		var td=tr.firstChild;
+		console.log(td);
+		cf=td.textContent;
 		gradazione=form.num.value;
 		form.action="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf;
 		console.log("/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf);
@@ -47,8 +49,7 @@
 		<%
 		for(Certificato c: elenco){
 		%>
-		<tr>
-			<td><%=c.getcF() %>
+		<tr><td><%=c.getcF() %>
 			<td><a href="<%=c.getUrl() %>"><%=c.getUrl() %></a>
 			<td>
 			<form method="post">
@@ -85,60 +86,70 @@ function displayResults(listXML, id) {
 		else
 		if(obj != null) {
 			console.log("Dopo il controlloc su obj");
-			var table=document.createElement("table");
-			var tr=document.createElement("tr");
+			var table=$("<table></table>");
+			console.log("Dopo jquery");
+			var tr=$("<tr></tr>");
 			for(var i=0;i<3;i++){
-				var td=document.createElement("td");
+				var td=$("<td></td>");
 				if(i==0){
 					var codiceFiscale = listXML.getElementsByTagName(tag[1])[0].firstChild.nodeValue;
-					td.appendChild(document.createTextNode(codiceFiscale));
+					td.append(document.createTextNode(codiceFiscale));
+					console.log("Dopo append di codice fiscale");
 				}
 				if(i==1){
 					var url=listXML.getElementsByTagName(tag[2])[0].firstChild.nodeValue;
-					td.appendChild(document.createTextNode(url));
+					td.append($("<label></label>").text(url));
+					console.log("Dopo append di url");
 				}
 				if(i==2){
-					var form=document.createElement("form");
-					form.setAttribute("method","post");
+					var form=$("<form></form>");
+					form.attr("method","post");
+					console.log("Dopo form");
+					
 					//Gradazione
-					var gradazione=document.createElement("input");
-					gradazione.type="number";
-					gradazione.setAttribute("id","num");
-					gradazione.setAttribute("min","0");
-					gradazione.setAttribute("max","10");
-					gradazione.setAttribute("value","0");
+					var gradazione=$("<input></input>");
+					gradazione.attr({
+						"type" : "number",
+						"id" : "num",
+						"min" : "0",
+						"max" : "10",
+						"value" : "0"
+					});
+					console.log("Dopo gradazione");
 					
 					//Valido
 					var valido=listXML.getElementsByTagName(tag[3])[0].firstChild.nodeValue;
-					var selectValido=document.createElement("select");
-					selectValido.setAttribute("id","selezione");
-						 var optionValidoFalse=document.createElement("option");
-						 	optionValidoFalse.setAttribute("value","false");
-						 	optionValidoFalse.innerHTML="false";
-						 var optionValidoTrue=document.createElement("option");
-						 	optionValidoTrue.setAttribute("value","true");
-						 	optionValidoTrue.innerHTML="true";
+					var selectValido=$("<select></select>");
+					selectValido.attr("id","selezione");
+						 var optionValidoFalse=$("<option></option>");
+						 	optionValidoFalse.attr("value","false");
+						 	optionValidoFalse.text("false");
+						 var optionValidoTrue=$("<option></option>");
+						 	optionValidoTrue.attr("value","true");
+						 	optionValidoTrue.text("true");
 						if(valido=="true")
-							optionValidoTrue.setAttribute("selected","selected");
+							optionValidoTrue.attr("selected","selected");
 						else
-							optionValidoFalse.setAttribute("selected","selected");
-					selectValido.appendChild(optionValidoTrue);
-					selectValido.appendChild(optionValidoFalse);
+							optionValidoFalse.attr("selected","selected");
+					selectValido.append(optionValidoTrue);
+					selectValido.append(optionValidoFalse);
+					console.log("Dopo select");
+
 					
 					//Bottone
-					var bottone=document.createElement("input");
-					bottone.setAttribute("type","button");
-					bottone.setAttribute("onClick","check(this)");
+					var bottone=$("<input></input>")
+					bottone.attr("type","button");
+					bottone.attr("onClick","check(this)");
 					
-					form.appendChild(selectValido);
-					form.appendChild(gradazione);
-					form.appendChild(bottone);
-					td.appendChild(form);
+					form.append(selectValido);
+					form.append(gradazione);
+					form.append(bottone);
+					td.append(form);
 				}	
-				tr.appendChild(td);
+				tr.append(td);
 			}
-			table.appendChild(tr);
-			obj.appendChild(table);
+			table.append(tr);
+			$("#modAjax").append(table);
 		}	
 		console.log("Handle results");
 	} catch(e1) {
