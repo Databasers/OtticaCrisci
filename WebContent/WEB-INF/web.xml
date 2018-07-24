@@ -4,63 +4,50 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-  
-
   <filter>
-  <filter-name>SessionFilter</filter-name>
-  <filter-class>filter.SessionFilter</filter-class>
+    <filter-name>SessionFilter</filter-name>
+    <filter-class>filter.SessionFilter</filter-class>
   </filter>
   <filter-mapping>
-  <filter-name>SessionFilter</filter-name>
-  <url-pattern>/HTML/Utente.jsp</url-pattern>
-  <url-pattern>/HTML/Login.jsp</url-pattern>
-  <url-pattern>/HTML/Carrello.jsp</url-pattern>
-  <url-pattern>/HTML/Admin.jsp</url-pattern>
+    <filter-name>SessionFilter</filter-name>
+    <url-pattern>/HTML/Utente.jsp</url-pattern>
+    <url-pattern>/HTML/Login.jsp</url-pattern>
+    <url-pattern>/HTML/Carrello.jsp</url-pattern>
+    <url-pattern>/HTML/Admin.jsp</url-pattern>
   </filter-mapping>
-  
-
   <filter>
-  <filter-name>AdminFilter</filter-name>
-  <filter-class>filter.AdminFilter</filter-class>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>filter.AdminFilter</filter-class>
   </filter>
   <filter-mapping>
-  <filter-name>AdminFilter</filter-name>
-  <url-pattern>/GestioneAdmin</url-pattern>
-  <url-pattern>/HTML/Admin.jsp</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/GestioneAdmin</url-pattern>
+    <url-pattern>/HTML/Admin.jsp</url-pattern>
   </filter-mapping>
- 
-
-
   <filter>
-  <filter-name>UtenteFilter</filter-name>
-  <filter-class>filter.UtenteFilter</filter-class>
+    <filter-name>UtenteFilter</filter-name>
+    <filter-class>filter.UtenteFilter</filter-class>
   </filter>
   <filter-mapping>
-  <filter-name>UtenteFilter</filter-name>
-  <url-pattern>/HTML/Utente.jsp</url-pattern>
-  <url-pattern>/GestioneUtente</url-pattern>
+    <filter-name>UtenteFilter</filter-name>
+    <url-pattern>/HTML/Utente.jsp</url-pattern>
+    <url-pattern>/GestioneUtente</url-pattern>
   </filter-mapping>
-  
-
   <filter>
-  <filter-name>CarrelloFilter</filter-name>
-  <filter-class>filter.CarrelloFilter</filter-class>
+    <filter-name>CarrelloFilter</filter-name>
+    <filter-class>filter.CarrelloFilter</filter-class>
   </filter>
   <filter-mapping>
-  <filter-name>CarrelloFilter</filter-name>
-  <url-pattern>/HTML/Carrello.jsp</url-pattern>
-  <url-pattern>/gestione</url-pattern>
+    <filter-name>CarrelloFilter</filter-name>
+    <url-pattern>/HTML/Carrello.jsp</url-pattern>
+    <url-pattern>/gestione</url-pattern>
   </filter-mapping>
-  
-
-    <filter>
-  <filter-name>LoginFilter</filter-name>
-  <filter-class>filter.LoginFilter</filter-class>
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>filter.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
-  <filter-name>LoginFilter</filter-name>
-  <url-pattern>/HTML/Login.jsp</url-pattern>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/HTML/Login.jsp</url-pattern>
   </filter-mapping>
-  
-  
 </web-app>

@@ -121,6 +121,8 @@
 		   </table>
 		   <%}%>
 		</div>
+		
+		
 		<p id="modAjax"><p>
 		
 		
@@ -159,7 +161,7 @@
 function displayResults(listXML, id) {
 	try { 
 		var obj = document.getElementById(id);		
-		var tag =["URLImmagine" ,"IDFrame", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"];
+		var tag =["IDFrame", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"];
 		
 		if(obj != null) {
 			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
@@ -167,6 +169,7 @@ function displayResults(listXML, id) {
 			for( var i = 1; i < tag.length; i++){
 				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
 				obj.innerHTML += " " + rdfs;
+				console.log(rdfs);
 			}
 			console.log("Handle results");
 		}
