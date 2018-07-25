@@ -19,6 +19,13 @@
 	%>
 	
 	
+	<!-- 
+		ANTONIO
+		if che verifica che valore ha "label" (in sessione) e selezione quale pagina fare include file="Admin*.jsp" (come sotto)   
+		dato che devono esserci anche i bottoni che cambiano, ogni bottone fagli modificare label in sessione e ricarica la pagina, così funziona sempre e lo fai una volta sola	
+	
+	 -->	
+	
 	<%@ include file="AdminCertificato.jsp" %>
 
 <!--  

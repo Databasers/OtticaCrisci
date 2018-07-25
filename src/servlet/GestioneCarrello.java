@@ -81,6 +81,7 @@ public class GestioneCarrello extends HttpServlet {
 					//Cancella dal carrello
 					int id = Integer.parseInt(request.getParameter("id"));
 					carrello.delete(model.doRetrieveByKey(id));
+					System.out.println("aaaa");
 				}
 				else if(action.equalsIgnoreCase("checkout")) {
 					doCheckout(request,response);

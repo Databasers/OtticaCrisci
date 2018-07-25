@@ -1,0 +1,45 @@
+div#quadro{
+	width: 80%;
+	border: 5px solid;
+	border-color: #1b79b7;
+	margin-left: 10%;
+}
+
+table {
+	width: 90%;
+}
+
+div.product{
+	font-size: 20px;
+	margin-top:5%;
+	margin-left: 18%;
+	margin-bottom: 5%;
+	border: thin solid;
+	border-color: #008ae6;
+	width: 75%;
+	height: 95px;
+}
+
+div.destra{
+	font-size: 25px;
+	float: right;
+	clear: right;
+}
+
+button {
+	float: right;
+	clear: right;
+}
+
+div#Totale{
+	float: right;
+	clear: left;
+	margin-right: 5%;
+	margin-bottom: 5%;
+	font-size: 30px;
+}
+
+div#Tot_Num {
+	margin-top: 10px;
+	margin-bottom: 30px;
+}

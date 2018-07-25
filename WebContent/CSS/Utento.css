@@ -1,18 +1,17 @@
 #Contenitore-menu{
 	border: thin;
-	border-color: black;
+	border-color: #008ae6;
 	border-style: solid;
-	background-color: #b3b3ff;
-	width: 50%;
-	margin-left: 10%;
+	width: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
 }
-body {
-	background-color: #d9d9d9;
 }
 
-input {
-	background-color: #e6e6ff;
+input#file {
+	background-color: #d1d5d8;
 	margin-right: 2px;
+	border: inset;
 }
 
 #bottoneanagrafica {
@@ -24,7 +23,4 @@ input {
 	border-style: solid;
 	border: thin;
 	border-color: black;
-}
-
-#Ordini{
 }

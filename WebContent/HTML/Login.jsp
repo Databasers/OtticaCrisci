@@ -11,7 +11,7 @@
 <div class= "header">
 <%@ include file="Header.jsp"%>
 </div>
-<!-- TEST PER CONTROLLARE SE FUNZIONAVA IL LOGIN -->
+
 
 <%
 	String x= (String)request.getAttribute("Done");
@@ -54,11 +54,11 @@
 			<input type="password" class="desc" placeholder="password" name="password"><br>
 			<input type="submit" class="btnbello">
 
+
 	
 		</form>
 	</div>
 
-</div>
 
 <script>
 
