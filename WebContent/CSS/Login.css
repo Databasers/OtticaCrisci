@@ -1,0 +1,60 @@
+div.container{
+	display:block;
+	
+	width: 50%;
+	Height:25%;
+	position: relative;
+	margin-top:5%;
+	margin-left:25%;
+	
+	border: 2px solid;
+	border-color: #008ae6;
+	background-color: #80ccff;
+}
+
+div.reg-log{
+	vertical-align: middle;
+	position: relative;
+	margin-left:28.5%;
+}
+
+div .choice{
+	vertical-align: middle;
+	position: relative;
+	margin-left:38%;
+	margin-bottom:0.5%;
+	
+}
+
+form#login{
+	position: relative;
+	margin-left:1%;
+	margin-bottom:1%;
+}
+form input.desc{
+	height:60px;
+	width:340px;
+	margin-bottom:1%;
+}
+form input.btn{
+	height:60px;
+	width:150px;
+	background-color: #008ae6;
+	margin-left: 2.5%;
+	margin-top:1%;
+}
+form input.btnbello{
+	height:60px;
+	width:200px;
+	background-color: #008ae6;
+	margin-left: 13%;
+	margin-top:1%;
+}
+
+div .choice button{
+	background-color: #008ae6;
+	height:60px;
+	width:100px;
+	
+}
+
