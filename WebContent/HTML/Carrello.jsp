@@ -31,8 +31,8 @@
 	GestioneCarrello gestione = new GestioneCarrello();
 	
 		carrello=(Carrello<Frame>)request.getSession().getAttribute("carrello");
-		if(carrello==null) { %>
-		<p>Non ci sono elementi</p> 
+		if(carrello==null || carrello.getList().isEmpty()) { %>
+		<p id="vuoto">Non ci sono elementi</p>
 		<%}
 		else{
 		%>
