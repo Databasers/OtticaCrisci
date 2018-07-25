@@ -1,0 +1,41 @@
+table, th {
+	border: 1px solid #008ae6;
+}
+table {
+	width: 100%;
+}
+
+div.hide-me {
+	display: none;
+}
+
+
+@media only screen and (max-width: 760px), (max-device-width: 760px) {
+	table, tr, th {
+		position: relative;
+		display: block;
+	}
+	
+	table {
+		width: 60%;
+		margin-left: 30%;
+		margin-right: 10%;
+		border: none;
+	}
+	
+	img {
+	width: 100%;
+	height: 100%;
+	
+	}
+}	
+
+@media screen and (max-width: 1200px) {
+	img {
+		width: 50%;
+		height: 50%;
+	}
+}
+
+	
+	

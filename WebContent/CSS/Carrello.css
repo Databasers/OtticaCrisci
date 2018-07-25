@@ -9,6 +9,11 @@ table {
 	width: 90%;
 }
 
+#ala{
+	font-size: 10px;
+	font-family: wingdings;
+}
+
 div.product{
 	font-size: 20px;
 	margin-top:5%;
@@ -42,4 +47,11 @@ div#Totale{
 div#Tot_Num {
 	margin-top: 10px;
 	margin-bottom: 30px;
+}
+
+p#vuoto {
+	font-size: 25px;
+	width: 20%;
+	margin-left: 30%;
+	margin-right: 30%;
 }

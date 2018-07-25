@@ -22,23 +22,23 @@
 		E' una tabella n * 1 dove son presenti gli articoli con foto, nome, prezzo
 		Ogni riga ha al termine un pulsante "remove"
 	-->
+	
+	
+	
+	
+	<div id ="quadro">
+	<table>
 	<%
-	
-	
-	
 	int h = 0;
 	Carrello<Frame> carrello;
 	GestioneCarrello gestione = new GestioneCarrello();
 	
 		carrello=(Carrello<Frame>)request.getSession().getAttribute("carrello");
-		if(carrello==null) { %>
-		<p>Non ci sono elementi</p> 
+		if(carrello==null || carrello.getList().isEmpty()) { %>
+		<p id="vuoto"><img  src="<%=request.getContextPath()%>/Immagini_Frame/CarrelloVuoto.jpg" width=140px>Non ci sono elementi nel tuo carrello. Compra qualcosa! <span id="ala">Luigi Crisci è scemo</span></p>
 		<%}
 		else{
 		%>
-	<div id ="quadro">
-	<table>
-		<!-- Inserire variabile globale per il totale -->
 			<%
 			List<Frame> lista = carrello.getList();
 			Frame[] elenco=lista.toArray(new Frame[0]);
