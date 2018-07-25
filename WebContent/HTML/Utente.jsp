@@ -95,7 +95,7 @@
 			<tr>
 				<td>
 				
-				<p ><%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
+				<p >Occhiale Nuovo: <%=e.getStato()%> <%=e.getDataOrdine()%> <%=e.getPrezzo()%> </p>
 				<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeNuovo');">
 				Mostra di più</input>
 				
@@ -112,9 +112,7 @@
 		   		<tr>
 		   			<td>
 				
-						<p><%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
-						<input type="button" onclick="ajaxCall('modAjax', '/OtticaCrisci/GestioneUtente?action=ajax', displayResults, '<%=e.getId()%>-occhialeRotto');">
-						Mostra di più</input>
+						<p>Occhiale rotto: <%=e.getStato()%> <%=e.getTipoDanno()%> <%=e.getPrezzo()%>  </p>
 					</td>
 		   		</tr>
 		   	<%} %>
