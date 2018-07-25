@@ -2,13 +2,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<link rel="stylesheet" href="../CSS/Login.css" type="text/css" media="all">
-<title>Login</title>
 
+<title>Login</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/Login.css" type="text/css" media="all">
 
 </head>
 <body>
+<div class= "header">
 <%@ include file="Header.jsp"%>
+</div>
 <!-- TEST PER CONTROLLARE SE FUNZIONAVA IL LOGIN -->
 
 <%

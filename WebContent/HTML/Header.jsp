@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" href="../CSS/header.css" type="text/css" media="all">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header.css" type="text/css" media="all">
 </head>
 <body>
 	<div class="header_top">
@@ -17,7 +17,7 @@
 		</div>-->
 		
 		<div class="logo">
-			<a href="Homepage.jsp" class="header"><img class ="logo" src="../OC.png"
+			<a href="<%= request.getContextPath() %>/HTML/Homepage.jsp" class="header"><img class ="logo" src="<%= request.getContextPath() %>/OC.png"
 				alt="Logo"> </a>
 		</div>
 
@@ -26,24 +26,24 @@
    	 if ( su != null) {
     %>
     	<div class="logout">
-		<a href="Utente.jsp" class="welcome header">Welcome : <%=su.getNome()%> </a>
+		<a href="<%= request.getContextPath() %>/HTML/Utente.jsp" class="welcome header">Welcome : <%=su.getNome()%> </a>
 		<br>
 		<a href="/OtticaCrisci/GestioneLogin?action=logout" class="header">Logout</a>
 		</div>
 		<%}else { %>
 
 		<div class="login">
-			<a href="Login.jsp" class="header">Login</a>
+			<a href="<%= request.getContextPath() %>/HTML/Login.jsp" class="header">Login</a>
 		</div>
 		<% } %>
 		
 	</div>
 	<div class="header_list">
 		<ul>
-			<li><a href="Homepage.jsp" class="header">Home</a></li>
-			<li><a href="Store.jsp" class="header">Store</a></li>
-			<li><a href="Marchi.html" class="header">Marchi</a></li>
-			<li><a href="Carrello.jsp" class="header">Carrello</a></li>
+			<li><a href="<%= request.getContextPath() %>/HTML/Homepage.jsp" class="header">Home</a></li>
+			<li><a href="<%= request.getContextPath() %>/HTML/Store.jsp" class="header">Store</a></li>
+			<li><a href="<%= request.getContextPath() %>/HTML/Marchi.html" class="header">Marchi</a></li>
+			<li><a href="<%= request.getContextPath() %>/HTML/Carrello.jsp" class="header">Carrello</a></li>
 		</ul>
 	</div>
 
