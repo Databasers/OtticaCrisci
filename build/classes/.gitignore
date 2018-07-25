@@ -1,2 +1,7 @@
-/servlet/
+/bean/
+/filter/
+/it/
+/listener/
 /managerBean/
+/servlet/
+/utilities/

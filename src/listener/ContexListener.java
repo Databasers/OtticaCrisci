@@ -40,9 +40,9 @@ public class ContexListener implements ServletContextListener {
     	System.out.println("\nAccedo al filtro di contesto\n");
     	HashMapStore<String, SessioneUtente> map;
 		try {
-			map = new HashMapStore<>("C:\\Users\\giggi\\eclipse-workspace\\OtticaCrisci\\Data\\Mappe\\su.no");
+			map = new HashMapStore<>("C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Mappe\\su.no");
 			arg0.getServletContext().setAttribute("mappa", map);
-	    	HashMapStore<String, Carrello> map2= new HashMapStore<>("C:\\Users\\giggi\\eclipse-workspace\\OtticaCrisci\\Data\\Mappe\\cart.no");
+	    	HashMapStore<String, Carrello> map2= new HashMapStore<>("C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Mappe\\cart.no");
 	    	arg0.getServletContext().setAttribute("carrello", map2);
 		} catch (Exception e){
 			// TODO Auto-generated catch block
