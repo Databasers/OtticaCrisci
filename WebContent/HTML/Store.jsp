@@ -40,12 +40,12 @@
 		
 			
 			for(Frame x: lista) {
-				
+				System.out.println(x.getUrlImmagine());
 				%>
 			
 				
 				 <div class= "product"> 
-					<img class= "productImg" src=  <%= x.getUrlImmagine() %> alt="Img" style= "width:33%">
+					<img class= "productImg" src= "../Immagini_Frame/<%= x.getUrlImmagine() %>" alt="Img" style= "width:33%">
 					<div class= "description">
 						<div class = "desc">
 							<h3> <%= x.getModello() %> <%= x.getColore()%></h3>

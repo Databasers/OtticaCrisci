@@ -16,7 +16,7 @@ import bean.SessioneUtente;
 /**
  * Servlet Filter implementation class AdminFilter
  */
-@WebFilter(filterName="AdminFilter", urlPatterns= {"/GestioneAdmin","/HTML/Admin.jsp"})
+
 public class AdminFilter implements Filter {
 
     /**

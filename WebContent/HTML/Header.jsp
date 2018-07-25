@@ -43,7 +43,7 @@
 
 			<li><a href="<%= request.getContextPath() %>/HTML/Homepage.jsp" class="header">Home</a></li>
 			<li><a href="<%= request.getContextPath() %>/HTML/Store.jsp" class="header">Store</a></li>
-			<li><a href="<%= request.getContextPath() %>/HTML/Marchi.html" class="header">Marchi</a></li>
+			<li><a href="<%= request.getContextPath() %>/HTML/Marchi.jsp" class="header">Marchi</a></li>
 			<li><a href="<%= request.getContextPath() %>/HTML/Carrello.jsp" class="header">Carrello</a></li>
 
 		</ul>

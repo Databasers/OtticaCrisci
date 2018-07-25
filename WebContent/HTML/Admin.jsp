@@ -15,6 +15,7 @@
 		if(su==null)
 		{
 			response.sendRedirect("Login.jsp");
+			return;
 		}
 	%>
 	
