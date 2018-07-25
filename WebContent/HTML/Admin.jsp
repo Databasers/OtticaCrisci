@@ -17,8 +17,30 @@
 			response.sendRedirect("Login.jsp");
 			return;
 		}
-	%>
+		
+	String label=(String) request.getSession().getAttribute("label");
+		if(label!=null && label.equalsIgnoreCase("certificato"))
+		{
+			%>
+			<%@ include file="AdminCertificato.jsp" %>
+		<%
+		} 
+		   
+		if(label!=null && label.equalsIgnoreCase("occhiali"))
+		{
+			%>
+			<%@ include file="AdminOcchiali.jsp" %>
+		<%
+		} 
+		%>
 	
+	
+	<form method="post">
+		<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=certificato" value="certificato">
+	</form>
+	<form method="post">
+		<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=occhiali" value="occhiali">
+	</form>
 	
 	<!-- 
 		ANTONIO
@@ -27,7 +49,7 @@
 	
 	 -->	
 	
-	<%@ include file="AdminCertificato.jsp" %>
+	
 
 <!--  
 	 <script>
