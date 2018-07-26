@@ -9,7 +9,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+
 
 <script type="text/javascript">
 	function check(bottone){
@@ -24,6 +24,7 @@
 		var td=tr.firstChild;
 		console.log(td);
 		cf=td.textContent;
+		console.log(cf);
 		gradazione=form.num.value;
 		form.action="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf;
 		console.log("/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf);
@@ -50,8 +51,7 @@
 		<%
 		for(Certificato c: elenco){
 		%>
-		<tr>
-			<td><%=c.getcF() %>
+		<tr><td><%=c.getcF() %>
 			<td><a href="<%=c.getUrl() %>"><%=c.getUrl() %></a>
 			<td>
 				<form method="post">
@@ -100,6 +100,7 @@ function displayResults(listXML, id) {
 				if(i==1){
 					var url=listXML.getElementsByTagName(tag[2])[0].firstChild.nodeValue;
 					td.append($("<label></label>").text(url));
+					
 					console.log("Dopo append di url");
 				}
 				if(i==2){
@@ -146,6 +147,7 @@ function displayResults(listXML, id) {
 					form.append(selectValido);
 					form.append(gradazione);
 					form.append(bottone);
+					td.append($("<br>"));
 					td.append(form);
 				}	
 				tr.append(td);

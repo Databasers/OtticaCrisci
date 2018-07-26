@@ -37,27 +37,25 @@
              <div class="Funzioni">
 		
 					<div class="func2">
-						<form method="post" action="/OtticaCrisci/GestioneAdmin?action=frame">
+						<form name= "insert" method="post" action="/OtticaCrisci/GestioneAdmin?action=frame">
 							<fieldset>
 							    <legend>Inserisci nuovo frame</legend>
 							   
-							    <input type="text" name="colore" value="colore">
+							    <input type="text" name="colore" placeholder ="colore">
 							    <br> <br>
-							    <input type="text" name="peso" value="peso">
+							    <input type="text" name="peso" placeholder ="0">
 							    <br><br>
-							    <input type="text" name="materiale" value="materiale">
+							    <input type="text" name="materiale" placeholder ="materiale">
 							    <br> <br>
-							    <input type="text" name="prezzo" value="prezzo">
+							    <input type="text" name="prezzo" placeholder ="0">
 							    <br> <br>
-							    <input type="text" name="PartitaIva" value="PartitaIva">
-							    <br> <br>
-							    <input type="text" name="marchio" value="marchio">
+							    <input type="text" name="marchio" placeholder ="marchio">
 							     <br> <br>
-							    <input type="text" name="modello" value="modello">
+							    <input type="text" name="modello" placeholder ="modello">
 							     <br> <br>
-							    <input type="text" name="peso" value="Link">
+							    <input type="text" name="link" placeholder ="Link">
 							     <br> <br>
-							    <input type="submit" value="Inserisci Frame!" style="background-color:#008ae6">
+							    <button type="button" onclick = "check()" style="background-color:#008ae6">Inserisci Frame!</button> 
 							 </fieldset>
 														
 						</form>
@@ -83,6 +81,33 @@
             
 </div>
 
+<script>
+function check(){
+	var u = document.insert.peso.value;
+	var d = document.insert.prezzo.value;
+	console.log(u);
+	console.log(d);
+	if(isInt(u) && isInt(d)){
 
+		console.log("interi");
+		
+		document.insert.submit();
+	}
+	else{
+		alert("Inseriti valori errati, necessari interi");
+		document.insert.peso.style = "background: red";
+		document.insert.prezzo.style = "background: red";
+		;
+	}
+}
+function isInt(value) {
+	var x;
+	  if (isNaN(value)) {
+	    return false;
+	  }
+	  x = parseFloat(value);
+	  return (x | 0) === x;
+	}
+</script>
 </body>
 </html>
