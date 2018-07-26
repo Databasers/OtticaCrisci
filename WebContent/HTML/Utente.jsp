@@ -136,8 +136,8 @@
 				else {%>
 				<h3>Password non cambiata</h3>
 				<%} 
-				request.getSession().removeAttribute("passowrdCambiata");}%>
-				<span>Cambio password</span><br>
+				request.getSession().removeAttribute("passwordCambiata");}%>
+				<h2>Cambio password</h2><br>
 				<span>Nuova password<br><input type ="text" name="Nu" placeholder ="test" style="background-color: #d1d5d8"></span><br>
 				<span>Ripeti		<br><input type ="text" name="Ri" placeholder ="test" style="background-color: #d1d5d8"></span><br>
 				

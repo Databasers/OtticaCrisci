@@ -6,15 +6,41 @@
 	margin-left: 20%;
 	margin-right: 20%;
 }
-}
 
 input#file {
-	background-color: #d1d5d8;
-	margin-right: 2px;
+	margin-right: 2%;
 	border: inset;
 }
 
 #bottoneanagrafica {
+	margin-top: 1%;
+	margin-right: 1%;
+}
+
+.frame{
+	border-style: solid;
+	border: thin;
+	border-color: black;
+}
+
+form {
+	margin-left: 25%;
+}
+
+@media screen and (max-width: 721){
+
+#Contenitore-menu{
+	font-size: 20px;
+}
+
+
+input#file {
+	font-size: 19px;
+	margin-right: 10%;
+}
+
+#bottoneanagrafica {
+	font-size: 19px;
 	margin-top: 10px;
 	margin-right: 2px;
 }
@@ -23,4 +49,23 @@ input#file {
 	border-style: solid;
 	border: thin;
 	border-color: black;
+	font-size: 19px;
+}
+
+form {
+	margin-left: 25%;
+	font-size: 19px;
+}
+
+input {
+	font-size: 19px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+span{
+	font-size: 20px;
+}
 }

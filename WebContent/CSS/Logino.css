@@ -1,11 +1,12 @@
 div.container{
 	display:block;
 	
-	width: 50%;
-	Height:25%;
+	width: 90%;
+	Height:30%;
 	position: relative;
 	margin-top:5%;
-	margin-left:25%;
+	margin-left:5%;
+	margin-right:5%;
 	
 	border: 2px solid;
 	border-color: #008ae6;
@@ -15,16 +16,18 @@ div.container{
 div.reg-log{
 	vertical-align: middle;
 	position: relative;
-	margin-left:28.5%;
+	margin-left:25%;
+	margin-right: 25%;
 }
 
 div .choice{
 	vertical-align: middle;
 	position: relative;
-	margin-left:38%;
+	margin-right: 28%;
 	margin-bottom:0.5%;
-	
 }
+
+.
 
 form#login{
 	position: relative;
@@ -33,14 +36,14 @@ form#login{
 }
 form input.desc{
 	height:60px;
-	width:340px;
+	width:100%;
 	margin-bottom:1%;
 }
 form input.btn{
 	height:60px;
 	width:150px;
 	background-color: #008ae6;
-	margin-left: 2.5%;
+	margin-left: 1%;
 	margin-top:1%;
 }
 form input.btnbello{
@@ -57,4 +60,14 @@ div .choice button{
 	width:100px;
 	
 }
+
+@media screen and (max-width: 1000px){
+	form input.desc{
+	height:70px;
+	width:100%;
+	margin-bottom:1%;
+}
+}
+
+
 
