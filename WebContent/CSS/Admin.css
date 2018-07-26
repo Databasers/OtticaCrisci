@@ -22,8 +22,9 @@ div.Function_list input{
 }
 div.func{
 	position:relative;
-	margin-left:27.5%;
+	margin-left:5%;
 	margin-top:2%;
+	width:100%;
 	
 }
 div.func2{
@@ -37,7 +38,9 @@ div.func2 input{
 	width:80%;
 	margin-left:10%;
 }
-
+div.func2 button{
+	
+}
 @media screen and (max-width: 721px) {
   div.well-profile{
 	border: 2px solid;
