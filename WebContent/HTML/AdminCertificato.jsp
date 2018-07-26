@@ -24,6 +24,7 @@
 		var td=tr.firstChild;
 		console.log(td);
 		cf=td.textContent;
+		console.log(cf);
 		gradazione=form.num.value;
 		form.action="/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf;
 		console.log("/OtticaCrisci/GestioneAdmin?action=modCertificato&valido="+valido+"&gradazione="+gradazione+"&code="+cf);
@@ -50,8 +51,7 @@
 		<%
 		for(Certificato c: elenco){
 		%>
-		<tr>
-			<td><%=c.getcF() %>
+		<tr><td><%=c.getcF() %>
 			<td><a href="<%=c.getUrl() %>"><%=c.getUrl() %></a>
 			<td>
 				<form method="post">
