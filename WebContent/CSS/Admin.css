@@ -1,0 +1,39 @@
+div.well-profile{
+	border: 2px solid;
+	border-color: #008ae6;
+	margin-top:2%;
+	margin-left:20%;
+	margin-right:20%;
+}
+
+div.Anagrafica{
+	position:relative;
+	margin-left:20%;
+}
+div.Function_list{
+	position:relative;
+	margin-left:30%;
+	margin-top:2%;
+}
+div.Function_list input{
+	height: 60px;
+	width: 150px;
+	background-color: #008ae6;
+}
+div.func{
+	position:relative;
+	margin-left:27.5%;
+	margin-top:2%;
+	
+}
+div.func2{
+	position:relative;
+	margin-left:5%;
+	margin-right:5%;
+	margin-top:2%;
+}
+div.func2 input{
+	position:relative;
+	width:80%;
+	margin-left:10%;
+}

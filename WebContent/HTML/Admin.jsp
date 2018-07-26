@@ -2,6 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet"
+	href="<%= request.getContextPath() %>/CSS/Admin.css" type="text/css"
+	media="all">
 <title>Admin Page</title>
 </head>
 <body>
@@ -20,28 +23,49 @@
 		}
 		
 	String label=(String) request.getSession().getAttribute("label");%>
-<div class="well profile">
+<div class="well-profile">
             <div class="Anagrafica">
                 
-                    <h2>Nicole Pearson</h2>
-                    <p><strong>Codice Fiscale </strong> 12355sads77 </p>
-                    <p><strong>Telefono </strong> 1235577 </p>
+                    <h2><%= su.getNome() %> <%=su.getCognome() %></h2>
+                    <p><strong>Codice Fiscale </strong> <%=su.getcF()%> </p>
                     
              </div>
+             
              <div class="Funzioni">
-            	<div class="Function_list">
+		
+					<div class="func2">
+						<form method="post" action="/OtticaCrisci/GestioneAdmin?action=frame">
+							<fieldset>
+							    <legend>Inserisci nuovo frame</legend>
+							   
+							    <input type="text" name="colore" value="colore">
+							    <br> <br>
+							    <input type="text" name="peso" value="peso">
+							    <br><br>
+							    <input type="text" name="materiale" value="materiale">
+							    <br> <br>
+							    <input type="text" name="prezzo" value="prezzo">
+							    <br> <br>
+							    <input type="text" name="PartitaIva" value="PartitaIva">
+							    <br> <br>
+							    <input type="text" name="marchio" value="marchio">
+							     <br> <br>
+							    <input type="text" name="modello" value="modello">
+							     <br> <br>
+							    <input type="text" name="peso" value="Link">
+							     <br> <br>
+							    <input type="submit" value="Inserisci Frame!" style="background-color:#008ae6">
+							 </fieldset>
+														
+						</form>
+					</div>
+				<div class="Function_list">
 					<form method="post">
-						<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=certificato" value="certificato">
-						<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=occhiali" value="occhiali">
+						<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=certificato" value="Controlla certificati">
+						<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=occhiali" value="Gestisci occhiali">
 					</form>
 				</div>
 				<div class="zonafunzioni">
-				
-					<div class="func2">
-						<form method="post" action="/OtticaCrisci/GestioneAdmin?action=frame">
-							<input type="submit" value="e manda">
-						</form>
-					</div>
 				<% if(label!=null && label.equalsIgnoreCase("certificato")){%>
 					<div class="func">
 						<%@ include file="AdminCertificato.jsp"%>
