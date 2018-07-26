@@ -71,7 +71,7 @@ public class FornitoreManager implements ProductModel<Fornitore, Integer>, Seria
 			ResultSet rs=preparedStatement.executeQuery();
 			while(rs.next()) {
 				Fornitore temp= new Fornitore();
-				temp.setPartitaIva(rs.getInt("CodiceFiscale"));
+				temp.setPartitaIva(rs.getInt("PartitaIva"));
 				temp.setNome(rs.getString("Nome"));
 				c.add(temp);
 			}

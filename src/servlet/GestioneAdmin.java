@@ -29,6 +29,7 @@ import managerBean.AdminManager;
 import managerBean.CertificatoManager;
 import managerBean.ClienteManager;
 import managerBean.DepositoManager;
+import managerBean.FornitoreManager;
 import managerBean.FrameManager;
 import managerBean.LaboratorioManager;
 import managerBean.LenteManager;
@@ -115,8 +116,9 @@ public class GestioneAdmin extends HttpServlet {
 		String colore=request.getParameter("colore");
 		Integer peso=Integer.parseInt(request.getParameter("peso"));
 		String materiale=request.getParameter("materiale");
-		Integer prezzo=Integer.parseInt(request.getParameter("prezzo"));		
-		Integer partitaIva=Integer.parseInt(request.getParameter("partitaIva"));
+		Integer prezzo=Integer.parseInt(request.getParameter("prezzo"));
+		FornitoreManager x = new FornitoreManager();
+		Integer partitaIva=x.doRetrieveAll("").iterator().next().getPartitaIva(); //ne prende uno casuale
 		String marchio=request.getParameter("marchio");
 		String urlImmagine=request.getParameter("urlImmagine");
 		
@@ -124,6 +126,7 @@ public class GestioneAdmin extends HttpServlet {
 		@SuppressWarnings("deprecation")
 		Date data=new Date(LocalDateTime.now().getYear()-1900, LocalDateTime.now().getMonthValue()-1, LocalDateTime.now().getDayOfMonth());
 		LavorazioneDeposito d= new LavorazioneDeposito(null, 15, null, null, f.getId(), "s8", data, null);
+		managerD.doSaveAI(d);
 	}
 	
 	/**

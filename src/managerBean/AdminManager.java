@@ -14,7 +14,7 @@ import it.unisa.model.ProductModel;
 
 public class AdminManager implements ProductModel<Admin,String>, Serializable {
 
-	private static final String TableName="Admin";
+	private static final String TableName="admin";
 	
 	public Admin doRetrieveIfRegistered(String code, String password) throws SQLException {
 		Connection connection=null;
