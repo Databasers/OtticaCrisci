@@ -26,13 +26,20 @@ div.product{
 	border: thin solid;
 	border-color: #008ae6;
 	width: 75%;
-	height: 350px;
+	height: 33%;
 }
-
+.productImg{
+	
+	margin-top: 1%;
+	margin-left: 3.5%;
+	width: 10px;
+	height: 50%;
+    
+}
 div.destra{
 	font-size: 25px;
 	float: right;
-	clear: right;
+	
 }
 
 button {

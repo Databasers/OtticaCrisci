@@ -59,7 +59,7 @@
 		</form>
 	</div>
 
-
+</div>
 <script>
 
 var slideIndex = 1;

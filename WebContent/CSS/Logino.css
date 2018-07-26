@@ -1,12 +1,12 @@
 div.container{
 	display:block;
 	
-	width: 90%;
+	width: 60%;
 	Height:30%;
 	position: relative;
 	margin-top:5%;
-	margin-left:5%;
-	margin-right:5%;
+	margin-left:20%;
+	margin-right:20%;
 	
 	border: 2px solid;
 	border-color: #008ae6;
@@ -17,13 +17,15 @@ div.reg-log{
 	vertical-align: middle;
 	position: relative;
 	margin-left:25%;
-	margin-right: 25%;
+	width:50%
+	
+	
 }
 
 div .choice{
-	vertical-align: middle;
+	
 	position: relative;
-	margin-right: 28%;
+	margin-left: 35%;
 	margin-bottom:0.5%;
 }
 
@@ -43,14 +45,14 @@ form input.btn{
 	height:60px;
 	width:150px;
 	background-color: #008ae6;
-	margin-left: 1%;
+	margin-left: 5%;
 	margin-top:1%;
 }
 form input.btnbello{
 	height:60px;
 	width:200px;
 	background-color: #008ae6;
-	margin-left: 13%;
+	margin-left: 20%;
 	margin-top:1%;
 }
 

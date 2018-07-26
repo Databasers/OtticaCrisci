@@ -51,7 +51,7 @@
 				<td>
 				<div class="product">
 				<form method="post">
-				<img class="prductImg" src = "<%=request.getContextPath()%>/Immagini_Frame/<%=oggetto.getUrlImmagine()%>" > 
+				<img class="prductImg" src = "<%=request.getContextPath()%>/Immagini_Frame/<%=oggetto.getUrlImmagine()%>" style="width:50%"> 
 				<div class="desc"><%=oggetto.getMarchio() + " " + oggetto.getModello() + " " + oggetto.getColore() + "\n"%></div>
 				 <div class="destra"><%=oggetto.getPrezzo()%></div>
 				 <button class="btn" type="submit" formaction="/OtticaCrisci/gestione?action=delCart&id=<%=oggetto.getId()%>">Rimuovi</button>
