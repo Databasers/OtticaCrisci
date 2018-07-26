@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<LINK rel="stylesheet" href="<%=request.getContextPath()%>/CSS/Occhi.css" type="text/css">
 <script type="text/javascript" src="Admin.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -47,7 +48,7 @@
 
 	%>
 
-	<table border="1px solid black" style="display: block; position: relative; width: 90%;">
+	<table>
 		<%
 		for(Certificato c: elenco){
 		%>
