@@ -32,15 +32,15 @@ h1.myslidestext{
     top: 70%;
     left: 46%;
     height: 75px;
-    width: 150px;
+    width: 16%;
     font-size: 20px;
 }
 .display-slidedue{
 	position: absolute;
     top: 70%;
     left: 44%;
-    height: 75px;
-    width: 220px;
+    min-height: 200px;
+    width: 100%;
     font-size: 20px;
     
 }
@@ -98,7 +98,6 @@ div.cont-table{
 }
 
 div.container-adivces{
-	
 	width:100%;
 	display:table-row;
 }
@@ -108,7 +107,7 @@ div.product{
 	margin: 20px;
 	border: 2px solid;
 	border-color: #008ae6;
-	width: 500px;
+	width: 1000px;
 	height: 500px;
 	display: table-cell;
 }

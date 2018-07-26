@@ -9,9 +9,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Occhiali da vista e da sole</title>
-<LINK rel="stylesheet" href="../CSS/Temp_FS.css" type="text/css">
-<LINK rel="stylesheet" href="../CSS/TabellaFiltri.css" type="text/css">
-<LINK rel="stylesheet" href="../CSS/Store.css" type="text/css">
+<LINK rel="stylesheet" href="<%=request.getContextPath()%>/CSS/Temp_FS.css" type="text/css">
+<LINK rel="stylesheet" href="<%=request.getContextPath()%>/CSS/TabellaFiltri.css" type="text/css">
+<LINK rel="stylesheet" href="<%=request.getContextPath()%>/CSS/Store.css" type="text/css">
 
 </head>
 <body>
@@ -45,7 +45,7 @@
 			
 				
 				 <div class= "product"> 
-					<img class= "productImg" src= "../Immagini_Frame/<%= x.getUrlImmagine() %>" alt="Img" style= "width:33%">
+					<img class= "productImg" src= "<%=request.getContextPath()%>/Immagini_Frame/<%= x.getUrlImmagine() %>" alt="Img" style= "width:33%">
 					<div class= "description">
 						<div class = "desc">
 							<h3> <%= x.getModello() %> <%= x.getColore()%></h3>

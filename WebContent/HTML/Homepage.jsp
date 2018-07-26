@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="../CSS/Homepage.css" type="text/css" media="all">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/CSS/Homepage.css" type="text/css" media="all">
 <title>OtticaCrisci, ottica otticante</title>
 </head>
 <body>
@@ -15,12 +15,12 @@
 
 <div class="container">
 	<div class="mySlides">
-		<img class= "myslidesimg" src="../ottico.jpg" style="width:100%">
+		<img class= "myslidesimg" src="<%=request.getContextPath()%>/ottico.jpg" style="width:100%">
 		<h1 class="myslidestext">Ottica Crisci, la soluzione per i tuoi occhi!</h1>
 		<button class="button display-slide" onclick="location.href='http://localhost/OtticaCrisci/HTML/Store.jsp'">Vai al negozio!</button>
 	</div>
 	<div class="mySlides">
-		<img class= "myslidesimg" src="../marche.jpg" style=" opacity: 0.4;">
+		<img class= "myslidesimg" src="<%=request.getContextPath()%>/marche.jpg" style=" opacity: 0.4;">
 		<h1 class="myslidestext">I migliori marchi, per tutti i gusti!</h1>
 		<button class="button display-slidedue" onclick="location.href='http://localhost/OtticaCrisci/HTML/Marchi.html'" >Guarda i nostri marchi!</button>
 	</div>
@@ -60,7 +60,7 @@
 			//}else{
 			%>
 				<div class= "product"> 
-					<img class= "productImg" src= <%= f.getUrlImmagine() %> alt="Img" style= "width:100%">
+					<img class= "productImg" src="<%=request.getContextPath()%>/Immagini_Frame/<%=f.getUrlImmagine()%>" alt="Img" style= "width:100%">
 					<h3> <%= f.getModello() %> <%= f.getColore()%></h3>
 					<h3> <%= f.getMarchio() %></h3>
 					

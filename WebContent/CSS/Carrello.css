@@ -14,6 +14,10 @@ table {
 	font-family: wingdings;
 }
 
+div.desc {
+	margin-left: 1%;
+}
+
 div.product{
 	font-size: 20px;
 	margin-top:5%;
@@ -22,7 +26,7 @@ div.product{
 	border: thin solid;
 	border-color: #008ae6;
 	width: 75%;
-	height: 95px;
+	height: 350px;
 }
 
 div.destra{

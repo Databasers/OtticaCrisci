@@ -159,11 +159,11 @@
 function displayResults(listXML, id) {
 	try { 
 		var obj = document.getElementById(id);		
-		var tag =["IDFrame", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"];
+		var tag =["URLImmagine", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"];
 		
 		if(obj != null) {
 			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
-			obj.innerHTML ="<img src =" +rdfs +">";
+			obj.innerHTML ="<img src =<%=request.getContextPath()%>/Immagini_Frame/" +rdfs +">";
 			for( var i = 1; i < tag.length; i++){
 				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
 				obj.innerHTML += " " + rdfs;
