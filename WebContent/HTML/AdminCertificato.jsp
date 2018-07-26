@@ -59,13 +59,13 @@
 						<option value="true">true
 						<option value="false">false
 					</select> <input type="number" min="0" max="10" id="num" value="0">
-					<input type="button" onclick="check(this)">
+					<input type="button" onclick="check(this)" value="mamma">
 				</form>
 		</tr>
 		<% } %>
 	</table>
 
-	<hr>
+	
 	<br>
 
 
@@ -140,6 +140,7 @@ function displayResults(listXML, id) {
 					//Bottone
 					var bottone=$("<input></input>")
 					bottone.attr("type","button");
+					bottone.attr("value","check");
 					bottone.attr("onClick","check(this)");
 					
 					form.append(selectValido);
@@ -162,7 +163,7 @@ function displayResults(listXML, id) {
 	<div id="cliente">
 		<p>
 			Cerca un cliente <input id="pcliente" type="text" name="cf" max="16">
-			<input type="button" onclick="FindCliente(this)">
+			<input type="button" onclick="FindCliente(this)" value="cerca">
 		<div id="modAjax"></div>
 	</div>
 </body>
