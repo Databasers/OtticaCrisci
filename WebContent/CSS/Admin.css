@@ -37,3 +37,19 @@ div.func2 input{
 	width:80%;
 	margin-left:10%;
 }
+
+@media screen and (max-width: 721px) {
+  div.well-profile{
+	border: 2px solid;
+	border-color: #000000;
+	margin-top:2%;
+	margin-left:0%;
+	margin-right:0%;
+}
+div.Function_list{
+	
+	margin-left:10%;
+	
+}
+
+}
