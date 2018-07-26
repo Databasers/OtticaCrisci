@@ -5,7 +5,8 @@
 
 <title>Login</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/Logino.css" type="text/css" media="all">
-
+<script type="text/javascript" src="<%=request.getContextPath()%>/JS/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/JS/ajax.js"></script>
 </head>
 <body>
 <div class= "header">
@@ -47,12 +48,43 @@
 		<% }
 			request.removeAttribute("alreadyRegistered");
 		%>
-		<form  action="http://localhost/OtticaCrisci/GestioneLogin?action=registrazione" method="Post">
-			<input type="text" class="desc" placeholder="Codice Fiscale" name="codicefiscale"><br>
-			<input type="text" class="desc" placeholder="Nome" name="nome"><br>
-			<input type="text" class="desc" placeholder="Cognome" name="cognome"><br>
-			<input type="password" class="desc" placeholder="password" name="password"><br>
-			<input type="submit" class="btnbello">
+		<form name = "registro" method = "Post">
+			<input type="text" class="desc" placeholder="Codice Fiscale" id="codicefiscale"><br>
+			<input type="text" class="desc" placeholder="Nome" id="nome"><br>
+			<input type="text" class="desc" placeholder="Cognome" id="cognome"><br>
+			<input type="password" class="desc" placeholder="password" id="password"><br>
+			<input type="button" class="btnbello" onclick="check()" value ="Invio">
+
+		<script>
+		function check(){
+			var u = document.getElementById("nome").value;
+			var d = document.getElementById("cognome").value;
+			var e = document.getElementById("password").value;
+			var x = document.getElementById("codicefiscale").value;
+			
+			if(u== "" || d== "" || e== "" || x== ""){
+				alert("Inserimento errato");
+				if(u == ""){
+					$("input#nome").css("background-color", "red");
+				}	
+				if(d == ""){
+					$("input#cognome").css("background-color", "red");
+				}
+				if(e == ""){
+					$("input#password").css("background-color", "red");
+				}
+				if(x == ""){
+					$("input#codicefiscale").css("background-color", "red");
+				}
+		}
+			else {
+				document.registro.action = "/OtticaCrisci/GestioneLogin?action=registrazione&nome="+u+"&cognome="+d+"&password="+e+"&codicefiscale="+x;
+				document.registro.submit();
+				
+			}
+			
+		}
+		</script>
 
 
 	
