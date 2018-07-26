@@ -34,7 +34,7 @@ div .choice{
 form#login{
 	position: relative;
 	margin-left:1%;
-	margin-bottom:1%;
+	margin-bottom:2%;
 }
 form input.desc{
 	height:60px;
