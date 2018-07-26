@@ -45,6 +45,7 @@
 			%>
 			
 			<% for(Frame oggetto: elenco){
+				System.out.println("id: "+ oggetto.getId());
 			h += oggetto.getPrezzo();
 			%>
 			<tr>

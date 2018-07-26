@@ -81,6 +81,8 @@ public class GestioneCarrello extends HttpServlet {
 					//Cancella dal carrello
 					int id = Integer.parseInt(request.getParameter("id"));
 					carrello.delete(model.doRetrieveByKey(id));
+					if(carrello.getList().isEmpty())
+						System.out.println("Il carrello è vuoto dopo la cancellazione");
 					System.out.println("aaaa");
 				}
 				else if(action.equalsIgnoreCase("checkout")) {
@@ -112,7 +114,7 @@ public class GestioneCarrello extends HttpServlet {
 			if(action.equalsIgnoreCase("delCart")) {
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Carrello.jsp"); 
 			}
-			if(action.equalsIgnoreCase("checkout") && ((SessioneUtente) request.getSession().getAttribute("Utente"))!=null)
+			if(action.equalsIgnoreCase("checkout") && ((SessioneUtente) request.getSession().getAttribute("Utente"))!=null && ((SessioneUtente) request.getSession().getAttribute("Utente")).getRuolo().equalsIgnoreCase("Utente") )
 				response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp");
 			
 			System.out.println("\n Fine gestione Carrello \n");

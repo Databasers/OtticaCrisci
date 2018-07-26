@@ -22,7 +22,7 @@
 	<div class="mySlides">
 		<img class= "myslidesimg" src="<%=request.getContextPath()%>/marche.jpg" style=" opacity: 0.4;">
 		<h1 class="myslidestext">I migliori marchi, per tutti i gusti!</h1>
-		<button class="button display-slidedue" onclick="location.href='http://localhost/OtticaCrisci/HTML/Marchi.html'" >Guarda i nostri marchi!</button>
+		<button class="button display-slidedue" onclick="location.href='http://localhost/OtticaCrisci/HTML/Marchi.jsp'" >Guarda i nostri marchi!</button>
 	</div>
   
 
