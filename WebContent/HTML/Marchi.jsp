@@ -28,7 +28,7 @@
 					</a>
 				</th>
 				<th>
-					<a onclick = 'pfunc("Alain Mikli")'>
+					<a onclick = 'pfunc("AlainMikli")'>
 						<img src="http://www.luxottica.com/sites/luxottica.com/files/brand/logo_grid/alainmikli-400-griglia.jpg" alt="Alain Mikli" title="Alain Mikli">
 					</a>
 				</th>
@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<th>
-					<a onclick = 'pfunc("Brooks Brothers")'>
+					<a onclick = 'pfunc("BrooksBrothers")'>
 						<img src="http://www.luxottica.com/sites/luxottica.com/files/brand/logo_grid/brooks-brothers.png" alt="Brooks Brothers" title="Brooks Brothers">
 					</a>
 				</th>
@@ -74,8 +74,12 @@
 			</tr>
 			</table>
 			
-		<p style="display: none;" classe=""><h3></h3>
-		</p>
+		<div id="Bvlgari"  class="hide-me"><h3>BVLGARI</h3>
+			<p>
+				In licenza dal 1997, Bulgari, il gioielliere italiano di fama internazionale, maestro nella lavorazione delle gemme, rappresenta uno dei più prestigiosi brand di occhiali grazie al design contemporaneo, allo stile unico e a dettagli raffinati.
+				Il marchio si colloca nel segmento più alto dell'occhialeria-gioiello grazie all'artigianalità italiana, al design audace e all'utilizzo di materiali pregiati quali oro e pietre colorate, oltre ai cristalli, applicati su creazioni esclusive e senza tempo.
+			</p>
+		</div>
 
 		<!-- Parte a scomparsa che viene modificata cliccando su un marchio -->
 		<div id="peppe">
@@ -89,7 +93,7 @@
 			</p>
 		</div>
 		
-		<div id="Alain Mikli" class="hide-me"><h3>ALAIN MIKLI</h3>
+		<div id="AlainMikli" class="hide-me"><h3>ALAIN MIKLI</h3>
 		<p>
 		Acquisito da Luxottica nel 2013, Alain Mikli da sempre parla ad un pubblico di artisti e creativi in tutto il mondo.
 		Dal 1978, il marchio è sinonimo di distinzione e provocazione, grazie al suo design unico e alle combinazioni di colori esclusive.
@@ -104,7 +108,7 @@
 		</p>
 		</div>
 		
-		<div id="Brooks Brothers" class="hide-me"><h3>BROOKS BROTHERS</h3>
+		<div id="BrooksBrothers" class="hide-me"><h3>BROOKS BROTHERS</h3>
 		<p>
 		Caratterizzate da materiali leggeri e da una linea sottile, le collezioni Brooks Brothers rispecchiano i tratti peculiari dello stile del marchio americano.
 		È una linea di prodotti accessibili a tutti, dallo stile classico che offre funzionalità, leggerezza e alta qualità.

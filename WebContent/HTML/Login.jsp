@@ -4,7 +4,7 @@
 <meta charset="ISO-8859-1">
 
 <title>Login</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/Login.css" type="text/css" media="all">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/Logino.css" type="text/css" media="all">
 
 </head>
 <body>
@@ -59,7 +59,7 @@
 		</form>
 	</div>
 
-
+</div>
 <script>
 
 var slideIndex = 1;

@@ -136,8 +136,8 @@
 				else {%>
 				<h3>Password non cambiata</h3>
 				<%} 
-				request.getSession().removeAttribute("passowrdCambiata");}%>
-				<span>Cambio password</span><br>
+				request.getSession().removeAttribute("passwordCambiata");}%>
+				<h2>Cambio password</h2><br>
 				<span>Nuova password<br><input type ="text" name="Nu" placeholder ="test" style="background-color: #d1d5d8"></span><br>
 				<span>Ripeti		<br><input type ="text" name="Ri" placeholder ="test" style="background-color: #d1d5d8"></span><br>
 				
@@ -159,11 +159,11 @@
 function displayResults(listXML, id) {
 	try { 
 		var obj = document.getElementById(id);		
-		var tag =["IDFrame", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"];
+		var tag =["URLImmagine", "PrezzoF", "Modello", "Colore", "PesoF", "MaterialeF", "Marchio", "Diottria"];
 		
 		if(obj != null) {
 			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
-			obj.innerHTML ="<img src =" +rdfs +">";
+			obj.innerHTML ="<img src =<%=request.getContextPath()%>/Immagini_Frame/" +rdfs +">";
 			for( var i = 1; i < tag.length; i++){
 				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
 				obj.innerHTML += " " + rdfs;
