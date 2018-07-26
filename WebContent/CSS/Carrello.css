@@ -10,7 +10,7 @@ table {
 }
 
 #ala{
-	font-size: 10px;
+	font-size: 0.2px;
 	font-family: wingdings;
 }
 
@@ -52,6 +52,6 @@ div#Tot_Num {
 p#vuoto {
 	font-size: 25px;
 	width: 20%;
-	margin-left: 30%;
-	margin-right: 30%;
+	margin-left: 40%;
+	margin-right: 40%;
 }

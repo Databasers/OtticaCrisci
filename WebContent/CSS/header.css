@@ -1,11 +1,9 @@
-
-a.header{
+a.header {
 	color: #FFFFFF;
 	text-decoration: none;
-	
 }
 
-a.visited{
+a.visited {
 	text-decoration: none;
 }
 
@@ -15,48 +13,45 @@ div.header_top {
 	height: 130px;
 }
 
-div.ricerca{
-	width:100%;
-   	position: absolute;
-    text-align:left;
-    top:9%;
-    left: 5%;
+div.ricerca {
+	width: 100%;
+	position: absolute;
+	text-align: left;
+	top: 9%;
+	left: 5%;
 }
 
-
-div.logo{
-   	width:100%;
-   	position: absolute;
-    text-align:center;
+div.logo {
+	width: 100%;
+	position: absolute;
+	text-align: center;
 }
 
-img.logo{
+img.logo {
 	padding: 1%;
-	 max-height: 100px;
+	max-height: 100px;
 	max-width: 200px;
-	height:auto;
-	width:auto;
-}
-div.logout{
-	margin: 0;
-    position: absolute;
-    top: 9%;
-    left: 85%;
-    
+	height: auto;
+	width: auto;
 }
 
-div.login{
+div.logout {
 	margin: 0;
-    position: absolute;
-    top: 9%;
-    left: 92.5%;
-    
+	position: absolute;
+	top: 9%;
+	left: 85%;
+}
+
+div.login {
+	margin: 0;
+	position: absolute;
+	top: 9%;
+	left: 92.5%;
 }
 
 div.header_list {
 	background-color: #0099ff;
 	margin: 0px 10px 0px 10px;
-	
 }
 
 div.header_list ul {
@@ -69,7 +64,4 @@ div.header_list ul {
 div.header_list ul li {
 	display: inline;
 	padding: 50px 100px 50px 100px;
-	
 }
-
-
