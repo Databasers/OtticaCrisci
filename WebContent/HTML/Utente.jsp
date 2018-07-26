@@ -138,8 +138,8 @@
 				<%} 
 				request.getSession().removeAttribute("passwordCambiata");}%>
 				<h2>Cambio password</h2><br>
-				<span>Nuova password<br><input type ="text" name="Nu" placeholder ="test" style="background-color: #d1d5d8"></span><br>
-				<span>Ripeti		<br><input type ="text" name="Ri" placeholder ="test" style="background-color: #d1d5d8"></span><br>
+				<span>Nuova password<br><input type ="password" name="Nu" placeholder ="test" style="background-color: #d1d5d8"></span><br>
+				<span>Ripeti		<br><input type ="password" name="Ri" placeholder ="test" style="background-color: #d1d5d8"></span><br>
 				
 				<button type="button" onclick = "check()">Conferma</button> <!-- Mo vai in Utente.js -->
 			</form> 
@@ -163,7 +163,7 @@ function displayResults(listXML, id) {
 		
 		if(obj != null) {
 			var rdfs = listXML.getElementsByTagName(tag[0])[0].firstChild.nodeValue; 
-			obj.innerHTML ="<img src =<%=request.getContextPath()%>/Immagini_Frame/" +rdfs +">";
+			obj.innerHTML ="<img style='width:120px; height:120px' src =<%=request.getContextPath()%>/Immagini_Frame/" +rdfs +">";
 			for( var i = 1; i < tag.length; i++){
 				var rdfs = listXML.getElementsByTagName(tag[i])[0].firstChild.nodeValue;
 				obj.innerHTML += " " + rdfs;

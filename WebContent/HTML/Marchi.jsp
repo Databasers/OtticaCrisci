@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<LINK rel="stylesheet" href="../CSS/Marco.css" type="text/css">
+<LINK rel="stylesheet" href="<%=request.getContextPath()%>/CSS/Marco.css" type="text/css">
 <!--  
 	Area dedicata alla descrizione dei marchi collegati al sito
 -->
