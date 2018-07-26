@@ -22,10 +22,13 @@ public class Carrello<T> implements Serializable{
 	public void delete(T elem)
 	{
 		Iterator<T> lista= list.iterator();
+		if(!lista.hasNext())
+			System.out.println("Il carrello +è vuoto");
 		while(lista.hasNext()) 
-			if(lista.next().equals(elem))
+			if(lista.next().equals(elem)) {
+				System.out.println("Ho trovato l'elemento corrispondente");
 				lista.remove();
-		
+			}
 	}
 	
 	public List<T> getList()
