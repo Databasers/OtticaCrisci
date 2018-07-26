@@ -47,7 +47,7 @@
 
 	%>
 
-	<table border="1px solid black">
+	<table border="1px solid black" style="display: block; position: relative; width: 90%;">
 		<%
 		for(Certificato c: elenco){
 		%>
