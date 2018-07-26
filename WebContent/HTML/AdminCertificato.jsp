@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ page import="bean.*,managerBean.*,java.util.*" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="ISO-8859-1"%>
+<%@ page import="bean.*,managerBean.*,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script type="text/javascript" src="Admin.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 
 <script type="text/javascript">
@@ -34,7 +35,7 @@
 </head>
 <body>
 
-<!-- Esempio gestione della parte dei certificati -->
+	<!-- Esempio gestione della parte dei certificati -->
 
 	<%
 		Collection<Certificato> elenco=(Collection<Certificato>)request.getAttribute("certificati");
@@ -49,17 +50,17 @@
 		<%
 		for(Certificato c: elenco){
 		%>
-		<tr><td><%=c.getcF() %>
+		<tr>
+			<td><%=c.getcF() %>
 			<td><a href="<%=c.getUrl() %>"><%=c.getUrl() %></a>
 			<td>
-			<form method="post">
-				<select id="selezione">
-				<option value="true">true
-				<option value="false">false 
-				</select>
-				<input type="number" min="0" max="10" id="num" value="0"> 
-				<input type="button" onclick="check(this)">
-			</form>
+				<form method="post">
+					<select id="selezione">
+						<option value="true">true
+						<option value="false">false
+					</select> <input type="number" min="0" max="10" id="num" value="0">
+					<input type="button" onclick="check(this)">
+				</form>
 		</tr>
 		<% } %>
 	</table>
@@ -68,7 +69,7 @@
 	<br>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 function FindCliente(testo){
     var x=document.getElementById("pcliente");
    	console.log(x.value);
@@ -158,11 +159,11 @@ function displayResults(listXML, id) {
 
 </script>
 
-<div id="cliente">
-	<p >Cerca un cliente <input id="pcliente" type="text" name="cf" max="16"> <input type="button" onclick="FindCliente(this)">
-	<div id="modAjax">
-
-</div>
-</div>
+	<div id="cliente">
+		<p>
+			Cerca un cliente <input id="pcliente" type="text" name="cf" max="16">
+			<input type="button" onclick="FindCliente(this)">
+		<div id="modAjax"></div>
+	</div>
 </body>
 </html>

@@ -61,6 +61,10 @@ public class GestioneAdmin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action=(String)request.getParameter("action");
 		su=(SessioneUtente)request.getSession().getAttribute("Utente");
+		if(action.equalsIgnoreCase("cambio")) {
+			doCambio(request,response);
+		}
+		else {
 		if(action.equalsIgnoreCase("ajax"))
 			try {
 				doAjax(request,response);
@@ -89,8 +93,16 @@ public class GestioneAdmin extends HttpServlet {
 			e.printStackTrace();
 		}
 		}
+		}
 	}
 	
+	private void doCambio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("entro in admin cambio");
+		String tabella=request.getParameter("tabella");
+		request.getSession().setAttribute("label", tabella);
+		response.sendRedirect("/OtticaCrisci/HTML/Admin.jsp");
+	}
+
 	/**
 	 * Inserisce un nuovo frame in deposito
 	 * @param request
@@ -311,6 +323,8 @@ public class GestioneAdmin extends HttpServlet {
 			request.getSession().removeAttribute("label");
 		request.getSession().setAttribute("label", label);
 	}
+	
+	
 	
 	
 	private void doAjax(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {

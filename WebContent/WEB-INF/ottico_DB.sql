@@ -70,7 +70,7 @@ CREATE TABLE `certificato` (
 
 LOCK TABLES `certificato` WRITE;
 /*!40000 ALTER TABLE `certificato` DISABLE KEYS */;
-INSERT INTO `certificato` VALUES ('CRSGPP78I52W687F','www.yahoo.it',0,1),('Luigi','C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati\\Luigi.pdf',0,0);
+INSERT INTO `certificato` VALUES ('azz','C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati\\azz.pdf',0,1),('CRSLGU97P06F924H','C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati\\CRSLGU97P06F924H.pdf',1,1),('Luigi','C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati\\Luigi.pdf',0,1),('ssssssssssssssss','C:\\Users\\Antonio\\eclipse--EEworkspace-servlet\\OtticaCrisci\\Data\\Certificati\\ssssssssssssssss.pdf',1,1);
 /*!40000 ALTER TABLE `certificato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('ASDFGHJKLQWERTYI','Luigi','Ferri','prova',NULL),('CCCGZN93L08F839T','Graziano','Ciccarelli','prova',NULL),('CRSGPP78I52W687F','Giuseppe','Crisci','prova',NULL),('CRSLGU97P06F924H','Luigi','Crisci','prova',NULL),('FRNSST80R50C129B','Francesca','Esposito','prova',NULL),('GVNDRT78S14F839Z','Giovanni','De Martino','prova',NULL),('LGUCSC97P06F924V','Luigi','Crisci','prova',NULL),('LRANTR94S69B963J','Laura','Notaro','prova',NULL),('LRIDDA97E54F839T','Ilaria','Addeo','prova',NULL),('Luigi','Luigi','Luigi','prova',0),('PLADCN80E11A089R','Paolo','De Canio','prova',NULL),('RMMNTN96T21F839N','Antonio','Auriemma','prova',NULL),('SLVFNC81A41A509P','Silvia','Francescani','prova',NULL);
+INSERT INTO `cliente` VALUES ('ASDFGHJKLQWERTYI','Luigi','Ferri','prova',NULL),('azz','azz','azz','prova',NULL),('CCCGZN93L08F839T','Graziano','Ciccarelli','prova',NULL),('CRSGPP78I52W687F','Giuseppe','Crisci','prova',NULL),('CRSLGU97P06F924H','Luigi','Crisci','prova',0),('FRNSST80R50C129B','Francesca','Esposito','prova',NULL),('GVNDRT78S14F839Z','Giovanni','De Martino','prova',NULL),('LGUCSC97P06F924V','Luigi','Crisci','prova',NULL),('LRANTR94S69B963J','Laura','Notaro','prova',NULL),('LRIDDA97E54F839T','Ilaria','Addeo','prova',NULL),('Luigi','Luigi','Luigi','prova',0),('PLADCN80E11A089R','Paolo','De Canio','prova',NULL),('RMMNTN96T21F839N','Antonio','Auriemma','prova',NULL),('SLVFNC81A41A509P','Silvia','Francescani','prova',NULL),('ssssssssssssssss','dino','dino','dino123',0);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +145,7 @@ CREATE TABLE `frame` (
   PRIMARY KEY (`IDFrame`),
   KEY `PartitaIVA` (`PartitaIVA`),
   CONSTRAINT `frame_ibfk_1` FOREIGN KEY (`PartitaIVA`) REFERENCES `fornitore` (`PartitaIVA`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +154,7 @@ CREATE TABLE `frame` (
 
 LOCK TABLES `frame` WRITE;
 /*!40000 ALTER TABLE `frame` DISABLE KEYS */;
-INSERT INTO `frame` VALUES (1,'tondo','nero',10,'plastica',100,123456,'RayBan',NULL),(2,'rettangolare','grigio',15,'plastica',75,345678,'RayBan',NULL),(3,'occhi di gatto','blu scuro',12,'plastica',50,123456,'RayBan',NULL),(4,'tondo','blu',10,'plastica',100,345678,'RayBan',NULL),(5,'tondo','nero',8,'metallo',150,123456,'RayBan',NULL),(6,'tondo piccolo','nero',10,'metallo',150,345678,'RayBan',NULL),(7,'rettangolare','nero',10,'metallo',125,123456,'Gucci',NULL),(8,'tondo','nero',10,'metallo',125,345678,'Gucci',NULL),(9,'rettangolare','nero',8,'metallo',150,123456,'Gucci',NULL),(10,'tondo','nero',8,'metallo',125,123456,'Gucci',NULL),(11,'occhi di gatto','blu',15,'acciaio',200,123456,'Gucci',NULL),(12,'occhi di gatto','grigio',11,'acciaio',100,345678,'Gucci',NULL),(13,'rettangolare','grigio',15,'acciaio',75,123456,'D&G',NULL),(14,'rettangolare','nero',12,'plastica',50,345678,'D&G',NULL),(15,'occhi di gatto','blu',10,'plastica',50,123456,'D&G',NULL),(16,'tondo piccolo','nero',10,'plastica',50,123456,'D&G',NULL),(17,'tondo','blu',8,'plastica',50,123456,'D&G',NULL),(18,'NNJK','DSD',1,'NJNKNKJ',30,123456,'D&G',NULL);
+INSERT INTO `frame` VALUES (1,'tondo','nero',10,'plastica',100,123456,'Oakley','Occhiali_steampunk.jpg'),(2,'rettangolare','nero',15,'plastica',75,345678,'Oakley','id.jpg'),(3,'occhi di gatto','nero',12,'plastica',50,123456,'Oakley','id3.jpg'),(4,'tondo','blu',10,'plastica',100,345678,'Alain Mikli','id4.jpg'),(5,'tondo','nero',8,'metallo',150,123456,'Alain Mikli','id5.jpg'),(6,'tondo piccolo','nero',10,'metallo',150,345678,'Alain Mikli','Occhiali_steampunk.jpg'),(7,'rettangolare','nero',10,'metallo',125,123456,'Alain Mikli','id6.jpg'),(8,'tondo','nero',10,'metallo',125,345678,'Arnette','Occhiali_steampunk.jpg'),(9,'rettangolare','nero',8,'metallo',150,123456,'Arnette','id9.png'),(10,'tondo','nero',8,'metallo',125,123456,'Arnette','id10.png'),(11,'occhi di gatto','blu',15,'acciaio',200,123456,'Brooks Brother','id3.jpg'),(12,'occhi di gatto','grigio',11,'acciaio',100,345678,'Brooks Brother','id3.jpg'),(13,'rettangolare','grigio',15,'acciaio',75,123456,'Burberry','id13.jpg'),(14,'rettangolare','nero',12,'plastica',50,345678,'Burberry','id9.png'),(15,'occhi di gatto','blu',10,'plastica',50,123456,'Bulgari','id15.jpg'),(16,'tondo piccolo','nero',10,'plastica',50,123456,'Bulgari','id16.jpg'),(17,'tondo','blu',8,'plastica',50,123456,'Chanel','id4.jpg'),(19,'occhi di gatto','blu',10,'plastica',50,123456,'Coach','id4.jpg'),(20,'occhi di gatto','blu',10,'plastica',50,123456,'Dkny','id4.jpg'),(21,'occhi di gatto','blu',10,'plastica',50,123456,'Dkny','id4.jpg'),(22,'occhi di gatto','blu',10,'plastica',50,123456,'Bulgari','id4.jpg'),(23,'occhi di gatto','blu',10,'plastica',50,123456,'Dkny','id4.jpg');
 /*!40000 ALTER TABLE `frame` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +214,7 @@ CREATE TABLE `lavorazione_laboratorio` (
   KEY `Occhiale_rotto.IDOcchiale` (`Occhiale_rottoIDOcchiale`),
   CONSTRAINT `lavorazione_laboratorio_ibfk_1` FOREIGN KEY (`Occhiale_nuovoIDOcchiale`) REFERENCES `occhiale_nuovo` (`idocchiale`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `lavorazione_laboratorio_ibfk_2` FOREIGN KEY (`Occhiale_rottoIDOcchiale`) REFERENCES `occhiale_rotto` (`IDOcchiale`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +223,7 @@ CREATE TABLE `lavorazione_laboratorio` (
 
 LOCK TABLES `lavorazione_laboratorio` WRITE;
 /*!40000 ALTER TABLE `lavorazione_laboratorio` DISABLE KEYS */;
-INSERT INTO `lavorazione_laboratorio` VALUES (1,11,'riparazione','2017-11-05',NULL,NULL,3),(2,7,'riparazione','2017-09-09','2017-09-30',NULL,4),(3,5,'riparazione','2017-12-01','2017-12-30',NULL,1),(4,4,'riparazione','2017-11-05','2017-11-25',NULL,2),(5,1,'riparazione','2017-08-10',NULL,NULL,5),(6,11,'montaggio','2017-11-29','2017-12-05',1,NULL),(7,11,'montaggio','2017-03-20','2017-04-01',2,NULL),(8,1,'montaggio','2017-03-29','2018-03-29',8,NULL),(9,4,'montaggio','2017-12-30',NULL,9,NULL),(10,5,'montaggio','2017-11-09',NULL,10,NULL),(11,6,'montaggio','2017-05-20','2017-06-03',6,NULL),(12,7,'montaggio','2017-04-20','2017-05-05',7,NULL),(13,11,'montaggio','2017-08-20','2017-09-01',3,NULL),(14,11,'montaggio','2017-09-30','2017-10-08',4,NULL),(15,10,'montaggio','2017-10-31','2017-11-09',5,NULL),(16,1,'montaggio','2018-03-29',NULL,11,NULL),(17,3,'montaggio','2018-07-10',NULL,6,NULL);
+INSERT INTO `lavorazione_laboratorio` VALUES (1,11,'riparazione','2017-11-05',NULL,NULL,3),(2,7,'riparazione','2017-09-09','2017-09-30',NULL,4),(3,5,'riparazione','2017-12-01','2017-12-30',NULL,1),(4,4,'riparazione','2017-11-05','2017-11-25',NULL,2),(5,1,'riparazione','2017-08-10',NULL,NULL,5),(6,11,'montaggio','2017-11-29','2017-12-05',1,NULL),(7,11,'montaggio','2017-03-20','2017-04-01',2,NULL),(8,1,'montaggio','2017-03-29','2018-03-29',8,NULL),(9,4,'montaggio','2017-12-30',NULL,9,NULL),(10,5,'montaggio','2017-11-09',NULL,10,NULL),(11,6,'montaggio','2017-05-20','2017-06-03',6,NULL),(12,7,'montaggio','2017-04-20','2017-05-05',7,NULL),(13,11,'montaggio','2017-08-20','2017-09-01',3,NULL),(14,11,'montaggio','2017-09-30','2017-10-08',4,NULL),(15,10,'montaggio','2017-10-31','2017-11-09',5,NULL),(17,3,'montaggio','2018-07-10',NULL,6,NULL),(19,32,'montaggio','2018-08-24',NULL,13,NULL),(20,13,'montaggio','2018-08-24',NULL,14,NULL),(21,12,'montaggio','2018-08-24',NULL,15,NULL),(22,23,'montaggio','2018-08-25',NULL,16,NULL),(23,3,'montaggio','2018-08-25',NULL,17,NULL),(24,19,'montaggio','2018-08-25',NULL,18,NULL);
 /*!40000 ALTER TABLE `lavorazione_laboratorio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +245,7 @@ CREATE TABLE `lente` (
   PRIMARY KEY (`IDLente`),
   KEY `PartitaIva` (`PartitaIva`),
   CONSTRAINT `lente_ibfk_1` FOREIGN KEY (`PartitaIva`) REFERENCES `fornitore` (`PartitaIVA`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +254,7 @@ CREATE TABLE `lente` (
 
 LOCK TABLES `lente` WRITE;
 /*!40000 ALTER TABLE `lente` DISABLE KEYS */;
-INSERT INTO `lente` VALUES (1,4,'Minerale',5,70,'antiriflesso, antigraffio',456789),(2,3,'Organico',7,50,'antigraffio',234567),(3,2,'Organico',5,50,'antiriflesso',234567),(4,1,'Trivex',5,10,'antiriflesso, antigraffio, transition',234567),(5,1,'Minerale',8,50,'antigraffio',456789),(6,1,'Policarbonato',7,100,'antiriflesso, antigraffio, transition',456789),(7,2,'Policarbonato',5,60,'antigraffio, transition',234567),(8,2,'Trivex',7,70,'antiriflesso, transition',234567),(9,3,'Organico',7,50,'antiriflesso',456789),(10,3,'Trivex',8,100,'antiriflesso, antigraffio, transition',234567),(11,5,'HH',1,100,'HH',123456);
+INSERT INTO `lente` VALUES (1,4,'Minerale',5,70,'antiriflesso, antigraffio',456789),(2,3,'Organico',7,50,'antigraffio',234567),(3,2,'Organico',5,50,'antiriflesso',234567),(4,1,'Trivex',5,10,'antiriflesso, antigraffio, transition',234567),(5,1,'Minerale',8,50,'antigraffio',456789),(6,1,'Policarbonato',7,100,'antiriflesso, antigraffio, transition',456789),(7,2,'Policarbonato',5,60,'antigraffio, transition',234567),(8,2,'Trivex',7,70,'antiriflesso, transition',234567),(9,3,'Organico',7,50,'antiriflesso',456789),(10,3,'Trivex',8,100,'antiriflesso, antigraffio, transition',234567),(11,5,'HH',1,100,'HH',123456),(12,7,'vetro',50,560,'D&G',123456),(13,7,'vetro',50,560,'occhi di gatto',123456),(14,7,'vetro',50,560,'occhi di gatto',123456),(15,7,'vetro',50,560,'occhi di gatto',123456),(16,0,'vetro',50,0,'occhi di gatto',123456),(17,0,'vetro',50,0,'occhi di gatto',123456),(18,0,'vetro',50,0,'occhi di gatto',123456);
 /*!40000 ALTER TABLE `lente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,7 +281,7 @@ CREATE TABLE `occhiale_nuovo` (
   CONSTRAINT `occhiale_nuovo_ibfk_1` FOREIGN KEY (`CodiceFiscale`) REFERENCES `cliente` (`CodiceFiscale`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `occhiale_nuovo_ibfk_2` FOREIGN KEY (`IDFrame`) REFERENCES `frame` (`IDFrame`) ON UPDATE CASCADE,
   CONSTRAINT `occhiale_nuovo_ibfk_3` FOREIGN KEY (`IDLente`) REFERENCES `lente` (`IDLente`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,7 +290,7 @@ CREATE TABLE `occhiale_nuovo` (
 
 LOCK TABLES `occhiale_nuovo` WRITE;
 /*!40000 ALTER TABLE `occhiale_nuovo` DISABLE KEYS */;
-INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T','2018-06-12','Consegnato'),(6,300,NULL,6,6,'LRIDDA97E54F839T','2018-06-12','In Lavorazione'),(7,400,NULL,7,7,'RMMNTN96T21F839N','2018-06-12','In Deposito'),(8,200,NULL,8,8,'RMMNTN96T21F839N','2018-06-12','In Deposito'),(9,350,NULL,9,9,'LRANTR94S69B963J','2018-06-12','In Lavorazione'),(10,500,NULL,10,10,'LRANTR94S69B963J','2018-06-12','In Lavorazione'),(11,169,NULL,11,18,'CRSLGU97P06F924H','2018-06-12','In Lavorazione');
+INSERT INTO `occhiale_nuovo` VALUES (1,500,'2017-12-15',1,1,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(2,500,'2017-04-11',2,2,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(3,500,'2017-09-08',3,3,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(4,500,'2017-10-15',4,4,'CCCGZN93L08F839T','2018-06-12','Consegnato'),(5,350,'2017-11-11',5,5,'LRIDDA97E54F839T','2018-06-12','Consegnato'),(6,300,NULL,6,6,'LRIDDA97E54F839T','2018-06-12','In Lavorazione'),(7,400,NULL,7,7,'RMMNTN96T21F839N','2018-06-12','In Deposito'),(8,200,NULL,8,8,'RMMNTN96T21F839N','2018-06-12','In Deposito'),(9,350,NULL,9,9,'LRANTR94S69B963J','2018-06-12','In Lavorazione'),(10,500,NULL,10,10,'LRANTR94S69B963J','2018-06-12','In Lavorazione'),(13,915,NULL,13,19,'CRSLGU97P06F924H','2018-08-24','In Lavorazione'),(14,915,NULL,14,20,'CRSLGU97P06F924H','2018-08-24','In Lavorazione'),(15,915,NULL,15,21,'CRSLGU97P06F924H','2018-08-24','In Lavorazione'),(16,75,NULL,16,15,'CRSLGU97P06F924H','2018-08-25','In Lavorazione'),(17,75,NULL,17,22,'CRSLGU97P06F924H','2018-08-25','In Lavorazione'),(18,75,NULL,18,23,'CRSLGU97P06F924H','2018-08-25','In Lavorazione');
 /*!40000 ALTER TABLE `occhiale_nuovo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-22 20:23:07
+-- Dump completed on 2018-07-25 21:32:42

@@ -1,72 +1,61 @@
-
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script type="text/javascript" src="../OtticaCrisci/JS/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../OtticaCrisci/JS/ajax.js"></script>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Admin Page</title>
 </head>
 <body>
-	<%!SessioneUtente su = null;%>
+<div class= "header">
+<%@ include file="Header.jsp"%>
+</div>
+
+<%!SessioneUtente su = null;%>
 	
 	<% 
 	su =(SessioneUtente) session.getAttribute("Utente");
 		if(su==null)
 		{
 			response.sendRedirect("Login.jsp");
+			return;
 		}
-	%>
-	
-	
-	<!-- 
-		ANTONIO
-		if che verifica che valore ha "label" (in sessione) e selezione quale pagina fare include file="Admin*.jsp" (come sotto)   
-		dato che devono esserci anche i bottoni che cambiano, ogni bottone fagli modificare label in sessione e ricarica la pagina, così funziona sempre e lo fai una volta sola	
-	
-	 -->	
-	
-	<%@ include file="AdminCertificato.jsp" %>
+		
+	String label=(String) request.getSession().getAttribute("label");%>
+<div class="well profile">
+            <div class="Anagrafica">
+                
+                    <h2>Nicole Pearson</h2>
+                    <p><strong>Codice Fiscale </strong> 12355sads77 </p>
+                    <p><strong>Telefono </strong> 1235577 </p>
+                    
+             </div>
+             <div class="Funzioni">
+            	<div class="Function_list">
+					<form method="post">
+						<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=certificato" value="certificato">
+						<input type="submit" formaction="/OtticaCrisci/GestioneAdmin?action=cambio&tabella=occhiali" value="occhiali">
+					</form>
+				</div>
+				<div class="zonafunzioni">
+				
+					<div class="func2">
+						<form method="post" action="/OtticaCrisci/GestioneAdmin?action=frame">
+							<input type="submit" value="e manda">
+						</form>
+					</div>
+				<% if(label!=null && label.equalsIgnoreCase("certificato")){%>
+					<div class="func">
+						<%@ include file="AdminCertificato.jsp"%>
+					</div>
+				<% }else if(label!=null && label.equalsIgnoreCase("occhiali")){%>
+					<div class="func">
+						<%@ include file="AdminOcchiali.jsp"%>
+					</div>
+					<% }%>
+				</div>
+            </div>
+            
+</div>
 
-<!--  
-	 <script>
-	 	function nascondi(a){
-	 		var ogg = ['Frame', 'Ordini', 'Certificati', 'Utenti'];
-	 		for(i=0; i < ogg.length; i++)}
-	 			$("#"+ogg[i]).hide();
-	 		}
-	 		$("#"+a).fadeIn();
-	 	}
-	 </script>
-	 
-	 
-	 
-	 <table>
-	 	<tr>
-	 		<td><div><button onclick="nascondi('Frame')">Nuovo Frame</button></div></td>		
-	 		<td><div><button onclick="nascondi('Ordini')">Ordini</button></div></td>
-	 		<td><div><button onclick="nascondi('Certificati')">Certificati</button></div></td>
-	 		<td><div><button onclick="nascondi('Utenti')">Utenti</button></div></td>
-	 	</tr>
-	 </table>
-	 
-	 <div><h1></h1>
-	 
-	 </div>
-	 
-	 
-	<div id="Frame"><h2>Inserire Nuovi Frame</h2>
-	<p>dati del frame<br/>
-		<input type="submit" src ="newFrame()"></p>
-	</div>
-	
-	<div id ="Ordini" style="display:none"><h2>Ordini in arrivo</h2>
-	<p>Questo sarà un ordine</p>
-	</div>
-	
-	<div id ="Certificati" style="display:none"><h2>Certificati in arrivo</h2></div>
-	
-	
-	<div id="Utenti" style="display:none"><h2>Utenti</h2></div>
--->
+
 </body>
+</html>
