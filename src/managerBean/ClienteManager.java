@@ -72,14 +72,16 @@ public class ClienteManager implements ProductModel<Cliente,String>, Serializabl
 			
 			ResultSet rs= preparedStatement.executeQuery();
 			
-			rs.next();
+			if(!rs.next())
+				temp=null;
+			else {
 			temp.setcF(rs.getString("CodiceFiscale"));
 			temp.setNome(rs.getString("Nome"));
 			temp.setCognome(rs.getString("Cognome"));
 			temp.setPassword(rs.getString("Password"));
 			temp.setGradazione(rs.getInt("Gradazione"));
 			
-				
+			}	
 		}finally {
 			try {
 			if(preparedStatement!=null)

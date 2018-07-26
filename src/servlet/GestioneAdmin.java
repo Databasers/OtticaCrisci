@@ -336,6 +336,9 @@ public class GestioneAdmin extends HttpServlet {
 		System.out.println("param=" + param);
 			ClienteManager manager=new ClienteManager();
 			Cliente cliente=manager.doRetrieveByKey(param);
+			if(cliente==null)
+				risposta.append("<Esito>"+false+"</Esito>");
+			else {
 			Certificato c= certificato.doRetrieveByKey(param);
 			if(c==null) {
 				risposta.append("<Esito>"+false+"</Esito>");
@@ -348,7 +351,7 @@ public class GestioneAdmin extends HttpServlet {
 				risposta.append("<Validato>"+c.isValidato()+"</Validato>");
 				
 			}
-			
+			}
 			
 		risposta.append("</info>");
 		response.getWriter().write(risposta.toString());

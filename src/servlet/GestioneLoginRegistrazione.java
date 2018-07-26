@@ -152,14 +152,17 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 		cognome=request.getParameter("cognome");
 		nome=request.getParameter("nome");
 		Cliente c;
-		try {
+
 				c=cManager.doRetrieveByKey(cf);
+				if(c!=null) {
 				System.out.println("Utente già registrato");
 				request.setAttribute("alreadyRegistered","true"); //Già registrato
 				System.out.println("\n FINE GESTIONE LOGIN REGISTRAZIONE \n");
 				RequestDispatcher x= getServletContext().getRequestDispatcher("/HTML/Login.jsp");
 				x.forward(request, response); 
-		} catch (SQLException e) {
+				}
+				else {
+				
 			System.out.println("Registrazione Utente");
 			c=new Cliente(cf,nome,cognome,password,0);
 			cManager.doSave(c);
@@ -175,7 +178,9 @@ public class GestioneLoginRegistrazione extends HttpServlet {
 			
 			System.out.println("\n FINE GESTIONE LOGIN REGISTRAZIONE \n");
 			response.sendRedirect(request.getContextPath() + "\\HTML\\Utente.jsp"); 
-		}
+		
+				}
+
 	}
 
 
